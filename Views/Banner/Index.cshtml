@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Project.Models.ViewModel.BannerViewModel>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Index";
+   Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link href="~/bulma-0.7.4/css/bulma.min.css" rel="stylesheet" />
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "button is-primary"})
+</p>
+<br />  
+<table class="table is-hoverable is-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BannerId)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HeadingOne)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HeadingTwo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Photo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.BannerId)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.HeadingOne)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.HeadingTwo)
+    </td>
+    <td>
+       <img src="~/images/Banner/@item.Photo" height="40" width="40"/>
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new {  id=item.BannerId }, new { @class="button is-info"}) |
+        @Html.ActionLink("Details", "Details", new {  id=item.BannerId }, new { @class="button is-warning"}) |
+        @Html.ActionLink("Delete", "Delete", new {  id=item.BannerId }, new { @class="button is-danger"})
+    </td>
+</tr>
+}
+
+</table>
