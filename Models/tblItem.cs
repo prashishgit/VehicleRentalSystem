@@ -14,11 +14,22 @@ namespace Project.Models
     
     public partial class tblItem
     {
-        public int ItemId { get; set; }
-        public string ItemPrice { get; set; }
-        public string ItemTitle { get; set; }
-        public string ItemPhoto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblItem()
+        {
+            this.tblBookings = new HashSet<tblBooking>();
+        }
+    
+        public int VehicleId { get; set; }
+        public Nullable<int> VehicleCategoryId { get; set; }
+        public string VehiclePrice { get; set; }
+        public string VehicleTitle { get; set; }
+        public string VehiclePhoto { get; set; }
         public string Description { get; set; }
-        public string ItemStatus { get; set; }
+        public string VehicleStatus { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblBooking> tblBookings { get; set; }
+        public virtual tblCategory tblCategory { get; set; }
     }
 }

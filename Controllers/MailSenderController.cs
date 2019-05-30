@@ -17,6 +17,7 @@ namespace Project.Controllers
         {
             return View();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Index(MailModel objModelMail, HttpPostedFileBase fileUploader)
         {
@@ -64,5 +65,6 @@ namespace Project.Controllers
                 return View();
             }
         }
+    
     }
 }

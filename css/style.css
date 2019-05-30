@@ -367,7 +367,7 @@ h1, h2, h3, h4, h5, h6, figure {
           text-transform: uppercase;
           letter-spacing: 2px;
           color: #fff;
-          padding: 20px 30px !important;
+          padding: 20px 73px !important;
           border: none; }
           #colorlib-hero .flexslider .slider-text > .slider-text-inner .btn.btn-learn {
             background: #FFC300;
@@ -2114,3 +2114,5 @@ input[type="text"] {
 
 .js .animate-box {
   opacity: 0; }
+
+}

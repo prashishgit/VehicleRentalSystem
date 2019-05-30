@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Project.Models.tblCategory>
+
+<h2>Categories</h2>
+<div class="fancy-collapse-panel">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        
+        @foreach (var item in Model)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a  href="@Url.Action("Index","Home")"  style="color:black">
+                            @item.CategoryName
+                        </a>
+                    </h4>
+                </div>
+                @*<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <ul>
+                            <li><a href="#">Jeans</a></li>
+                            <li><a href="#">T-Shirt</a></li>
+                            <li><a href="#">Jacket</a></li>
+                            <li><a href="#">Shoes</a></li>
+                        </ul>
+                    </div>
+                </div>*@
+            </div>
+        }
+
+    </div>
+</div>

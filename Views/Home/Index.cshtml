@@ -4,7 +4,8 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<!-- Theme style  -->
+<link rel="stylesheet" href="~/css/style.css">
 
 @section banner
 {
@@ -24,7 +25,7 @@
                                         <h2 class="head-2">@item.HeadingTwo</h2>
                                         <h3>@item.Title</h3>
                                         <p class="category"><span>@item.Description</span></p>
-                                        <p><a href="#" class="btn btn-primary">Book Now</a></p>
+                                        <p><a href="@Url.Action("Shop", "Home")" class="btn btn-primary">Book Now</a></p>
                                     </div>
                                 </div>
                             </div>

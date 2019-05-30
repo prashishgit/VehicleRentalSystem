@@ -21,24 +21,43 @@
     <Property Name="HeadingOne" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="HeadingTwo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
-  <EntityType Name="tblDescription">
+  <EntityType Name="tblBooking">
     <Key>
-      <PropertyRef Name="HeaderId" />
+      <PropertyRef Name="BookingId" />
     </Key>
-    <Property Name="HeaderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="HeaderTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="HeaderDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VehicleId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="CitizenshipPhoto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BookingDate" Type="DateTime" Precision="0" />
+    <Property Name="DueDate" Type="DateTime" Precision="0" />
+    <Property Name="TotalAmount" Type="Int32" />
+    <Property Name="AmountPaid" Type="Int32" />
+    <Property Name="BookingStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblItem" Relationship="Self.FK_tblBooking_tblItem" FromRole="tblBooking" ToRole="tblItem" />
+    <NavigationProperty Name="tblUser" Relationship="Self.FK_tblBooking_tblUser" FromRole="tblBooking" ToRole="tblUser" />
+  </EntityType>
+  <EntityType Name="tblCategory">
+    <Key>
+      <PropertyRef Name="VehicleCategoryId" />
+    </Key>
+    <Property Name="VehicleCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblItems" Relationship="Self.FK_tblItem_tblCategory" FromRole="tblCategory" ToRole="tblItem" />
   </EntityType>
   <EntityType Name="tblItem">
     <Key>
-      <PropertyRef Name="ItemId" />
+      <PropertyRef Name="VehicleId" />
     </Key>
-    <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ItemPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="ItemTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="ItemPhoto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VehicleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VehicleCategoryId" Type="Int32" />
+    <Property Name="VehiclePrice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VehicleTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="VehiclePhoto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ItemStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VehicleStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblBookings" Relationship="Self.FK_tblBooking_tblItem" FromRole="tblItem" ToRole="tblBooking" />
+    <NavigationProperty Name="tblCategory" Relationship="Self.FK_tblItem_tblCategory" FromRole="tblItem" ToRole="tblCategory" />
   </EntityType>
   <EntityType Name="tblRole">
     <Key>
@@ -60,6 +79,7 @@
     <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CitizenshipNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblBookings" Relationship="Self.FK_tblBooking_tblUser" FromRole="tblUser" ToRole="tblBooking" />
     <NavigationProperty Name="tblRole" Relationship="Self.FK_tblUser_tblRole" FromRole="tblUser" ToRole="tblRole" />
     <NavigationProperty Name="tblUserRoles" Relationship="Self.FK_tblUserRole_tblUser" FromRole="tblUser" ToRole="tblUserRole" />
   </EntityType>
@@ -73,6 +93,44 @@
     <NavigationProperty Name="tblRole" Relationship="Self.FK_tblUserRole_tblRole" FromRole="tblUserRole" ToRole="tblRole" />
     <NavigationProperty Name="tblUser" Relationship="Self.FK_tblUserRole_tblUser" FromRole="tblUserRole" ToRole="tblUser" />
   </EntityType>
+  <Association Name="FK_tblBooking_tblItem">
+    <End Role="tblItem" Type="Self.tblItem" Multiplicity="0..1" />
+    <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblItem">
+        <PropertyRef Name="VehicleId" />
+      </Principal>
+      <Dependent Role="tblBooking">
+        <PropertyRef Name="VehicleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblBooking_tblUser">
+    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+    <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tblBooking">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblItem_tblCategory">
+    <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tblItem" Type="Self.tblItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCategory">
+        <PropertyRef Name="VehicleCategoryId" />
+      </Principal>
+      <Dependent Role="tblItem">
+        <PropertyRef Name="VehicleCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tblUser_tblRole">
     <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
     <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
@@ -116,11 +174,24 @@
   <EntityContainer Name="VehicleRentalDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="tblBanners" EntityType="Self.tblBanner" />
-    <EntitySet Name="tblDescriptions" EntityType="Self.tblDescription" />
+    <EntitySet Name="tblBookings" EntityType="Self.tblBooking" />
+    <EntitySet Name="tblCategories" EntityType="Self.tblCategory" />
     <EntitySet Name="tblItems" EntityType="Self.tblItem" />
     <EntitySet Name="tblRoles" EntityType="Self.tblRole" />
     <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
     <EntitySet Name="tblUserRoles" EntityType="Self.tblUserRole" />
+    <AssociationSet Name="FK_tblBooking_tblItem" Association="Self.FK_tblBooking_tblItem">
+      <End Role="tblItem" EntitySet="tblItems" />
+      <End Role="tblBooking" EntitySet="tblBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblBooking_tblUser" Association="Self.FK_tblBooking_tblUser">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblBooking" EntitySet="tblBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblItem_tblCategory" Association="Self.FK_tblItem_tblCategory">
+      <End Role="tblCategory" EntitySet="tblCategories" />
+      <End Role="tblItem" EntitySet="tblItems" />
+    </AssociationSet>
     <AssociationSet Name="FK_tblUser_tblRole" Association="Self.FK_tblUser_tblRole">
       <End Role="tblRole" EntitySet="tblRoles" />
       <End Role="tblUser" EntitySet="tblUsers" />

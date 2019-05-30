@@ -24,24 +24,39 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tblDescriptions">
-      <EntityTypeMapping TypeName="VehicleRentalDBModel.tblDescription">
-        <MappingFragment StoreEntitySet="tblDescription">
-          <ScalarProperty Name="HeaderId" ColumnName="HeaderId" />
-          <ScalarProperty Name="HeaderTitle" ColumnName="HeaderTitle" />
-          <ScalarProperty Name="HeaderDescription" ColumnName="HeaderDescription" />
+    <EntitySetMapping Name="tblBookings">
+      <EntityTypeMapping TypeName="VehicleRentalDBModel.tblBooking">
+        <MappingFragment StoreEntitySet="tblBooking">
+          <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+          <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CitizenshipPhoto" ColumnName="CitizenshipPhoto" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+          <ScalarProperty Name="BookingStatus" ColumnName="BookingStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblCategories">
+      <EntityTypeMapping TypeName="VehicleRentalDBModel.tblCategory">
+        <MappingFragment StoreEntitySet="tblCategory">
+          <ScalarProperty Name="VehicleCategoryId" ColumnName="VehicleCategoryId" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tblItems">
       <EntityTypeMapping TypeName="VehicleRentalDBModel.tblItem">
         <MappingFragment StoreEntitySet="tblItem">
-          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-          <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
-          <ScalarProperty Name="ItemTitle" ColumnName="ItemTitle" />
-          <ScalarProperty Name="ItemPhoto" ColumnName="ItemPhoto" />
+          <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+          <ScalarProperty Name="VehicleCategoryId" ColumnName="VehicleCategoryId" />
+          <ScalarProperty Name="VehiclePrice" ColumnName="VehiclePrice" />
+          <ScalarProperty Name="VehicleTitle" ColumnName="VehicleTitle" />
+          <ScalarProperty Name="VehiclePhoto" ColumnName="VehiclePhoto" />
           <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="ItemStatus" ColumnName="ItemStatus" />
+          <ScalarProperty Name="VehicleStatus" ColumnName="VehicleStatus" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -1,0 +1,79 @@
+﻿@model Project.Models.ViewModel.UserViewModel
+
+@{
+    ViewBag.Title = "CreateUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<link rel="stylesheet" href="~/registration/fonts/linearicons/style.css">
+<link rel="stylesheet" href="/registration/css/style.css">
+
+<div class="wrapper">
+    <div class="inner">
+        @using (Html.BeginForm("CreateUser", "User", FormMethod.Post, new { @id = "Register", @enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(true)
+
+        <form class="login100-form validate-form">
+           
+            <h3>New Account?</h3>
+            <div class="form-group">
+                @Html.HiddenFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            </div>
+            <div class="form-holder">
+                <span class="lnr lnr-user"></span>
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "Username" })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-holder">
+                <span class="lnr lnr-smile"></span>
+                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", placeholder = "FullName" })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-holder">
+                <span class="lnr lnr-envelope"></span>
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+            </div>
+
+
+
+            <div class="form-holder">
+                <span class="lnr lnr-lock"></span>
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
+
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-holder">
+                <span class="lnr lnr-lock"></span>
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-holder">
+                <span class="lnr lnr-calendar-full"></span>
+                @Html.TextBoxFor(model => model.CitizenshipNumber, new { @class = "form-control", placeholder = "CitizenshipNumber" })
+                @Html.ValidationMessageFor(model => model.CitizenshipNumber, "", new { @class = "text-danger" })
+
+            </div>
+            <button type="submit" value="Create">
+                <span>Register</span>
+            </button>
+
+        </form>
+        }
+        
+        </div>
+
+</div>
+
+
+<script src="~/registration/js/jquery-3.3.1.min.js"></script>
+<script src="~/registration/js/main.js"></script>

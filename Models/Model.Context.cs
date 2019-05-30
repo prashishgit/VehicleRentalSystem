@@ -27,7 +27,8 @@ namespace Project.Models
     
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tblBanner> tblBanners { get; set; }
-        public virtual DbSet<tblDescription> tblDescriptions { get; set; }
+        public virtual DbSet<tblBooking> tblBookings { get; set; }
+        public virtual DbSet<tblCategory> tblCategories { get; set; }
         public virtual DbSet<tblItem> tblItems { get; set; }
         public virtual DbSet<tblRole> tblRoles { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }

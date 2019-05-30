@@ -57,9 +57,13 @@ namespace Project.Controllers
         [AllowAnonymous]
         public ActionResult Shop()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            
+            var vehicle = _db.tblItems.ToList();
+            return View(vehicle);
+        }
+        public ActionResult CategoryList()
+        {
+            return PartialView("_CategoryList", _db.tblCategories.ToList());
         }
     }
 }

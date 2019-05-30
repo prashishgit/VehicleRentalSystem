@@ -7,11 +7,15 @@ namespace Project.Models.ViewModel
 {
     public class ItemViewModel
     {
-        public int ItemId { get; set; }
-        public string ItemPrice { get; set; }
-        public string ItemTitle { get; set; }
-        public string ItemPhoto { get; set; }
+        public int VehicleId { get; set; }
+        public int SN { get; set; }
+        public Nullable<int> VehicleCategoryId { get; set; }
+        public string VehiclePrice { get; set; }
+        public string VehicleTitle { get; set; }
+        public string VehiclePhoto { get; set; }
         public string Description { get; set; }
-        public string ItemStatus { get; set; }
+        public string VehicleStatus { get; set; }
+
+        public virtual tblCategory tblCategory { get; set; }
     }
 }

@@ -12,24 +12,30 @@ namespace Project.Controllers
     {
         VehicleRentalDBEntities _db = new VehicleRentalDBEntities();
         // GET: Banner
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
+            int i = 0;
             List<BannerViewModel> list = new List<BannerViewModel>();
             var banners = _db.tblBanners.ToList();
             foreach (var item in banners)
             {
                 list.Add(new BannerViewModel()
                 {
+                    SN = i + 1,
                     BannerId = item.BannerId,
                     Title = item.Title,
                     Description = item.Description,
                     HeadingOne = item.HeadingOne,
                     HeadingTwo = item.HeadingTwo,
                     Photo = item.Photo
-                });
+
+                }) ;
+                i++;
             }
             return View(list);
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -90,6 +96,7 @@ namespace Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Details(int id)
         {

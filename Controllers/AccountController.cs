@@ -29,6 +29,8 @@ namespace Project.Controllers
                 if (users != null)
                 {
                     Session.Add("fullname", users.FullName);
+                    Session["Email"] = users.Email;
+
                     FormsAuthentication.SetAuthCookie(l.UserName, l.RememberMe);
                     if (Url.IsLocalUrl(ReturnUrl))
                     {

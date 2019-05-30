@@ -17,6 +17,7 @@ namespace Project.Controllers
 
         VehicleRentalDBEntities _db = new VehicleRentalDBEntities();
         // GET: Banner
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             List<UserViewModel> list = new List<UserViewModel>();
@@ -28,14 +29,23 @@ namespace Project.Controllers
                     UserId = item.UserId,
                     UserName = item.UserName,
                     Password = item.Password,
-                    
+
                     FullName = item.FullName,
                     Email = item.Email,
                     CitizenshipNumber = item.CitizenshipNumber
                 });
             }
+            
             return View(list);
         }
+        [HttpGet]
+        
+        public ActionResult GetAllUser()
+        {
+            
+            return View("_GetAllUser", _db.tblUsers.ToList());
+        }
+        [HttpGet]
         public ActionResult Create()
         {
             ViewBag.RoleName = _db.tblRoles.ToList();
@@ -44,26 +54,32 @@ namespace Project.Controllers
         [HttpPost]
         public ActionResult Create(UserViewModel uvm)
         {
-            
-            tblUser tb = new tblUser();
-            tb.RoleId = uvm.RoleId;
-            tb.UserName = uvm.UserName;
-            tb.Password = uvm.Password;
-            
-            tb.FullName = uvm.FullName;
-            tb.Email = uvm.Email;
-            tb.CitizenshipNumber = uvm.CitizenshipNumber;
+            var users = _db.tblUsers.Where(b => b.UserName == uvm.UserName || b.Email == uvm.Email).FirstOrDefault();
+            if(users != null)
+            {
+                tblUser tb = new tblUser();
+                tb.RoleId = uvm.RoleId;
+                tb.UserName = uvm.UserName;
+                tb.Password = uvm.Password;
+
+                tb.FullName = uvm.FullName;
+                tb.Email = uvm.Email;
+                tb.CitizenshipNumber = uvm.CitizenshipNumber;
+
+                _db.tblUsers.Add(tb);
+                _db.SaveChanges();
+                int latestUserId = tb.UserId;
+                tblUserRole userRole = new tblUserRole();
+                userRole.UserId = latestUserId;
+                userRole.RoleId = tb.RoleId;
+                _db.tblUserRoles.Add(userRole);
+                _db.SaveChanges();
+            }
+
            
-            _db.tblUsers.Add(tb);
-            _db.SaveChanges();
-            int latestUserId = tb.UserId;
-            tblUserRole userRole = new tblUserRole();
-            userRole.UserId = latestUserId;
-            userRole.RoleId = tb.RoleId;
-            _db.tblUserRoles.Add(userRole);
-            _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -93,6 +109,7 @@ namespace Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Details(int id)
         {
@@ -184,9 +201,46 @@ namespace Project.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View();
+            return RedirectToAction("Index", "Home");
 
+
+        }
+        [HttpGet]
+        public ActionResult CreateUser()
+        {
            
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateUser(UserViewModel uvm)
+        {
+            var users = _db.tblUsers.Where(b => b.UserName == uvm.UserName || b.Email == uvm.Email).FirstOrDefault();
+            if (users == null)
+            {
+                tblUser tb = new tblUser();
+                tb.RoleId = 2;
+                tb.UserName = uvm.UserName;
+                tb.Password = uvm.Password;
+
+                tb.FullName = uvm.FullName;
+                tb.Email = uvm.Email;
+                tb.CitizenshipNumber = uvm.CitizenshipNumber;
+
+                _db.tblUsers.Add(tb);
+                _db.SaveChanges();
+                int latestUserId = tb.UserId;
+                tblUserRole userRole = new tblUserRole();
+                userRole.UserId = latestUserId;
+                userRole.RoleId = 2;
+                _db.tblUserRoles.Add(userRole);
+                _db.SaveChanges();
+            }
+            else
+            {
+                ViewBag.Message ="Username is already Taken";
+            }
+          
+            return RedirectToAction("Index");
         }
 
     }

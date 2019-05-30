@@ -4,61 +4,76 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/bulma-0.7.4/css/bulma.min.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <em class="fa fa-home"></em>
+                </a>
+            </li>
+            <li class="active">Manage Vechicle</li>
+            @Html.ActionLink("Create New", "Create", null, new { @class = "button is-primary", style="margin-left:56em" })
+        </ol>
+    </div><!--/.row-->
+    
+    <br />
 
-<h2>Index</h2>
+    <table class="table is-hoverable is-striped" style="width: 90%">
+        <tr>
+            <th>
+                S.N
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehiclePrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehiclePhoto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleStatus)
+            </th>
+            <th></th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemPhoto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemStatus)
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SN)
+                    @Html.HiddenFor(modelItem => item.VehicleId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehiclePrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleTitle)
+                </td>
+                <td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemPhoto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemStatus)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {  id=item.ItemId }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+                    <img src="~/images/Vehicle/@item.VehiclePhoto" height="40" width="40" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleStatus)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.VehicleId }, new { @class = "button is-info" }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }, new { @class = "button is-warning" }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "button is-danger" })
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>
+</div>
