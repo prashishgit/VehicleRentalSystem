@@ -29,11 +29,11 @@ namespace Project.Controllers
                     UserId = item.UserId,
                     UserName = item.UserName,
                     Password = item.Password,
-
+                    RoleName = item.tblRole.RoleName,
                     FullName = item.FullName,
                     Email = item.Email,
                     CitizenshipNumber = item.CitizenshipNumber
-                });
+                }) ;
             }
             
             return View(list);
@@ -88,7 +88,7 @@ namespace Project.Controllers
             bvm.UserId = users.UserId;
             bvm.UserName = users.UserName;
             bvm.Password = users.Password;
-          
+            ViewBag.RoleName = _db.tblRoles.ToList();
             bvm.FullName = users.FullName;
             bvm.Email = users.Email;
             bvm.CitizenshipNumber = users.CitizenshipNumber;
@@ -99,7 +99,7 @@ namespace Project.Controllers
         {
             var users = _db.tblUsers.Where(b => b.UserId == uvm.UserId).FirstOrDefault();
 
-            
+            users.RoleId = uvm.RoleId;
             users.UserName = uvm.UserName;
             users.Password = uvm.Password;
             

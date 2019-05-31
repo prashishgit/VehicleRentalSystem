@@ -30,7 +30,7 @@ namespace Project.Controllers
                 {
                     Session.Add("fullname", users.FullName);
                     Session["Email"] = users.Email;
-
+                    Session["UserId"] = users.UserId;
                     FormsAuthentication.SetAuthCookie(l.UserName, l.RememberMe);
                     if (Url.IsLocalUrl(ReturnUrl))
                     {

@@ -4,120 +4,84 @@
     ViewBag.Title = "Book Vehicle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-<link rel="stylesheet" href="~/Booking/css/linearicons.css">
-<link rel="stylesheet" href="~/Booking/css/font-awesome.min.css">
 
-<link href="~/Booking/css/bootstrap.css" rel="stylesheet" />
-<link rel="stylesheet" href="~/Booking/css/magnific-popup.css">
-<link rel="stylesheet" href="~/Booking/css/nice-select.css">
-<link rel="stylesheet" href="~/Booking/css/animate.min.css">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="~/Booking/css/owl.carousel.css">
-<link rel="stylesheet" href="~/Booking/css/main.css">
 
-<section class="banner-area relative" id="home">
-    <div class="overlay overlay-bg"></div>
-    <div class="container">
-        <div class="row fullscreen d-flex align-items-center justify-content-center">
-            <div class="banner-content col-lg-7 col-md-6 ">
-                <h6 class="text-white ">the Royal Essence of Journey</h6>
-                <h1 class="text-white text-uppercase">
-                    Relaxed Journey Ever
-                </h1>
-                <p class="pt-20 pb-20 text-white">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <a href="#" class="primary-btn text-uppercase">Rent Car Now</a>
-            </div>
-            <div class="col-lg-5  col-md-6 header-right">
-                <h4 class="text-white pb-30">Book Your Car Today!</h4>
-                <form class="form" role="form" autocomplete="off">
-                    <div class="form-group">
-                        <div class="default-select" id="default-select" ">
-                            <select>
-                                <option value="" disabled selected hidden>Select Your Car</option>
-                                <option value="1">BMW</option>
-                                <option value="1">Farrari</option>
-                                <option value="1">Toyota</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-6 wrap-left">
-                            <div class="default-select" id="default-select" ">
-                                <select>
-                                    <option value="" disabled selected hidden>Pickup</option>
-                                    <option value="1">Pickup One</option>
-                                    <option value="1">Pickup Two</option>
-                                    <option value="1">Pickup Three</option>
-                                    <option value="1">Pickup Four</option>
-                                </select>
+<aside id="colorlib-hero" class="breadcrumbs">
+    <div class="flexslider">
+        <ul class="slides">
+            <li style="background-image: url('../../images/cover-img-1.jpg');">
+                <div class="overlay"></div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
+                            <div class="slider-text-inner text-center">
+                                <h1>Booking Details</h1>
+                                <h2 class="bread"><span><a href="index.html">Home</a></span> <span>Vehicle</span></h2>
                             </div>
                         </div>
-                        <div class="col-md-6 wrap-right">
-                            <div class="input-group dates-wrap">
-                                <input id="datepicker" class="dates form-control" id="exampleAmount" placeholder="Date & time" type="text">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span class="lnr lnr-calendar-full"></span></span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+
+<div class="container">
+    <div class="card" style="width: 90%;">
+        <div class="card-body">
+            <h3 class="card-title" style="font-weight:bold; font-size:20px">Confirm Booking</h3>
+            <hr />
+            <div class="row row-pb-lg">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="product-detail-wrap">
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="product-entry">
+                                    <div class="product-img" style="background-image: url(/images/Vehicle/@Model.VehiclePhoto);">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-6 wrap-left">
-                            <div class="default-select" id="default-select" ">
-                                <select>
-                                    <option value="" disabled selected hidden>Drop off</option>
-                                    <option value="1">Drop off One</option>
-                                    <option value="1">Drop off Two</option>
-                                    <option value="1">Drop off Three</option>
-                                    <option value="1">Drop off Four</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6 wrap-right">
-                            <div class="input-group dates-wrap">
-                                <input id="datepicker2" class="dates form-control" id="exampleAmount" placeholder="Date & time" type="text">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span class="lnr lnr-calendar-full"></span></span>
+                            @using (Html.BeginForm("Create_Post", "Booking", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                            {
+
+                                @Html.AntiForgeryToken()
+                                <div class="col-md-7">
+                                    <div class="desc">
+                                        <h3>
+                                            @Html.HiddenFor(model => model.VehicleId)
+                                            @Html.HiddenFor(model => model.PickUpDate)
+                                            @Html.HiddenFor(model => model.DropOffDate)
+                                            @Html.HiddenFor(model => model.TotalAmount)
+                                            <label>Vehicle Title:</label>
+                                            @Html.DisplayFor(model => model.VehicleTitle)
+                                        </h3>
+                                        <p class="price">
+                                            <label>Total Price:</label>
+                                            <span> Rs @Html.DisplayFor(model => model.TotalAmount)</span>
+
+                                        </p>
+                                        <label>PickUp Date:</label> @Html.DisplayFor(model => model.PickUpDate)
+                                        <br />
+                                        <label>DropOff Date: </label>@Html.DisplayFor(model => model.DropOffDate)
+                                        <br />
+                                        <label>Citizenship Photo:</label>
+                                        @Html.TextBoxFor(model => model.CitizenshipPhoto, new { @class = "form-control", @Type = "file" })
+                                    <br />
+                                    <p><input type="submit" value="BOOK NOW" class="btn btn-primary btn-addtocart"> </p>
+                                    </div>
                                 </div>
-                            </div>
+                            }|
                         </div>
                     </div>
-                    <div class="from-group">
-                        <input class="form-control txt-field" type="text" name="name" placeholder="Your name">
-                        <input class="form-control txt-field" type="email" name="email" placeholder="Email address">
-                        <input class="form-control txt-field" type="tel" name="phone" placeholder="Phone number">
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <button type="reset" class="btn btn-default btn-lg btn-block text-center text-uppercase">Confirm Car Booking</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
+
+
+
             </div>
         </div>
     </div>
-</section>
 
+</div>
 
-<script src="~/Booking/js/vendor/bootstrap.min.js"></script>
-<script src="~/Booking/js/vendor/jquery-2.2.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="~/Booking/js/vendor/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="~/Booking/js/easing.min.js"></script>
-<script src="~/Booking/js/hoverIntent.js"></script>
-<script src="~/Booking/js/superfish.min.js"></script>
-<script src="~/Booking/js/jquery.ajaxchimp.min.js"></script>
-<script src="~/Booking/js/jquery.magnific-popup.min.js"></script>
-<script src="~/Booking/js/owl.carousel.min.js"></script>
-<script src="~/Booking/js/jquery.sticky.js"></script>
-<script src="~/Booking/js/jquery.nice-select.min.js"></script>
-<script src="~/Booking/js/waypoints.min.js"></script>
-<script src="~/Booking/js/jquery.counterup.min.js"></script>
-<script src="~/Booking/js/parallax.min.js"></script>
-<script src="~/Booking/js/mail-script.js"></script>
-<script src="~/Booking/js/main.js"></script>	

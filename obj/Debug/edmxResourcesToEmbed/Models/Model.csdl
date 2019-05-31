@@ -29,8 +29,8 @@
     <Property Name="VehicleId" Type="Int32" />
     <Property Name="UserId" Type="Int32" />
     <Property Name="CitizenshipPhoto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="BookingDate" Type="DateTime" Precision="0" />
-    <Property Name="DueDate" Type="DateTime" Precision="0" />
+    <Property Name="PickUpDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DropOffDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="TotalAmount" Type="Int32" />
     <Property Name="AmountPaid" Type="Int32" />
     <Property Name="BookingStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />

@@ -76,7 +76,7 @@
                             </p>
                             <div class="cart">
                                 <p>
-                                    <span class="addtocart"><a href="@Url.Action("Create","Booking", new { id = item.VehicleId })"><i class="icon-shopping-cart"></i></a></span>
+                                    @*<span class="addtocart"><a data-toggle="modal" class="btn btn-primary btn-addtocart" data-target="#myModal" data-id="@item.VehicleId"><i class="icon-shopping-cart"></i></a></span>*@
                                     <span><a href="@Url.Action("DetailsClient","Item", new { id = item.VehicleId })"><i class="icon-eye"></i></a></span>
                                     <span><a href="#"><i class="icon-heart3"></i></a></span>
                                     <span><a href="add-to-wishlist.html"><i class="icon-bar-chart"></i></a></span>
@@ -91,6 +91,7 @@
 
                 </div>
             }
+
 
 
         </div>

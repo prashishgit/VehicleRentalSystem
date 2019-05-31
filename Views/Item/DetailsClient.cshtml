@@ -4,6 +4,8 @@
     ViewBag.Title = "DetailsClient";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <aside id="colorlib-hero" class="breadcrumbs">
     <div class="flexslider">
         <ul class="slides">
@@ -28,88 +30,88 @@
         <div class="row row-pb-lg">
             <div class="col-md-10 col-md-offset-1">
                 <div class="product-detail-wrap">
-                    
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="product-entry">
-                                    <div class="product-img" style="background-image: url(/images/Vehicle/@Model.VehiclePhoto);">
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="product-entry">
+                                <div class="product-img" style="background-image: url(/images/Vehicle/@Model.VehiclePhoto);">
 
 
 
-                                        <p class="tag">
-                                            @if (Model.VehicleStatus == "Book Now")
-                                            {
-                                                <span class="sale">@Html.DisplayFor(model => model.VehicleStatus)</span>
+                                    <p class="tag">
+                                        @if (Model.VehicleStatus == "Book Now")
+                                        {
+                                            <span class="sale">@Html.DisplayFor(model => model.VehicleStatus)</span>
 
-                                            }
-                                            else
-                                            {
-                                                <span class="new">@Html.DisplayFor(model => model.VehicleStatus)</span>
-                                            }
-                                        </p>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="desc">
-                                    <h3>@Html.DisplayFor(model => model.VehicleTitle)</h3>
-                                    <p class="price">
-                                        <span> Rs @Html.DisplayFor(model => model.VehiclePrice)/PerDay</span>
-                                        <span class="rate text-right">
-                                            <i class="icon-star-full"></i>
-                                            <i class="icon-star-full"></i>
-                                            <i class="icon-star-full"></i>
-                                            <i class="icon-star-full"></i>
-                                            <i class="icon-star-half"></i>
-                                            (74 Rating)
-                                        </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="new">@Html.DisplayFor(model => model.VehicleStatus)</span>
+                                        }
                                     </p>
-                                    <p>@Html.DisplayFor(model => model.Description)</p>
-                                    @*<div class="color-wrap">
-            <p class="color-desc">
-                Color:
-                <a href="#" class="color color-1"></a>
-                <a href="#" class="color color-2"></a>
-                <a href="#" class="color color-3"></a>
-                <a href="#" class="color color-4"></a>
-                <a href="#" class="color color-5"></a>
-            </p>
-        </div>*@
-                                    @*<div class="size-wrap">
-            <p class="size-desc">
-                Size:
-                <a href="#" class="size size-1">xs</a>
-                <a href="#" class="size size-2">s</a>
-                <a href="#" class="size size-3">m</a>
-                <a href="#" class="size size-4">l</a>
-                <a href="#" class="size size-5">xl</a>
-                <a href="#" class="size size-5">xxl</a>
-            </p>
-        </div>*@
-                                    <div class="row row-pb-sm">
-                                        <div class="col-md-4">
-                                            <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
-                                                        <i class="icon-minus2"></i>
-                                                    </button>
-                                                </span>
-                                                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-                                                        <i class="icon-plus2"></i>
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   
-                                        <p><a href="@Url.Action("Create","Booking", new { id = Model.VehicleId })" class="btn btn-primary btn-addtocart"><i class="icon-shopping-cart"></i> Book Now</a></p>
                                 </div>
+
                             </div>
                         </div>
-                    
+                        <div class="col-md-7">
+                            <div class="desc">
+                                <h3>@Html.DisplayFor(model => model.VehicleTitle)</h3>
+                                <p class="price">
+                                    <span> Rs @Html.DisplayFor(model => model.VehiclePrice)/PerDay</span>
+                                    <span class="rate text-right">
+                                        <i class="icon-star-full"></i>
+                                        <i class="icon-star-full"></i>
+                                        <i class="icon-star-full"></i>
+                                        <i class="icon-star-full"></i>
+                                        <i class="icon-star-half"></i>
+                                        (74 Rating)
+                                    </span>
+                                </p>
+                                <p>@Html.DisplayFor(model => model.Description)</p>
+                                @*<div class="color-wrap">
+                                        <p class="color-desc">
+                                            Color:
+                                            <a href="#" class="color color-1"></a>
+                                            <a href="#" class="color color-2"></a>
+                                            <a href="#" class="color color-3"></a>
+                                            <a href="#" class="color color-4"></a>
+                                            <a href="#" class="color color-5"></a>
+                                        </p>
+                                    </div>*@
+                                @*<div class="size-wrap">
+                                        <p class="size-desc">
+                                            Size:
+                                            <a href="#" class="size size-1">xs</a>
+                                            <a href="#" class="size size-2">s</a>
+                                            <a href="#" class="size size-3">m</a>
+                                            <a href="#" class="size size-4">l</a>
+                                            <a href="#" class="size size-5">xl</a>
+                                            <a href="#" class="size size-5">xxl</a>
+                                        </p>
+                                    </div>*@
+                                <div class="row row-pb-sm">
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
+                                                    <i class="icon-minus2"></i>
+                                                </button>
+                                            </span>
+                                            <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+                                                    <i class="icon-plus2"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p><a data-toggle="modal" class="btn btn-primary btn-addtocart" data-target="#myModal"><i class="icon-calendar"></i> Book Now</a></p>
+                            </div>
+                        </div>
+                    </div>
+
 
 
 
@@ -128,13 +130,13 @@
                         <div class="tab-content">
                             <div id="description" class="tab-pane fade in active">
                                 <p>@Html.DisplayFor(model => model.Description)</p>
-                                
+
                             </div>
                             @*<div id="manufacturer" class="tab-pane fade">
-                                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-                                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
+                                    <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+                                    <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
 
-                            </div>*@
+                                </div>*@
                             <div id="review" class="tab-pane fade">
                                 <div class="row">
                                     <div class="col-md-7">
@@ -269,3 +271,61 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="myModal" role="dialog" style="margin-top:8%">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h2 style="margin-left:35%"><span class="glyphicon glyphicon-lock center"></span> BOOKING</h2>
+            </div>
+            <div class="modal-body">
+
+
+                @using (Html.BeginForm("DetailsClient", "Item", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+
+
+
+                    @Html.HiddenFor(model => model.VehicleId);
+                    @Html.HiddenFor(model => model.VehiclePhoto);
+                    @Html.HiddenFor(model => model.VehiclePrice);
+                    @Html.HiddenFor(model => model.VehicleTitle);
+                    <div class="form-group">
+                        <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> Check In</label>
+                        @*<input type="date" name="cin" class="form-control dates" id="fromDate"
+                placeholder="Check In Date">*@
+                        @Html.TextBoxFor(model => model.PickUpDate, new { type = "date", @class = "form-control dates", placeholder = "Check In Date" })
+                    </div>
+                    <div class="form-group">
+                        <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> Check Out</label>
+                        @*<input type="date" name="cout" class="form-control dates" id="toDate"
+                placeholder="Check Out Date">*@
+                        @Html.TextBoxFor(model => model.DropOffDate, new { type = "date", @class = "form-control dates", placeholder = "Check Out Date" })
+                    </div>
+
+                    <input type="submit" value="BOOK" class="btn btn-primary btn-block glyphicon glyphicon-ok" />
+                    @*<a href="@Url.Action("DetailsClient", "Item")" class="btn btn-primary btn-block">
+                BOOK
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>*@
+
+
+
+                }
+                <div class="modal-footer">
+                    <button type="submit" class="btn-danger btn-default pull-left" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span> Cancel
+                    </button>
+                    <p>Need <a href="#">help?</a></p>
+                </div>
+            </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+

@@ -528,6 +528,7 @@
     <Content Include="img\single-product\thumb-2.jpg" />
     <Content Include="img\single-product\thumb-3.jpg" />
     <Content Include="img\single-product\thumb-4.jpg" />
+    <Content Include="js\booking.js" />
     <Content Include="js\bootstrap-datepicker.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\google_map.js" />
@@ -957,13 +958,6 @@
     <Content Include="registration\fonts\muli\Muli-Bold.ttf" />
     <Content Include="registration\fonts\muli\Muli-Regular.ttf" />
     <Content Include="registration\fonts\muli\Muli-SemiBold.ttf" />
-    <EntityDeploy Include="Models\Model.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
-    </Content>
     <Content Include="Booking\css\.DS_Store" />
     <Content Include="Booking\css\bootstrap.map" />
     <Content Include="Booking\css\main.map" />
@@ -1077,6 +1071,13 @@
     <Content Include="Booking\scss\theme\_pages.scss" />
     <Content Include="Booking\scss\theme\_reset.scss" />
     <Content Include="Booking\scss\theme\_variables.scss" />
+    <EntityDeploy Include="Models\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1138,10 +1139,12 @@
     <Content Include="Views\Category\AddOrEdit.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Item\DetailsClient.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\Banner\" />
+    <Folder Include="images\CitizenshipPhoto\" />
     <Folder Include="img\Banner\" />
   </ItemGroup>
   <ItemGroup>

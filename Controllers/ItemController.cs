@@ -117,15 +117,34 @@ namespace Project.Controllers
         public ActionResult DetailsClient(int id)
         {
             var banners = _db.tblItems.Where(b => b.VehicleId == id).FirstOrDefault();
+           
             ItemViewModel bvm = new ItemViewModel();
+            bvm.VehicleId = id;
             bvm.VehicleTitle = banners.VehicleTitle;
             bvm.Description = banners.Description;
             bvm.VehicleStatus = banners.VehicleStatus;
             bvm.VehiclePrice = banners.VehiclePrice;
             bvm.VehiclePhoto = banners.VehiclePhoto;
-
-
+           
+            
             return View(bvm);
+           
+        }
+        [HttpPost]
+        public ActionResult DetailsClient(BookingViewModel bvmm)
+        {
+         
+
+            BookingViewModel bvm = new BookingViewModel();
+            bvm.VehicleId = bvmm.VehicleId;
+            bvm.PickUpDate = bvmm.PickUpDate;
+            bvm.DropOffDate = bvmm.DropOffDate;
+            bvm.VehiclePhoto = bvmm.VehiclePhoto;
+            bvm.VehicleTitle = bvmm.VehicleTitle;
+            bvm.VehiclePrice = bvmm.VehiclePrice;
+
+
+            return RedirectToAction("Create", "Booking", bvm);
         }
         [HttpGet]
         public ActionResult Delete(int id)

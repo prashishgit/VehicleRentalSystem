@@ -34,8 +34,8 @@
           <Property Name="VehicleId" Type="int" />
           <Property Name="UserId" Type="int" />
           <Property Name="CitizenshipPhoto" Type="nvarchar" MaxLength="50" />
-          <Property Name="BookingDate" Type="date" />
-          <Property Name="DueDate" Type="date" />
+          <Property Name="PickUpDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="DropOffDate" Type="nvarchar" MaxLength="50" />
           <Property Name="TotalAmount" Type="int" />
           <Property Name="AmountPaid" Type="int" />
           <Property Name="BookingStatus" Type="nvarchar" MaxLength="50" />
@@ -232,8 +232,8 @@
           <Property Name="VehicleId" Type="Int32" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="CitizenshipPhoto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BookingDate" Type="DateTime" Precision="0" />
-          <Property Name="DueDate" Type="DateTime" Precision="0" />
+          <Property Name="PickUpDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DropOffDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TotalAmount" Type="Int32" />
           <Property Name="AmountPaid" Type="Int32" />
           <Property Name="BookingStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -444,8 +444,8 @@
                 <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CitizenshipPhoto" ColumnName="CitizenshipPhoto" />
-                <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
-                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="PickUpDate" ColumnName="PickUpDate" />
+                <ScalarProperty Name="DropOffDate" ColumnName="DropOffDate" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
                 <ScalarProperty Name="BookingStatus" ColumnName="BookingStatus" />

@@ -14,37 +14,50 @@ namespace Project.Controllers
         VehicleRentalDBEntities _db = new VehicleRentalDBEntities();
         public ActionResult Index()
         {
+
             return View();
         }
-        [Authorize(Roles = "User")]
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult Create(BookingViewModel bvmm)
         {
-            
-            return View();
+            BookingViewModel bvm = new BookingViewModel();
+
+            bvm.PickUpDate = bvmm.PickUpDate;
+            bvm.DropOffDate = bvmm.DropOffDate;
+            bvm.VehicleId = bvmm.VehicleId;
+            bvm.VehiclePhoto = bvmm.VehiclePhoto;
+            bvm.VehicleTitle = bvmm.VehicleTitle;
+            int total = Convert.ToInt32(bvmm.VehiclePrice);
+            bvm.TotalAmount = total * 3;
+
+
+            return View(bvm);
         }
-        [Authorize(Roles = "User")]
+
         [HttpPost]
-       public ActionResult Create(BookingViewModel bvm)
+        public ActionResult Create_Post(BookingViewModel bvm)
         {
             tblBooking tb = new tblBooking();
 
             tb.VehicleId = bvm.VehicleId;
-            tb.UserId = bvm.UserId;
-          
-            tb.BookingDate = bvm.BookingDate;
-            tb.DueDate = bvm.DueDate;
-            tb.AmountPaid = bvm.AmountPaid;
+            tb.UserId = Convert.ToInt32(@Session["UserId"]);
+
+            tb.PickUpDate = bvm.PickUpDate;
+            tb.DropOffDate = bvm.DropOffDate;
             tb.TotalAmount = bvm.TotalAmount;
+           
+            tb.BookingStatus = "Pending";
             HttpPostedFileBase fup = Request.Files["CitizenshipPhoto"];
             if (fup != null)
             {
                 tb.CitizenshipPhoto = fup.FileName;
-                fup.SaveAs(Server.MapPath("~/images/Citizenship/" + fup.FileName));
+                fup.SaveAs(Server.MapPath("~/images/CitizenshipPhoto/" + fup.FileName));
             }
             _db.tblBookings.Add(tb);
             _db.SaveChanges();
             return RedirectToAction("Shop");
-           
+
+
         }
     }
 }
