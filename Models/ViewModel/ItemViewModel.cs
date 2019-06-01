@@ -17,7 +17,7 @@ namespace Project.Models.ViewModel
         public string VehicleStatus { get; set; }
         public DateTime PickUpDate { get; set; }
         public DateTime DropOffDate { get; set; }
-
+       
         public virtual tblCategory tblCategory { get; set; }
     }
 }

@@ -237,7 +237,7 @@ namespace Project.Controllers
             }
             else
             {
-                ViewBag.Message ="Username is already Taken";
+                ViewBag.Taken ="Username is already Taken";
             }
           
             return RedirectToAction("Index");

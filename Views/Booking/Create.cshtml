@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+    
 <aside id="colorlib-hero" class="breadcrumbs">
     <div class="flexslider">
         <ul class="slides">
@@ -30,7 +30,7 @@
 <div class="container">
     <div class="card" style="width: 90%;">
         <div class="card-body">
-            <h3 class="card-title" style="font-weight:bold; font-size:20px">Confirm Booking</h3>
+            <h1 class="card-title" style="font-weight:bold; font-size:20px; text-align: center">CONFIRM BOOKING</h1>
             <hr />
             <div class="row row-pb-lg">
                 <div class="col-md-10 col-md-offset-1">
@@ -58,21 +58,46 @@
                                             @Html.DisplayFor(model => model.VehicleTitle)
                                         </h3>
                                         <p class="price">
+                                            <label>Vehicle Price:</label>
+                                            <span> Rs @Html.DisplayFor(model => model.VehiclePrice) / Day</span>
+
+                                        </p>
+                                        <p class="price">
+                                            <label>Number of Days:</label>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Days) Days
+                                            </span>
+                                        </p>
+                                        <p class="price">
                                             <label>Total Price:</label>
                                             <span> Rs @Html.DisplayFor(model => model.TotalAmount)</span>
 
                                         </p>
-                                        <label>PickUp Date:</label> @Html.DisplayFor(model => model.PickUpDate)
-                                        <br />
-                                        <label>DropOff Date: </label>@Html.DisplayFor(model => model.DropOffDate)
-                                        <br />
-                                        <label>Citizenship Photo:</label>
-                                        @Html.TextBoxFor(model => model.CitizenshipPhoto, new { @class = "form-control", @Type = "file" })
-                                    <br />
-                                    <p><input type="submit" value="BOOK NOW" class="btn btn-primary btn-addtocart"> </p>
+                                        <p class="price">
+                                            <label>PickUp Date:</label>
+                                            <span>
+                                                @Html.DisplayFor(model => model.PickUpDate)
+                                            </span>
+
+                                        </p>
+                                        <p class="price">
+                                            <label>DropOff Date: </label>
+                                            <span>
+                                                @Html.DisplayFor(model => model.DropOffDate)
+                                            </span>
+
+                                        </p>
+
+                                        <p class="price">
+                                            <label>Citizenship Photo:</label>
+                                            <span>
+                                                @Html.TextBoxFor(model => model.CitizenshipPhoto, new { @class = "form-control", @Type = "file" })
+                                            </span>
+                                        </p>
+                                        <p><input type="submit" value="BOOK NOW" class="btn btn-primary btn-addtocart"> </p>
                                     </div>
-                                </div>
-                            }|
+                </div>
+            }
                         </div>
                     </div>
                 </div>

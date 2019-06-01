@@ -296,16 +296,18 @@
                     @Html.HiddenFor(model => model.VehiclePrice);
                     @Html.HiddenFor(model => model.VehicleTitle);
                     <div class="form-group">
-                        <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> Check In</label>
+                        <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> PickUp Date:</label>
                         @*<input type="date" name="cin" class="form-control dates" id="fromDate"
                 placeholder="Check In Date">*@
-                        @Html.TextBoxFor(model => model.PickUpDate, new { type = "date", @class = "form-control dates", placeholder = "Check In Date" })
+                        @Html.TextBoxFor(model => model.PickUpDate, new { type = "date", @class = "form-control dates", @id = "cin", placeholder = "Check In Date" })
+
+
                     </div>
                     <div class="form-group">
-                        <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> Check Out</label>
+                        <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> DropOff Date:</label>
                         @*<input type="date" name="cout" class="form-control dates" id="toDate"
                 placeholder="Check Out Date">*@
-                        @Html.TextBoxFor(model => model.DropOffDate, new { type = "date", @class = "form-control dates", placeholder = "Check Out Date" })
+                        @Html.TextBoxFor(model => model.DropOffDate, new { type = "date", @class = "form-control dates", @id = "cout", placeholder = "Check Out Date" })
                     </div>
 
                     <input type="submit" value="BOOK" class="btn btn-primary btn-block glyphicon glyphicon-ok" />
@@ -313,19 +315,50 @@
                 BOOK
                 <span class="glyphicon glyphicon-ok"></span>
             </a>*@
-
+                   
 
 
                 }
                 <div class="modal-footer">
-                    <button type="submit" class="btn-danger btn-default pull-left" data-dismiss="modal">
+                    <button type="submit" class="btn btn-default btn-default pull-left" data-dismiss="modal">
                         <span class="glyphicon glyphicon-remove"></span> Cancel
                     </button>
                     <p>Need <a href="#">help?</a></p>
                 </div>
             </div>
+        </div>
     </div>
-</div>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+          
+        })
+        $('.dates').change(function () {
+            var cin = $('#cin').val();
+            var checkin = new Date(cin);
+            var cout = $('#cout').val();
+            var checkout = new Date(cout);
+            var date = new Date();
+          
+            date.setDate(date.getDate() - 1);
+
+            if (checkin < date) {
+                $('#cin').val('');
+            }
+
+            if (cin != null && cout != null) {
+                if (checkin > checkout) {
+                    $('#cin').val('');
+                    $('#cout').val('');
+                }
+            }
+         
+           // var millisecondsPerDay = 1000 * 60 * 60 * 24;
+           // var millisBetween = checkout.getTime() - checkin.getTime(); 
+           // var days = millisBetween / millisecondsPerDay;
+           //$('#days').val(days);
+           
+        })
+    </script>
 
