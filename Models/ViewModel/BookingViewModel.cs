@@ -22,7 +22,8 @@ namespace Project.Models.ViewModel
         public string VehiclePhoto { get; set; }
         public string UserName { get; set; }
         public int Days { get; set; }
-
+        public int AmountLeft { get; set; }
+      
 
         public virtual tblItem tblItem { get; set; }
         public virtual tblUser tblUser { get; set; }

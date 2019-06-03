@@ -98,7 +98,7 @@ namespace Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "Admin")]
+        
         [HttpGet]
         public ActionResult Details(int id)
         {
@@ -113,6 +113,7 @@ namespace Project.Controllers
 
             return View(bvm);
         }
+       
         [HttpGet]
         public ActionResult DetailsClient(int id)
         {
@@ -130,6 +131,7 @@ namespace Project.Controllers
             return View(bvm);
            
         }
+       
         [HttpPost]
         public ActionResult DetailsClient(BookingViewModel bvmm)
         {
@@ -142,6 +144,7 @@ namespace Project.Controllers
             bvm.VehiclePhoto = bvmm.VehiclePhoto;
             bvm.VehicleTitle = bvmm.VehicleTitle;
             bvm.VehiclePrice = bvmm.VehiclePrice;
+           
 
 
             return RedirectToAction("Create", "Booking", bvm);

@@ -1,0 +1,134 @@
+﻿@model IEnumerable<Project.Models.ViewModel.BookingViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+@using (Html.BeginForm("Index", "Booking", FormMethod.Get, new { @enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">
+                        <em class="fa fa-home"></em>
+                    </a>
+                </li>
+                <li class="active">Manage Banner</li>
+
+            </ol>
+
+        </div><!--/.row-->
+        <table class="table is-hoverable is-striped" style="width: 100%">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VehiclePhoto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VehicleTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CitizenshipPhoto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PickUpDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DropOffDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AmountPaid)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookingStatus)
+                </th>
+                <th>
+                    Action
+                </th>
+
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SN)
+                        @Html.HiddenFor(modelItem => item.BookingId)
+
+                    </td>
+                    <td>
+
+                        <img src="~/images/Vehicle/@item.VehiclePhoto" height="40" width="40" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VehicleTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        <img src="~/images/CitizenshipPhoto/@item.CitizenshipPhoto" height="50" width="50" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PickUpDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DropOffDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalAmount)
+                    </td>
+                    <td>
+
+
+                        @Html.DisplayFor(modelItem => item.AmountPaid)
+
+
+                    </td>
+                    <td>
+                        @if (@item.BookingStatus == "Pending")
+                        {
+                            @Html.ActionLink(@item.BookingStatus, "Edit", new { id = item.BookingId }, new { @class = "btn btn-primary" })
+                        }
+                        else
+                        {
+                            @item.BookingStatus
+                        }
+
+
+
+                    </td>
+                    <td>
+                        @if (@item.AmountPaid == 0)
+                        {
+
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { @class = "btn btn-primary", id = item.BookingId })
+                        }
+
+
+
+
+                    </td>
+                </tr>
+
+            }
+        </table>
+
+    </div>
+}

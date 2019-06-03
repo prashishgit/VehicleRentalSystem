@@ -14,36 +14,89 @@ namespace Project.Controllers
     {
         // GET: Booking
         VehicleRentalDBEntities _db = new VehicleRentalDBEntities();
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult IndexBooking()
         {
+
             int i = 0;
             List<BookingViewModel> list = new List<BookingViewModel>();
             var items = _db.tblBookings.ToList();
-           
+
             foreach (var item in items)
             {
-
-
+                var users = _db.tblUsers.Where(u => u.UserId == item.UserId).FirstOrDefault();
+                var vehicle = _db.tblItems.Where(u => u.VehicleId == item.VehicleId).FirstOrDefault();
                 list.Add(new BookingViewModel()
                 {
-
+                    BookingId = item.BookingId,
                     SN = i + 1,
-                    VehicleId = item.VehicleId,
-                   
+                    UserName = users.UserName,
+                    VehicleTitle = vehicle.VehicleTitle,
+                    VehiclePhoto = vehicle.VehiclePhoto,
                     PickUpDate = item.PickUpDate,
                     DropOffDate = item.DropOffDate,
                     TotalAmount = item.TotalAmount,
                     AmountPaid = item.AmountPaid,
                     CitizenshipPhoto = item.CitizenshipPhoto,
                     BookingStatus = item.BookingStatus
-                }) ;
+                });
                 i++;
             }
             return View(list);
         }
+        //public ActionResult ManageBooking()
+        //{
+        //    return View();
+        //}
+        //[HttpGet]
+        //public JsonResult GetData()
+        //{
+        //    using (VehicleRentalDBEntities db = new VehicleRentalDBEntities())
+        //    {
+        //        db.Configuration.LazyLoadingEnabled = false;
+        //        List<BookingViewModel> lstitem = new List<BookingViewModel>();
+        //        var lst = db.tblBookings.ToList();
+        //        foreach (var item in lst)
+        //        {
+        //            var users = _db.tblUsers.Where(u => u.UserId == item.UserId).FirstOrDefault();
+        //            var vehicle = _db.tblItems.Where(u => u.VehicleId == item.VehicleId).FirstOrDefault();
+        //            lstitem.Add(new BookingViewModel() { BookingId = item.BookingId, VehiclePhoto=vehicle.VehiclePhoto, UserName = users.UserName, VehicleTitle = vehicle.VehicleTitle, PickUpDate = item.PickUpDate, DropOffDate = item.DropOffDate, TotalAmount = item.TotalAmount, CitizenshipPhoto = item.CitizenshipPhoto, AmountPaid = item.AmountPaid, BookingStatus = item.BookingStatus });
+        //        }
+        //        return Json(new { data = lstitem }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+        //[HttpGet]
+        //public ActionResult Edit(int id)
+        //{
+
+        //        using (VehicleRentalDBEntities db = new VehicleRentalDBEntities())
+        //        {
+        //            ViewBag.Action = "Edit Item";
+
+        //            tblBooking item = db.tblBookings.Where(i => i.BookingId == id).FirstOrDefault();
+        //            BookingViewModel itemvm = new BookingViewModel();
+
+
+        //        itemvm.AmountPaid = item.AmountPaid;
+        //        itemvm.TotalAmount = item.TotalAmount;
+        //        itemvm.AmountLeft = Convert.ToInt32(item.TotalAmount - item.AmountPaid);
+
+
+
+
+
+        //            return View(itemvm);
+        //        }
+        //    }
+
+
         [HttpGet]
         public ActionResult Create(BookingViewModel bvmm)
         {
+
+           
+           
+         
             BookingViewModel bvm = new BookingViewModel();
 
             bvm.PickUpDate = bvmm.PickUpDate;
@@ -58,7 +111,7 @@ namespace Project.Controllers
             var days = (dropofday - pickupday).Days;
             bvm.TotalAmount = total * days;
             bvm.Days = days;
-
+           
 
             return View(bvm);
         }
@@ -74,10 +127,7 @@ namespace Project.Controllers
             tb.PickUpDate = bvm.PickUpDate;
             tb.DropOffDate = bvm.DropOffDate;
             tb.TotalAmount = bvm.TotalAmount;
-
-
-
-
+            tb.AmountPaid = 0;
             tb.BookingStatus = "Pending";
             HttpPostedFileBase fup = Request.Files["CitizenshipPhoto"];
             if (fup != null)
@@ -90,7 +140,7 @@ namespace Project.Controllers
             _db.SaveChanges();
             var email = @Session["Email"].ToString();
 
-            
+
             if (tb != null)
             {
                 if (ModelState.IsValid)
@@ -136,12 +186,42 @@ namespace Project.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-           
+
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var booking = _db.tblBookings.Where(b => b.BookingId == id).FirstOrDefault();
+            BookingViewModel bvm = new BookingViewModel();
+            bvm.BookingId = booking.BookingId;
+            bvm.TotalAmount = booking.TotalAmount;
+            bvm.AmountPaid = booking.AmountPaid;
+            bvm.BookingStatus = booking.BookingStatus;
+            bvm.AmountLeft = Convert.ToInt32(bvm.TotalAmount - booking.AmountPaid);
+
+            return View(bvm);
+        }
+        [HttpPost]
+        public ActionResult Edit(BookingViewModel bvmm)
+        {
+
+            var booking = _db.tblBookings.Where(b => b.BookingId == bvmm.BookingId).FirstOrDefault();
+            
+            booking.TotalAmount = bvmm.TotalAmount;
+            booking.AmountPaid = bvmm.AmountPaid;
+            if (booking.TotalAmount != booking.AmountPaid)
+            {
+                booking.BookingStatus = "Confirm";
+            }else
+            {
+                booking.BookingStatus = "Checked Out";
+            }
+          
+            _db.SaveChanges();
+            return RedirectToAction("IndexBooking","Booking");
         }
 
 
     }
-        
-       
 }

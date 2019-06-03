@@ -33,7 +33,7 @@
     <link href="~/Admin/css/theme.css" rel="stylesheet" />
     <!-- Main CSS-->
     <link href="~/Admin/css/theme.css" rel="stylesheet" media="all">
-
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
 
     <link href="~/bulma-0.7.4/css/bulma.css" rel="stylesheet" />
 </head>
@@ -177,10 +177,15 @@
                         <li><a href="@Url.Action("Index","MailSender")"><i class="fas fa-mail-bulk"></i>Mail</a></li>
                         @*<li>@Html.ActionLink("Vehicle", "Index", "Item", null, new { @class = "fas fa-user" })</li>*@
                         <li><a href="@Url.Action("Index","Item")"><i class="fas fa-car"></i>Vehicle</a></li>
-                        <li><a href="@Url.Action("Index","Booking")">
-                                <i class="fas fa-table"></i>Bookings
-                            </a>
+                        @*<li>
+                                <a href="@Url.Action("Index","Booking"))"><i class="fas fa-table"></i>Booking</a>
+
+                            </li>*@
+                        <li>
+                            <a href="@Url.Action("IndexBooking", "Booking")">Booking</a>
                         </li>
+
+
                         <li>
                             <a href="form.html">
                                 <i class="far fa-check-square"></i>Forms
@@ -408,7 +413,7 @@
                                                     <h5 class="name">
                                                         <a href="#">@User.Identity.Name</a>
                                                     </h5>
-                                                    <span class="email">@Session["Email"].ToString()</span>
+                                                    @*<span class="email">@Session["Email"].ToString()</span>*@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -457,7 +462,9 @@
 
     <!-- Jquery JS-->
     <script src="~/Admin/vendor/jquery-3.2.1.min.js"></script>
-    <script src="~/js/jquery-ui.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/notify.min.js"></script>
     <script src="~/js/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/notify.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
@@ -486,8 +493,6 @@
 
     <!-- Main JS-->
     <script src="~/Admin/js/main.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
-
 
 
     <script>
@@ -499,10 +504,10 @@
                 scaleGridLineColor: "rgba(0,0,0,.05)",
                 scaleFontColor: "#c5c7cc"
             });
-        };
-    </script>
-
+        };</script>
+    
     @RenderSection("scripts", required: false)
+
 
 </body>
 

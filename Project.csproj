@@ -36,6 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1090,7 +1091,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\notify.min.js" />
-    <Content Include="Scripts\user.js" />
+    <Content Include="Scripts\booking.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1137,10 +1138,13 @@
     <Content Include="Views\Home\_CategoryList.cshtml" />
     <Content Include="Views\User\CreateUser.cshtml" />
     <Content Include="Views\Category\AddOrEdit.cshtml" />
-    <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Item\DetailsClient.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\Booking\Index.cshtml" />
+    <Content Include="Views\Booking\IndexBooking.cshtml" />
+    <Content Include="Views\Booking\Create.cshtml" />
+    <Content Include="Views\Booking\Edit.cshtml" />
+    <Content Include="Views\Booking\ManageBooking.cshtml" />
+    <Content Include="Views\Booking\Edit_Ajax.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
