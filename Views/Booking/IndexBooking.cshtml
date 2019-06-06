@@ -116,6 +116,10 @@
                         {
 
                         }
+                        else if (item.BookingStatus == "Checked Out")
+                        {
+                            @Html.ActionLink("Print", "Details", new { @class = "btn btn-info", id = item.BookingId })
+                        }
                         else
                         {
                             @Html.ActionLink("Edit", "Edit", new { @class = "btn btn-primary", id = item.BookingId })

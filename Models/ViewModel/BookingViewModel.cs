@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -23,7 +24,9 @@ namespace Project.Models.ViewModel
         public string UserName { get; set; }
         public int Days { get; set; }
         public int AmountLeft { get; set; }
-      
+        [Required]
+        public int Payment { get; set; }
+
 
         public virtual tblItem tblItem { get; set; }
         public virtual tblUser tblUser { get; set; }

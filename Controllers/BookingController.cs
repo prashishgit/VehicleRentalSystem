@@ -115,7 +115,7 @@ namespace Project.Controllers
 
             return View(bvm);
         }
-
+        [Authorize]
         [HttpPost]
         public ActionResult Create_Post(BookingViewModel bvm, MailModel objModelMail)
         {
@@ -132,94 +132,174 @@ namespace Project.Controllers
             HttpPostedFileBase fup = Request.Files["CitizenshipPhoto"];
             if (fup != null)
             {
-                tb.CitizenshipPhoto = fup.FileName;
-                fup.SaveAs(Server.MapPath("~/images/CitizenshipPhoto/" + fup.FileName));
-            }
-
-            _db.tblBookings.Add(tb);
-            _db.SaveChanges();
-            var email = @Session["Email"].ToString();
-
-
-            if (tb != null)
-            {
-                if (ModelState.IsValid)
+                if (fup.FileName != "")
                 {
-                    //https://www.google.com/settings/security/lesssecureapps
-                    //Make Access for less secure apps=true
+                    tb.CitizenshipPhoto = fup.FileName;
+                    fup.SaveAs(Server.MapPath("~/images/CitizenshipPhoto/" + fup.FileName));
+                    _db.tblBookings.Add(tb);
+                    _db.SaveChanges();
+                    var email = @Session["Email"].ToString();
 
-                    string from = "vehiclerentalsystem09@gmail.com";
-                    objModelMail.To = email;
-                    using (MailMessage mail = new MailMessage(from, objModelMail.To))
+
+                    if (tb != null)
                     {
-                        try
+                        if (ModelState.IsValid)
                         {
-                            mail.Subject = "Booking Details";
-                            mail.Body = "To Confirm you booking please visit our office for the partial payment of Total Amount:";
+                            //https://www.google.com/settings/security/lesssecureapps
+                            //Make Access for less secure apps=true
 
-                            mail.IsBodyHtml = false;
-                            SmtpClient smtp = new SmtpClient();
-                            smtp.Host = "smtp.gmail.com";
-                            smtp.EnableSsl = true;
-                            NetworkCredential networkCredential = new NetworkCredential(from, "159753159753p");
-                            smtp.UseDefaultCredentials = false;
-                            smtp.Credentials = networkCredential;
-                            smtp.Port = 587;
-                            smtp.Send(mail);
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
-                        finally
-                        {
-                            ViewBag.Message = "Sent";
+                            string from = "vehiclerentalsystem09@gmail.com";
+                            objModelMail.To = email;
+                            using (MailMessage mail = new MailMessage(from, objModelMail.To))
+                            {
+                                try
+                                {
+                                    mail.Subject = "Booking Details";
+                                    mail.Body = "To Confirm you booking please visit our office for the partial payment of Total Amount:";
+
+                                    mail.IsBodyHtml = false;
+                                    SmtpClient smtp = new SmtpClient();
+                                    smtp.Host = "smtp.gmail.com";
+                                    smtp.EnableSsl = true;
+                                    NetworkCredential networkCredential = new NetworkCredential(from, "159753159753p");
+                                    smtp.UseDefaultCredentials = false;
+                                    smtp.Credentials = networkCredential;
+                                    smtp.Port = 587;
+                                    smtp.Send(mail);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw ex;
+                                }
+                                finally
+                                {
+                                    ViewBag.Message = "Sent";
+                                }
+
+                            }
+
                         }
 
                     }
+                    else
+                    {
 
+                        return RedirectToAction("Index", "Home");
+                    }
+
+                  
+                }
+                else
+                {
+                    BookingViewModel bvmm = new BookingViewModel();
+                    bvmm.PickUpDate = bvm.PickUpDate;
+                    bvmm.DropOffDate = bvm.DropOffDate;
+                    bvmm.VehicleId = bvm.VehicleId;
+                    bvmm.VehiclePhoto = bvm.VehiclePhoto;
+                    bvmm.VehicleTitle = bvm.VehicleTitle;
+                    bvmm.VehiclePrice = bvm.VehiclePrice;
+                    int total = Convert.ToInt32(bvm.VehiclePrice);
+                    DateTime pickupday = Convert.ToDateTime(bvm.PickUpDate);
+                    DateTime dropofday = Convert.ToDateTime(bvm.DropOffDate);
+                    var days = (dropofday - pickupday).Days;
+                    bvmm.TotalAmount = total * days;
+                    bvmm.Days = days;
+                    return RedirectToAction("Create", "Booking", bvmm);
                 }
 
             }
-            else
-            {
-
-                return RedirectToAction("Index", "Home");
-            }
-
             return RedirectToAction("Index", "Home");
+
+
+
         }
         [HttpGet]
         public ActionResult Edit(int id)
         {
+           
             var booking = _db.tblBookings.Where(b => b.BookingId == id).FirstOrDefault();
-            BookingViewModel bvm = new BookingViewModel();
-            bvm.BookingId = booking.BookingId;
-            bvm.TotalAmount = booking.TotalAmount;
-            bvm.AmountPaid = booking.AmountPaid;
-            bvm.BookingStatus = booking.BookingStatus;
-            bvm.AmountLeft = Convert.ToInt32(bvm.TotalAmount - booking.AmountPaid);
+            if (booking.BookingStatus != "Checked Out")
+            {
+                BookingViewModel bvm = new BookingViewModel();
+                bvm.BookingId = booking.BookingId;
+                bvm.TotalAmount = booking.TotalAmount;
+                bvm.AmountPaid = booking.AmountPaid;
+                bvm.BookingStatus = booking.BookingStatus;
+                bvm.AmountLeft = Convert.ToInt32(bvm.TotalAmount - booking.AmountPaid);
 
-            return View(bvm);
+                return View(bvm);
+            }
+            else
+            {
+                 BookingViewModel bvm = new BookingViewModel();
+                bvm.BookingId = booking.BookingId;
+                bvm.TotalAmount = booking.TotalAmount;
+                bvm.AmountPaid = booking.AmountPaid;
+                bvm.BookingStatus = booking.BookingStatus;
+                bvm.AmountLeft = Convert.ToInt32(bvm.TotalAmount - booking.AmountPaid);
+
+                return RedirectToAction("IndexBooking", "Booking");
+            }
+           
         }
+        
         [HttpPost]
         public ActionResult Edit(BookingViewModel bvmm)
         {
-
+            
             var booking = _db.tblBookings.Where(b => b.BookingId == bvmm.BookingId).FirstOrDefault();
             
             booking.TotalAmount = bvmm.TotalAmount;
-            booking.AmountPaid = bvmm.AmountPaid;
-            if (booking.TotalAmount != booking.AmountPaid)
+            booking.AmountPaid = booking.AmountPaid + bvmm.Payment;
+            if (booking.TotalAmount >= booking.AmountPaid)
             {
-                booking.BookingStatus = "Confirm";
-            }else
-            {
-                booking.BookingStatus = "Checked Out";
+                if (booking.TotalAmount != booking.AmountPaid && booking.AmountPaid != 0)
+                {
+                    booking.BookingStatus = "Confirm";
+                }
+                else if(bvmm.AmountPaid == 0)
+                {
+                    booking.BookingStatus = "Pending";
+                }
+                else 
+                {
+                    booking.BookingStatus = "Checked Out";
+                }
+                _db.SaveChanges();
             }
+            else
+            {
+                return RedirectToAction("Edit", "Booking");
+            }
+           
           
-            _db.SaveChanges();
-            return RedirectToAction("IndexBooking","Booking");
+          
+            return RedirectToAction("Edit","Booking");
+        }
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            var booking = _db.tblBookings.Where(b => b.BookingId == id).FirstOrDefault();
+            var users = _db.tblUsers.Where(u => u.UserId == booking.UserId).FirstOrDefault();
+            var vehicle = _db.tblItems.Where(u => u.VehicleId == booking.VehicleId).FirstOrDefault();
+            BookingViewModel bvm = new BookingViewModel();
+            bvm.BookingId = booking.BookingId;
+            bvm.TotalAmount = booking.TotalAmount;
+            bvm.UserName = users.UserName;
+            bvm.VehicleTitle = vehicle.VehicleTitle;
+            bvm.PickUpDate = booking.PickUpDate;
+            
+            bvm.DropOffDate = booking.DropOffDate;
+            DateTime pickupday = Convert.ToDateTime(bvm.PickUpDate);
+            DateTime dropofday = Convert.ToDateTime(bvm.DropOffDate);
+            var days = (dropofday - pickupday).Days;
+            bvm.Days = days;
+            bvm.VehiclePrice = vehicle.VehiclePrice;
+            bvm.AmountPaid = booking.AmountPaid;
+            bvm.AmountLeft = Convert.ToInt32(booking.TotalAmount - booking.AmountPaid);
+           
+
+            return View(bvm);
         }
 
 

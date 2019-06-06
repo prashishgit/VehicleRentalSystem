@@ -78,3 +78,7 @@ E:\Broadway\Project\Project\obj\Debug\Project.csproj.CopyComplete
 E:\Broadway\Project\Project\obj\Debug\Project.dll
 E:\Broadway\Project\Project\obj\Debug\Project.pdb
 E:\Broadway\Project\Project\obj\Debug\Project.csprojAssemblyReference.cache
+E:\Broadway\Project\Project\bin\PagedList.dll
+E:\Broadway\Project\Project\bin\PagedList.Mvc.dll
+E:\Broadway\Project\Project\bin\PagedList.xml
+E:\Broadway\Project\Project\bin\PagedList.Mvc.xml

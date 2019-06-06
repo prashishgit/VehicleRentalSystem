@@ -4,72 +4,83 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+@using PagedList;
+@using PagedList.Mvc;
 
 <link href="~/bulma-0.7.4/css/bulma.min.css" rel="stylesheet" />
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 <div class="container">
+
+
     <p>
+       
         @Html.ActionLink("Create New", "Create", null, new { @class = "button is-primary" })
+
     </p>
     <br />
     <table class="table is-hoverable is-striped" style="width:95%">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                @Html.DisplayNameFor(model => model.First().UserId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserName)
+                @Html.DisplayNameFor(model => model.First().UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Password)
+                @Html.DisplayNameFor(model => model.First().Password)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RoleName)
+                @Html.DisplayNameFor(model => model.First().RoleName)
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.FullName)
+                @Html.DisplayNameFor(model => model.First().FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.First().Email)
             </th>
-           
+
             <th>
-               Action
+                Action
             </th>
             <th></th>
         </tr>
 
         @foreach (var item in Model)
         {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoleName)
-        </td>
+           
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-       
-       
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "button is-info" }) |
-            @Html.ActionLink("Details", "Details", new { id = item.UserId }, new { @class = "button is-warning" }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "button is-danger" })
-        </td>
-    </tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "button is-info" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.UserId }, new { @class = "button is-warning" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "button is-danger" })
+                    </td>
+                </tr>
+            
+
+
         }
 
     </table>
-    </div>
+</div>

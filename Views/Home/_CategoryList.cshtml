@@ -9,7 +9,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
                     <h4 class="panel-title">
-                        <a  href="@Url.Action("Index","Home")"  style="color:black">
+
+                        <a  href="@Url.Action("Shop","Home", new { id= item.VehicleCategoryId})"  style="color:black">
                             @item.CategoryName
                         </a>
                     </h4>

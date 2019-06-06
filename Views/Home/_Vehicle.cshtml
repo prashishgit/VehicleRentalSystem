@@ -9,36 +9,37 @@
             </div>
         </div>
         <div class="row">
+            
             @foreach (var item in Model)
             {
+                    if (item.VehicleStatus == "Available Now")
+                    {
 
-                if (item.VehicleStatus == "Available Now")
-                {
+                        <div class="col-md-3 text-center">
 
-                    <div class="col-md-3 text-center">
+                            <div class="product-entry">
 
-                        <div class="product-entry">
-
-                            <div class="product-img" style="background-image: url(images/Vehicle/@item.VehiclePhoto);">
-                                <p class="tag"><span class="new">@item.VehicleStatus</span></p>
-                                <div class="cart">
-                                    <p>
-                                        <span class="addtocart"><a href="cart.html"><i class="icon-shopping-cart"></i></a></span>
-                                        <span><a href="product-detail.html"><i class="icon-eye"></i></a></span>
-                                        <span><a href="#"><i class="icon-heart3"></i></a></span>
-                                        <span><a href="add-to-wishlist.html"><i class="icon-bar-chart"></i></a></span>
-                                    </p>
+                                <div class="product-img" style="background-image: url(images/Vehicle/@item.VehiclePhoto);">
+                                    <p class="tag"><span class="new">@item.VehicleStatus</span></p>
+                                    <div class="cart">
+                                        <p>
+                                            <span class="addtocart"><a href="cart.html"><i class="icon-shopping-cart"></i></a></span>
+                                            <span><a href="product-detail.html"><i class="icon-eye"></i></a></span>
+                                            <span><a href="#"><i class="icon-heart3"></i></a></span>
+                                            <span><a href="add-to-wishlist.html"><i class="icon-bar-chart"></i></a></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="desc">
+                                    <h3><a href="shop.html">@item.VehicleTitle</a></h3>
+                                    <p class="price"><span>@item.VehiclePrice</span></p>
                                 </div>
                             </div>
-                            <div class="desc">
-                                <h3><a href="shop.html">@item.VehicleTitle</a></h3>
-                                <p class="price"><span>@item.VehiclePrice</span></p>
-                            </div>
+
                         </div>
 
-                    </div>
+                    }
                 }
-            }
 
 
             </div>
@@ -94,6 +95,8 @@
 
 
 
+
         </div>
+        <p><a href="@Url.Action("Shop", "Home")" class="btn btn-primary" style="margin-left: 45%">See More</a></p>
     </div>
 </div>

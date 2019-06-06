@@ -38,6 +38,7 @@ namespace Project.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
+            ViewBag.CategoryName = _db.tblCategories.ToList();
             return View();
         }
         [HttpPost]

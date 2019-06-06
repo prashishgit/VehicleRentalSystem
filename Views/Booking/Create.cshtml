@@ -54,6 +54,10 @@
                                             @Html.HiddenFor(model => model.PickUpDate)
                                             @Html.HiddenFor(model => model.DropOffDate)
                                             @Html.HiddenFor(model => model.TotalAmount)
+                                            @Html.HiddenFor(model => model.VehiclePhoto)
+                                            @Html.HiddenFor(model => model.VehiclePrice)
+                                            @Html.HiddenFor(model => model.VehicleTitle)
+
                                             <label>Vehicle Title:</label>
                                             @Html.DisplayFor(model => model.VehicleTitle)
                                         </h3>
@@ -91,13 +95,13 @@
                                         <p class="price">
                                             <label>Citizenship Photo:</label>
                                             <span>
-                                                @Html.TextBoxFor(model => model.CitizenshipPhoto, new { @class = "form-control", @Type = "file" })
+                                                @Html.TextBoxFor(model => model.CitizenshipPhoto, new { @class = "form-control", @Type = "file", id="citizenship" })
                                             </span>
                                         </p>
-                                       
-                                        
-                                            <p><input type="submit" value="BOOK NOW" class="btn btn-primary btn-addtocart"> </p>
-                                        
+
+
+                                        <p><input type="submit" value="BOOK NOW" class="btn btn-primary btn-addtocart" id="SubmitBooking"> </p>
+
 
                                     </div>
                                 </div>
@@ -113,4 +117,22 @@
     </div>
 
 </div>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    var validate = function(){
+        var citizenship = $("#citizenship").val();
+       
+        if (citizenship == "") {
+            $("#citizenship").focus();
+            alert("Please upload your citizenship photo");
+            $("#SubmitBooking").attr("disabled", true);
+            return false;
+        }
+        else {
+            $('#SubmitBooking').removeAttr("disabled");
+        }
+    };
+</script>
 

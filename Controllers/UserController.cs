@@ -7,6 +7,9 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using PagedList.Mvc;
+
 
 namespace Project.Controllers
 {
@@ -20,8 +23,13 @@ namespace Project.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
+            
+             
+            
+
             List<UserViewModel> list = new List<UserViewModel>();
             var users = _db.tblUsers.ToList();
+            ViewBag.UserNumber = _db.tblUsers.Count();
             foreach (var item in users)
             {
                 list.Add(new UserViewModel()
@@ -38,6 +46,7 @@ namespace Project.Controllers
             
             return View(list);
         }
+      
         [HttpGet]
         
         public ActionResult GetAllUser()

@@ -10,6 +10,7 @@ namespace Project.Models.ViewModel
         public int VehicleId { get; set; }
         public int SN { get; set; }
         public Nullable<int> VehicleCategoryId { get; set; }
+        public string CategoryName { get; set; }
         public string VehiclePrice { get; set; }
         public string VehicleTitle { get; set; }
         public string VehiclePhoto { get; set; }

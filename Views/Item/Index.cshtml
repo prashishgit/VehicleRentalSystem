@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-<link href="~/bulma-0.7.4/css/bulma.min.css" rel="stylesheet" />
+@*<link href="~/bulma-0.7.4/css/bulma.min.css" rel="stylesheet" />*@
 <div class="container">
     <div class="row">
         <ol class="breadcrumb">
@@ -20,7 +20,7 @@
     </div><!--/.row-->
     
     
-    <table class="table is-hoverable is-striped" style="width: 90%">
+    <table class="table is-hoverable is-striped" style="width: 100%">
         <tr>
             <th>
                 S.N
@@ -61,7 +61,16 @@
                     <img src="~/images/Vehicle/@item.VehiclePhoto" height="40" width="40" />
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @if (item.Description.Length <= 11)
+                    {
+                        @Html.DisplayFor(modelItem => item.Description)
+                    }
+                    else
+                    {
+                        string parameterValue = item.Description.ToString().Substring(0, 11) + "....";
+                        @Html.DisplayFor(modelItem => parameterValue)
+                    }
+
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.VehicleStatus)

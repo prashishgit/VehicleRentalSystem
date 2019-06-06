@@ -4,78 +4,95 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
 
 @using (Html.BeginForm("Edit", "Booking", FormMethod.Post, new { @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <div class="form-horizontal">
+                    <form id="myform">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.HiddenFor(model => model.BookingId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.HiddenFor(model => model.VehicleId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.HiddenFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.HiddenFor(model => model.VehicleTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.HiddenFor(model => model.CitizenshipPhoto, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.HiddenFor(model => model.PickUpDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.HiddenFor(model => model.DropOffDate, htmlAttributes: new { @class = "control-label col-md-2" })
 
-    <div class="form-horizontal">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm" ">
+                                @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "col-sm" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.TotalAmount, new { @class = "form-control", id = "totalamount", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm" ">
+                                @Html.LabelFor(model => model.AmountPaid, htmlAttributes: new { @class = "col-sm" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.AmountPaid, new { @class = "form-control", id = "amountpaid", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.AmountPaid, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm" ">
+                                @Html.LabelFor(model => model.Payment, htmlAttributes: new { @class = "col-sm" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.Payment, new { @class = "form-control", id = "Payment", onChange = "validate()" })
+                                    @Html.ValidationMessageFor(model => model.Payment, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm" ">
+                                @Html.LabelFor(model => model.AmountLeft, htmlAttributes: new { @class = "col-sm" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.AmountLeft, new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.AmountLeft, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save" class="btn btn-primary pull-left" id="SubmitProject" onclick="validate()" />
+                                <a href="@Url.Action("IndexBooking", "Booking", new {@class="btn btn-secondary pull-right"})">Back</a>
+                            </div>
+                        </div>
+                      
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.HiddenFor(model => model.BookingId, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.HiddenFor(model => model.VehicleId, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.HiddenFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.HiddenFor(model => model.VehicleTitle, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.HiddenFor(model => model.CitizenshipPhoto, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.HiddenFor(model => model.PickUpDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.HiddenFor(model => model.DropOffDate, htmlAttributes: new { @class = "control-label col-md-2" })
 
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control", id="totalamount" } })
-                @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AmountPaid, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AmountPaid, new { htmlAttributes = new { @class = "form-control", id = "amountpaid" } })
-                @Html.ValidationMessageFor(model => model.AmountPaid, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AmountLeft, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AmountLeft, new { htmlAttributes = new { @class = "form-control", @diasbled = "disabled" } })
-                @Html.ValidationMessageFor(model => model.AmountLeft, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" id="SubmitProject" />
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<script src="~/Scripts/jquery.validate.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#amountpaid").change(function () {
-            if ($("#amountpaid").val() > $("#totalamount").val()) {
-              
-                $('#amountpaid').val('');
-                  debugger
-                alert("Please enter a valid amount");
-            } else {
+<script>
+    var validate = function () {
+        var amountpaid = $("#amountpaid").val();
+        var totalamount = $("#totalamount").val();
+        if (amountpaid > totalamount || amountpaid == "") {
+            $("#amountpaid").focus();
+            alert("Please Enter a valid input");
+            $("#SubmitProject").attr("disabled", true);
+            return false;
+        }
+        else {
+            $('#SubmitProject').removeAttr("disabled");
+        }
+    };
 
-            }
-        });
-    });
-    </script>
+
+</script>
