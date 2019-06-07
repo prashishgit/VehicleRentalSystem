@@ -42,6 +42,16 @@
     <Property Name="VehicleCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="tblComments">
+    <Key>
+      <PropertyRef Name="CommentId" />
+    </Key>
+    <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Comments" Type="varchar" MaxLength="7999" />
+    <Property Name="ThisDateTime" Type="datetime" />
+    <Property Name="VehicleId" Type="int" />
+    <Property Name="Rating" Type="int" />
+  </EntityType>
   <EntityType Name="tblItem">
     <Key>
       <PropertyRef Name="VehicleId" />
@@ -65,7 +75,7 @@
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="RoleId" Type="int" />
     <Property Name="UserName" Type="nvarchar" MaxLength="50" />
     <Property Name="Password" Type="nvarchar" MaxLength="50" />
@@ -102,6 +112,20 @@
       </Principal>
       <Dependent Role="tblBooking">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblComments_tblItem">
+    <End Role="tblItem" Type="Self.tblItem" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tblComments" Type="Self.tblComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblItem">
+        <PropertyRef Name="VehicleId" />
+      </Principal>
+      <Dependent Role="tblComments">
+        <PropertyRef Name="VehicleId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -164,6 +188,7 @@
     <EntitySet Name="tblBanner" EntityType="Self.tblBanner" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblBooking" EntityType="Self.tblBooking" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblComments" EntityType="Self.tblComments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblItem" EntityType="Self.tblItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblRole" EntityType="Self.tblRole" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
@@ -175,6 +200,10 @@
     <AssociationSet Name="FK_tblBooking_tblUser" Association="Self.FK_tblBooking_tblUser">
       <End Role="tblUser" EntitySet="tblUser" />
       <End Role="tblBooking" EntitySet="tblBooking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblComments_tblItem" Association="Self.FK_tblComments_tblItem">
+      <End Role="tblItem" EntitySet="tblItem" />
+      <End Role="tblComments" EntitySet="tblComments" />
     </AssociationSet>
     <AssociationSet Name="FK_tblItem_tblCategory" Association="Self.FK_tblItem_tblCategory">
       <End Role="tblCategory" EntitySet="tblCategory" />

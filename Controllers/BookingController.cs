@@ -89,7 +89,7 @@ namespace Project.Controllers
         //        }
         //    }
 
-
+        [Authorize]
         [HttpGet]
         public ActionResult Create(BookingViewModel bvmm)
         {

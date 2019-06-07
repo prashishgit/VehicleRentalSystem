@@ -18,6 +18,7 @@ namespace Project.Models
         public tblItem()
         {
             this.tblBookings = new HashSet<tblBooking>();
+            this.tblComments = new HashSet<tblComment>();
         }
     
         public int VehicleId { get; set; }
@@ -31,5 +32,7 @@ namespace Project.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblBooking> tblBookings { get; set; }
         public virtual tblCategory tblCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblComment> tblComments { get; set; }
     }
 }

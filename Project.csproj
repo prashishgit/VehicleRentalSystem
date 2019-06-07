@@ -141,6 +141,7 @@
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\MailSenderController.cs" />
@@ -178,6 +179,9 @@
     <Compile Include="Models\tblCategory.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblComment.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblItem.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -193,6 +197,7 @@
     <Compile Include="Models\ViewModel\BannerViewModel.cs" />
     <Compile Include="Models\ViewModel\BookingViewModel.cs" />
     <Compile Include="Models\ViewModel\CategoryViewModel.cs" />
+    <Compile Include="Models\ViewModel\CommentViewModel.cs" />
     <Compile Include="Models\ViewModel\ItemViewModel.cs" />
     <Compile Include="Models\ViewModel\LoginViewModel.cs" />
     <Compile Include="Models\ViewModel\UserRoleViewModel.cs" />
@@ -490,6 +495,8 @@
     <Content Include="images\person1.jpg" />
     <Content Include="images\person2.jpg" />
     <Content Include="images\person3.jpg" />
+    <Content Include="images\StarFade.gif" />
+    <Content Include="images\StarGlow.gif" />
     <Content Include="images\Vehicle\Bike1.jpg" />
     <Content Include="images\Vehicle\buggati.jpg" />
     <Content Include="images\Vehicle\DUCATI.jpg" />
@@ -1163,12 +1170,15 @@
     <Content Include="Views\Home\_UserCount.cshtml" />
     <Content Include="Views\Home\_BookingPending.cshtml" />
     <Content Include="Views\Home\_TotalAmount.cshtml" />
+    <Content Include="Views\Item\Rate.cshtml" />
+    <Content Include="Views\Item\_CommentBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\Banner\" />
     <Folder Include="images\CitizenshipPhoto\" />
     <Folder Include="img\Banner\" />
+    <Folder Include="Views\Comment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

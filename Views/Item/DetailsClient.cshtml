@@ -65,6 +65,10 @@
                                         <i class="icon-star-full"></i>
                                         <i class="icon-star-half"></i>
                                         (74 Rating)
+
+
+
+
                                     </span>
                                 </p>
                                 <p>@Html.DisplayFor(model => model.Description)</p>
@@ -298,7 +302,7 @@
                     <div class="form-group">
                         <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> PickUp Date:</label>
                         @*<input type="date" name="cin" class="form-control dates" id="fromDate"
-                placeholder="Check In Date">*@
+                            placeholder="Check In Date">*@
                         @Html.TextBoxFor(model => model.PickUpDate, new { type = "date", @class = "form-control dates", @id = "cin", placeholder = "Check In Date" })
 
 
@@ -306,16 +310,16 @@
                     <div class="form-group">
                         <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> DropOff Date:</label>
                         @*<input type="date" name="cout" class="form-control dates" id="toDate"
-                placeholder="Check Out Date">*@
+                            placeholder="Check Out Date">*@
                         @Html.TextBoxFor(model => model.DropOffDate, new { type = "date", @class = "form-control dates", @id = "cout", placeholder = "Check Out Date" })
                     </div>
 
                     <input type="submit" value="BOOK" class="btn btn-primary btn-block glyphicon glyphicon-ok" />
                     @*<a href="@Url.Action("DetailsClient", "Item")" class="btn btn-primary btn-block">
-                BOOK
-                <span class="glyphicon glyphicon-ok"></span>
-            </a>*@
-                   
+                            BOOK
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </a>*@
+
 
 
                 }
@@ -332,7 +336,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
-          
+
         })
         $('.dates').change(function () {
             var cin = $('#cin').val();
@@ -340,7 +344,7 @@
             var cout = $('#cout').val();
             var checkout = new Date(cout);
             var date = new Date();
-          
+
             date.setDate(date.getDate() - 1);
 
             if (checkin < date) {
@@ -353,12 +357,12 @@
                     $('#cout').val('');
                 }
             }
-         
-           // var millisecondsPerDay = 1000 * 60 * 60 * 24;
-           // var millisBetween = checkout.getTime() - checkin.getTime(); 
-           // var days = millisBetween / millisecondsPerDay;
-           //$('#days').val(days);
-           
+
+            // var millisecondsPerDay = 1000 * 60 * 60 * 24;
+            // var millisBetween = checkout.getTime() - checkin.getTime();
+            // var days = millisBetween / millisecondsPerDay;
+            //$('#days').val(days);
+
         })
     </script>
 

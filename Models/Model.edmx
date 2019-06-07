@@ -47,6 +47,16 @@
           <Property Name="VehicleCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tblComments">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Comments" Type="varchar" MaxLength="7999" />
+          <Property Name="ThisDateTime" Type="datetime" />
+          <Property Name="VehicleId" Type="int" />
+          <Property Name="Rating" Type="int" />
+        </EntityType>
         <EntityType Name="tblItem">
           <Key>
             <PropertyRef Name="VehicleId" />
@@ -70,7 +80,7 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RoleId" Type="int" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
@@ -107,6 +117,20 @@
             </Principal>
             <Dependent Role="tblBooking">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblComments_tblItem">
+          <End Role="tblItem" Type="Self.tblItem" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblComments" Type="Self.tblComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblItem">
+              <PropertyRef Name="VehicleId" />
+            </Principal>
+            <Dependent Role="tblComments">
+              <PropertyRef Name="VehicleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -169,6 +193,7 @@
           <EntitySet Name="tblBanner" EntityType="Self.tblBanner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBooking" EntityType="Self.tblBooking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblComments" EntityType="Self.tblComments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblItem" EntityType="Self.tblItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblRole" EntityType="Self.tblRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
@@ -180,6 +205,10 @@
           <AssociationSet Name="FK_tblBooking_tblUser" Association="Self.FK_tblBooking_tblUser">
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblBooking" EntitySet="tblBooking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblComments_tblItem" Association="Self.FK_tblComments_tblItem">
+            <End Role="tblItem" EntitySet="tblItem" />
+            <End Role="tblComments" EntitySet="tblComments" />
           </AssociationSet>
           <AssociationSet Name="FK_tblItem_tblCategory" Association="Self.FK_tblItem_tblCategory">
             <End Role="tblCategory" EntitySet="tblCategory" />
@@ -248,6 +277,17 @@
           <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblItems" Relationship="Self.FK_tblItem_tblCategory" FromRole="tblCategory" ToRole="tblItem" />
         </EntityType>
+        <EntityType Name="tblComment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Comments" Type="String" MaxLength="7999" FixedLength="false" Unicode="false" />
+          <Property Name="ThisDateTime" Type="DateTime" Precision="3" />
+          <Property Name="VehicleId" Type="Int32" />
+          <Property Name="Rating" Type="Int32" />
+          <NavigationProperty Name="tblItem" Relationship="Self.FK_tblComments_tblItem" FromRole="tblComments" ToRole="tblItem" />
+        </EntityType>
         <EntityType Name="tblItem">
           <Key>
             <PropertyRef Name="VehicleId" />
@@ -261,6 +301,7 @@
           <Property Name="VehicleStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblBookings" Relationship="Self.FK_tblBooking_tblItem" FromRole="tblItem" ToRole="tblBooking" />
           <NavigationProperty Name="tblCategory" Relationship="Self.FK_tblItem_tblCategory" FromRole="tblItem" ToRole="tblCategory" />
+          <NavigationProperty Name="tblComments" Relationship="Self.FK_tblComments_tblItem" FromRole="tblItem" ToRole="tblComments" />
         </EntityType>
         <EntityType Name="tblRole">
           <Key>
@@ -275,7 +316,7 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="RoleId" Type="Int32" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -334,6 +375,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblComments_tblItem">
+          <End Role="tblItem" Type="Self.tblItem" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblComments" Type="Self.tblComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblItem">
+              <PropertyRef Name="VehicleId" />
+            </Principal>
+            <Dependent Role="tblComments">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblUser_tblRole">
           <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
           <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
@@ -379,6 +434,7 @@
           <EntitySet Name="tblBanners" EntityType="Self.tblBanner" />
           <EntitySet Name="tblBookings" EntityType="Self.tblBooking" />
           <EntitySet Name="tblCategories" EntityType="Self.tblCategory" />
+          <EntitySet Name="tblComments" EntityType="Self.tblComment" />
           <EntitySet Name="tblItems" EntityType="Self.tblItem" />
           <EntitySet Name="tblRoles" EntityType="Self.tblRole" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
@@ -394,6 +450,10 @@
           <AssociationSet Name="FK_tblItem_tblCategory" Association="Self.FK_tblItem_tblCategory">
             <End Role="tblCategory" EntitySet="tblCategories" />
             <End Role="tblItem" EntitySet="tblItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblComments_tblItem" Association="Self.FK_tblComments_tblItem">
+            <End Role="tblItem" EntitySet="tblItems" />
+            <End Role="tblComments" EntitySet="tblComments" />
           </AssociationSet>
           <AssociationSet Name="FK_tblUser_tblRole" Association="Self.FK_tblUser_tblRole">
             <End Role="tblRole" EntitySet="tblRoles" />
@@ -457,6 +517,17 @@
               <MappingFragment StoreEntitySet="tblCategory">
                 <ScalarProperty Name="VehicleCategoryId" ColumnName="VehicleCategoryId" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblComments">
+            <EntityTypeMapping TypeName="VehicleRentalDBModel.tblComment">
+              <MappingFragment StoreEntitySet="tblComments">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ThisDateTime" ColumnName="ThisDateTime" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

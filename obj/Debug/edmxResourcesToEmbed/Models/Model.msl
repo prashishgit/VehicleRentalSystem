@@ -47,6 +47,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tblComments">
+      <EntityTypeMapping TypeName="VehicleRentalDBModel.tblComment">
+        <MappingFragment StoreEntitySet="tblComments">
+          <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="ThisDateTime" ColumnName="ThisDateTime" />
+          <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tblItems">
       <EntityTypeMapping TypeName="VehicleRentalDBModel.tblItem">
         <MappingFragment StoreEntitySet="tblItem">

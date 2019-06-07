@@ -2,7 +2,9 @@
 using Project.Models.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -169,6 +171,40 @@ namespace Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult Rate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var article = _db.tblItems.Find(id);
+            if (article == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ArticleId = id.Value;
+            CommentViewModel cvm = new CommentViewModel();
+
+            var comments = _db.tblComments.Where(d => d.VehicleId == id).ToList();
+            ViewBag.Comments = comments;
+
+            var ratings = _db.tblComments.Where(d => d.VehicleId == id).ToList();
+            if (ratings.Count() > 0)
+            {
+                var ratingSum = ratings.Sum(d => d.Rating.Value);
+                ViewBag.RatingSum = ratingSum;
+                var ratingCount = ratings.Count();
+                ViewBag.RatingCount = ratingCount;
+            }
+            else
+            {
+                ViewBag.RatingSum = 0;
+                ViewBag.RatingCount = 0;
+            }
+
+            return View(article);
+        }
+
 
     }
 }
