@@ -56,6 +56,7 @@
           <Property Name="ThisDateTime" Type="datetime" />
           <Property Name="VehicleId" Type="int" />
           <Property Name="Rating" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblItem">
           <Key>
@@ -286,6 +287,7 @@
           <Property Name="ThisDateTime" Type="DateTime" Precision="3" />
           <Property Name="VehicleId" Type="Int32" />
           <Property Name="Rating" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblItem" Relationship="Self.FK_tblComments_tblItem" FromRole="tblComments" ToRole="tblItem" />
         </EntityType>
         <EntityType Name="tblItem">
@@ -528,6 +530,7 @@
                 <ScalarProperty Name="ThisDateTime" ColumnName="ThisDateTime" />
                 <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -19,6 +19,7 @@ namespace Project.Models
         public Nullable<System.DateTime> ThisDateTime { get; set; }
         public Nullable<int> VehicleId { get; set; }
         public Nullable<int> Rating { get; set; }
+        public string UserName { get; set; }
     
         public virtual tblItem tblItem { get; set; }
     }

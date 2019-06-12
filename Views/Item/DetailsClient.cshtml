@@ -3,9 +3,20 @@
 @{
     ViewBag.Title = "DetailsClient";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+     var comments = (IEnumerable<Project.Models.tblComment>)ViewBag.Comments;
+    var ratingSum = ViewBag.RatingSum;
+    var ratingCount = ViewBag.RatingCount;
 
+    decimal rating = 0;
+    if (ratingCount > 0)
+    {
+        rating = (ratingSum / ratingCount);
+    }
+    var totalRating = decimal.Parse(rating.ToString());
+}
+    <link href="~/Content/Site.css" rel="stylesheet" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <aside id="colorlib-hero" class="breadcrumbs">
     <div class="flexslider">
         <ul class="slides">
@@ -58,18 +69,7 @@
                                 <h3>@Html.DisplayFor(model => model.VehicleTitle)</h3>
                                 <p class="price">
                                     <span> Rs @Html.DisplayFor(model => model.VehiclePrice)/PerDay</span>
-                                    <span class="rate text-right">
-                                        <i class="icon-star-full"></i>
-                                        <i class="icon-star-full"></i>
-                                        <i class="icon-star-full"></i>
-                                        <i class="icon-star-full"></i>
-                                        <i class="icon-star-half"></i>
-                                        (74 Rating)
-
-
-
-
-                                    </span>
+                                    <i class="starFadeN" id="sRate1"></i><i class="starFadeN" id="sRate2"></i><i class="starFadeN" id="sRate3"></i><i class="starFadeN" id="sRate4"></i><i class="starFadeN" id="sRate5"></i>
                                 </p>
                                 <p>@Html.DisplayFor(model => model.Description)</p>
                                 @*<div class="color-wrap">
@@ -365,4 +365,15 @@
 
         })
     </script>
-
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+    function SCRate() {
+        for (var i = 1; i <= @totalRating; i++) {
+            $("#sRate" + i).attr('class', 'starGlowN');
+        }
+    }
+    $(function(){
+        SCRate();
+    });
+    </script>

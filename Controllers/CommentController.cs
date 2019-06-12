@@ -40,19 +40,21 @@ namespace Project.Controllers
         }
 
         [HttpPost]
+        
         [ValidateAntiForgeryToken]
         public ActionResult Add(FormCollection form)
         {
             var comment = form["Comment"].ToString();
             var articleId = int.Parse(form["VehicleId"]);
             var rating = int.Parse(form["Rating"]);
-
+            var username = User.Identity.Name;
             tblComment artComment = new tblComment()
             {
                 VehicleId = articleId,
                 Comments = comment,
                 Rating = rating,
-                ThisDateTime = DateTime.Now
+                ThisDateTime = DateTime.Now,
+                UserName = username
             };
 
             _db.tblComments.Add(artComment);

@@ -95,7 +95,7 @@
                                         <p class="price">
                                             <label>Citizenship Photo:</label>
                                             <span>
-                                                @Html.TextBoxFor(model => model.CitizenshipPhoto, new { @class = "form-control", @Type = "file", id="citizenship" })
+                                                @Html.TextBoxFor(model => model.CitizenshipPhoto, new { @class = "form-control", @Type = "file", id = "citizenship" })
                                             </span>
                                         </p>
 
@@ -117,13 +117,11 @@
     </div>
 
 </div>
-<script src="~/Scripts/jquery.validate.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script>
-    var validate = function(){
+    var validate = function () {
         var citizenship = $("#citizenship").val();
-       
+
         if (citizenship == "") {
             $("#citizenship").focus();
             alert("Please upload your citizenship photo");

@@ -120,8 +120,12 @@ namespace Project.Controllers
         [HttpGet]
         public ActionResult DetailsClient(int id)
         {
-            var banners = _db.tblItems.Where(b => b.VehicleId == id).FirstOrDefault();
            
+            var banners = _db.tblItems.Where(b => b.VehicleId == id).FirstOrDefault();
+            if (banners == null)
+            {
+                return HttpNotFound();
+            }
             ItemViewModel bvm = new ItemViewModel();
             bvm.VehicleId = id;
             bvm.VehicleTitle = banners.VehicleTitle;
@@ -129,8 +133,23 @@ namespace Project.Controllers
             bvm.VehicleStatus = banners.VehicleStatus;
             bvm.VehiclePrice = banners.VehiclePrice;
             bvm.VehiclePhoto = banners.VehiclePhoto;
-           
-            
+            ViewBag.ArticleId = id;
+            var comments = _db.tblComments.Where(d => d.VehicleId == id).ToList();
+            ViewBag.Comments = comments;
+            var ratings = _db.tblComments.Where(d => d.VehicleId == id).ToList();
+            if (ratings.Count() > 0)
+            {
+                var ratingSum = ratings.Sum(d => d.Rating.Value);
+                ViewBag.RatingSum = ratingSum;
+                var ratingCount = ratings.Count();
+                ViewBag.RatingCount = ratingCount;
+            }
+            else
+            {
+                ViewBag.RatingSum = 0;
+                ViewBag.RatingCount = 0;
+            }
+
             return View(bvm);
            
         }
@@ -147,9 +166,6 @@ namespace Project.Controllers
             bvm.VehiclePhoto = bvmm.VehiclePhoto;
             bvm.VehicleTitle = bvmm.VehicleTitle;
             bvm.VehiclePrice = bvmm.VehiclePrice;
-           
-
-
             return RedirectToAction("Create", "Booking", bvm);
         }
         [HttpGet]
@@ -171,6 +187,7 @@ namespace Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+       
         public ActionResult Rate(int? id)
         {
             if (id == null)

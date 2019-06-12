@@ -55,6 +55,7 @@
           <ScalarProperty Name="ThisDateTime" ColumnName="ThisDateTime" />
           <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
           <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

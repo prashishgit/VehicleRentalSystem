@@ -50,6 +50,7 @@
     <!-- Theme style  -->
     <link rel="stylesheet" href="~/css/style.css">
 
+
     <!-- Modernizr JS -->
     <script src="~/js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
@@ -80,11 +81,13 @@
 
                                     <ul class="dropdown">
                                         <li><a href="product-detail.html">Vehicle Detail</a></li>
-                                       
+
                                         <li><a href="checkout.html">Bookings</a></li>
-                                       
+
                                     </ul>
                                 </li>
+                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <li>@Html.ActionLink("Admin Panel", "AdminIndex", "Home")</li>
@@ -100,11 +103,10 @@
                                 }
                                 else
                                 {
-                                    <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                                    <li><i class="icon-user"></i>@Html.ActionLink("Sign in", "Login", "Account")</li>
                                 }
-                                <li>@Html.ActionLink("About", "About", "Home")</li>
-                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                                <li><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+
+                                @*<li><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>*@
                             </ul>
                         </div>
                     </div>
