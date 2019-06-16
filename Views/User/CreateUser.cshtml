@@ -19,7 +19,7 @@
             @Html.ValidationSummary(true)
 
         <form class="login100-form validate-form">
-           
+
             <h3>New Account?</h3>
             <div class="form-group">
                 @Html.HiddenFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -59,10 +59,10 @@
             </div>
             <div class="form-holder">
                 <span class="lnr lnr-calendar-full"></span>
-                @Html.TextBoxFor(model => model.CitizenshipNumber, new { @class = "form-control", placeholder = "CitizenshipNumber" })
-                @Html.ValidationMessageFor(model => model.CitizenshipNumber, "", new { @class = "text-danger" })
-
+                @Html.TextBoxFor(model => model.Photo, new { @class = "form-control", @Type = "file" })
+                @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
             </div>
+         
             <button type="submit" value="Create">
                 <span>Register</span>
             </button>

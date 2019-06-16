@@ -40,7 +40,7 @@ namespace Project.Controllers
                     RoleName = item.tblRole.RoleName,
                     FullName = item.FullName,
                     Email = item.Email,
-                    CitizenshipNumber = item.CitizenshipNumber
+                   
                 }) ;
             }
             
@@ -63,9 +63,7 @@ namespace Project.Controllers
         [HttpPost]
         public ActionResult Create(UserViewModel uvm)
         {
-            var users = _db.tblUsers.Where(b => b.UserName == uvm.UserName || b.Email == uvm.Email).FirstOrDefault();
-            if(users != null)
-            {
+            
                 tblUser tb = new tblUser();
                 tb.RoleId = uvm.RoleId;
                 tb.UserName = uvm.UserName;
@@ -73,7 +71,15 @@ namespace Project.Controllers
 
                 tb.FullName = uvm.FullName;
                 tb.Email = uvm.Email;
-                tb.CitizenshipNumber = uvm.CitizenshipNumber;
+                HttpPostedFileBase fup = Request.Files["Photo"];
+                if (fup != null)
+                {
+                    if (fup.FileName != "")
+                    {
+                        tb.Photo = fup.FileName;
+                        fup.SaveAs(Server.MapPath("~/images/UserPhoto/" + fup.FileName));
+                    }
+                }
 
                 _db.tblUsers.Add(tb);
                 _db.SaveChanges();
@@ -83,7 +89,7 @@ namespace Project.Controllers
                 userRole.RoleId = tb.RoleId;
                 _db.tblUserRoles.Add(userRole);
                 _db.SaveChanges();
-            }
+            
 
            
             return RedirectToAction("Index");
@@ -100,7 +106,7 @@ namespace Project.Controllers
             ViewBag.RoleName = _db.tblRoles.ToList();
             bvm.FullName = users.FullName;
             bvm.Email = users.Email;
-            bvm.CitizenshipNumber = users.CitizenshipNumber;
+            bvm.Photo = users.Photo;
             return View(bvm);
         }
         [HttpPost]
@@ -114,7 +120,17 @@ namespace Project.Controllers
             
             users.FullName = uvm.FullName;
             users.Email = uvm.Email;
-            users.CitizenshipNumber = users.CitizenshipNumber;
+            HttpPostedFileBase fup = Request.Files["Photo"];
+            if (fup != null)
+            {
+                if (fup.FileName != null)
+                {
+                    System.IO.File.Delete(Server.MapPath("~/images/UserPhoto" + uvm.Photo));
+                    users.Photo = fup.FileName;
+                    fup.SaveAs(Server.MapPath("~/images/UserPhoto/" + fup.FileName));
+                }
+
+            }
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -131,7 +147,7 @@ namespace Project.Controllers
             
             uvm.FullName = users.FullName;
             uvm.Email = users.Email;
-            uvm.CitizenshipNumber = users.CitizenshipNumber;
+            uvm.Photo = users.Photo;
 
             return View(uvm);
         }
@@ -223,9 +239,7 @@ namespace Project.Controllers
         [HttpPost]
         public ActionResult CreateUser(UserViewModel uvm)
         {
-            var users = _db.tblUsers.Where(b => b.UserName == uvm.UserName || b.Email == uvm.Email).FirstOrDefault();
-            if (users == null)
-            {
+            
                 tblUser tb = new tblUser();
                 tb.RoleId = 2;
                 tb.UserName = uvm.UserName;
@@ -233,8 +247,15 @@ namespace Project.Controllers
 
                 tb.FullName = uvm.FullName;
                 tb.Email = uvm.Email;
-                tb.CitizenshipNumber = uvm.CitizenshipNumber;
-
+                HttpPostedFileBase fup = Request.Files["Photo"];
+                if (fup != null)
+                {
+                    if (fup.FileName != "")
+                    {
+                        tb.Photo = fup.FileName;
+                        fup.SaveAs(Server.MapPath("~/images/UserPhoto/" + fup.FileName));
+                    }
+                }
                 _db.tblUsers.Add(tb);
                 _db.SaveChanges();
                 int latestUserId = tb.UserId;
@@ -243,11 +264,8 @@ namespace Project.Controllers
                 userRole.RoleId = 2;
                 _db.tblUserRoles.Add(userRole);
                 _db.SaveChanges();
-            }
-            else
-            {
-                ViewBag.Taken ="Username is already Taken";
-            }
+            
+            
           
             return RedirectToAction("Index");
         }

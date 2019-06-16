@@ -80,6 +80,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tblTestimonies">
+      <EntityTypeMapping TypeName="VehicleRentalDBModel.tblTestimony">
+        <MappingFragment StoreEntitySet="tblTestimony">
+          <ScalarProperty Name="TestimonyId" ColumnName="TestimonyId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="TestimonyDescription" ColumnName="TestimonyDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tblUsers">
       <EntityTypeMapping TypeName="VehicleRentalDBModel.tblUser">
         <MappingFragment StoreEntitySet="tblUser">
@@ -89,7 +99,7 @@
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="FullName" ColumnName="FullName" />
           <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="CitizenshipNumber" ColumnName="CitizenshipNumber" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

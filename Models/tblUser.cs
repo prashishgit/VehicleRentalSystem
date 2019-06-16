@@ -18,6 +18,7 @@ namespace Project.Models
         public tblUser()
         {
             this.tblBookings = new HashSet<tblBooking>();
+            this.tblTestimonies = new HashSet<tblTestimony>();
             this.tblUserRoles = new HashSet<tblUserRole>();
         }
     
@@ -27,11 +28,13 @@ namespace Project.Models
         public string Password { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
-        public string CitizenshipNumber { get; set; }
+        public string Photo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblBooking> tblBookings { get; set; }
         public virtual tblRole tblRole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblTestimony> tblTestimonies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblUserRole> tblUserRoles { get; set; }
     }

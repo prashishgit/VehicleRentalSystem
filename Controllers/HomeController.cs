@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using PagedList.Mvc;
+using Project.Models.ViewModel;
+
 namespace Project.Controllers
 {
     public class HomeController : Controller
@@ -54,7 +56,7 @@ namespace Project.Controllers
         }
         public ActionResult TotalAmount()
         {
-            var total = 0;
+           var total = 0;
            var booking = _db.tblBookings.ToList();
             foreach (var item in booking)
             {
@@ -70,6 +72,41 @@ namespace Project.Controllers
         {
             return View();
         }
+        public ActionResult UserProfileCard()
+        {
+            var userId = Convert.ToInt32(Session["UserId"]);
+            var userDetails = _db.tblUsers.Where(u => u.UserId == userId).FirstOrDefault();
+            var userRole = _db.tblRoles.Where(u => u.RoleId == userDetails.RoleId).FirstOrDefault();
+          
+            ViewBag.UserName = userDetails.UserName;
+            ViewBag.Email = userDetails.Email;
+            ViewBag.FullName = userDetails.FullName;
+            ViewBag.Role = userRole.RoleName;
+            ViewBag.Photo = userDetails.Photo;
+            return PartialView("_UserProfileCard");
+        }
+        public ActionResult UserBookingList()
+        {
+            var userId = Convert.ToInt32(Session["UserId"]);
+            var userBooking = _db.tblBookings.Where(u => u.UserId == userId).FirstOrDefault();
+            var vehicleBooking = _db.tblItems.Where(u => u.VehicleId == userBooking.VehicleId).FirstOrDefault();
+           
+            List<BookingViewModel> list = new List<BookingViewModel>();
+            var items = _db.tblBookings.ToList();
+            int i = 0;
+            foreach (var item in items)
+            {
+                list.Add(new BookingViewModel()
+                {
+                    SN = i + 1,
+                   
+                });
+                i++;
+            }
+                return PartialView("_UserBookingList");
+
+        }
+
         [AllowAnonymous]
         public ActionResult Contact()
         {

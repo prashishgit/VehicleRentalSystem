@@ -72,17 +72,26 @@
     <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="tblTestimony">
+    <Key>
+      <PropertyRef Name="TestimonyId" />
+    </Key>
+    <Property Name="TestimonyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Location" Type="nvarchar" MaxLength="50" />
+    <Property Name="TestimonyDescription" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="tblUser">
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RoleId" Type="int" />
     <Property Name="UserName" Type="nvarchar" MaxLength="50" />
     <Property Name="Password" Type="nvarchar" MaxLength="50" />
     <Property Name="FullName" Type="nvarchar" MaxLength="50" />
     <Property Name="Email" Type="nvarchar" MaxLength="50" />
-    <Property Name="CitizenshipNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Photo" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tblUserRole">
     <Key>
@@ -144,6 +153,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tblTestimony_tblUser">
+    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+    <End Role="tblTestimony" Type="Self.tblTestimony" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tblTestimony">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tblUser_tblRole">
     <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
     <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
@@ -192,6 +213,7 @@
     <EntitySet Name="tblComments" EntityType="Self.tblComments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblItem" EntityType="Self.tblItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblRole" EntityType="Self.tblRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblTestimony" EntityType="Self.tblTestimony" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblUserRole" EntityType="Self.tblUserRole" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_tblBooking_tblItem" Association="Self.FK_tblBooking_tblItem">
@@ -209,6 +231,10 @@
     <AssociationSet Name="FK_tblItem_tblCategory" Association="Self.FK_tblItem_tblCategory">
       <End Role="tblCategory" EntitySet="tblCategory" />
       <End Role="tblItem" EntitySet="tblItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTestimony_tblUser" Association="Self.FK_tblTestimony_tblUser">
+      <End Role="tblUser" EntitySet="tblUser" />
+      <End Role="tblTestimony" EntitySet="tblTestimony" />
     </AssociationSet>
     <AssociationSet Name="FK_tblUser_tblRole" Association="Self.FK_tblUser_tblRole">
       <End Role="tblRole" EntitySet="tblRole" />

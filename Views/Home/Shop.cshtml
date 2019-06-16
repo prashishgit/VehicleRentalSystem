@@ -77,7 +77,7 @@
             <li><a href="#">4</a></li>
             <li><a href="#">&raquo;</a></li>
         </ul>*@
-                        @Html.PagedListPager(Model, page => Url.Action("Shop", new { @class = "pagination", page, search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true, DisplayItemSliceAndTotal = true }))
+                        @Html.PagedListPager(Model, page => Url.Action("Shop", new { @class = "pagination", page, search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true, DisplayItemSliceAndTotal = true })
                     </div>
                 </div>
             </div>

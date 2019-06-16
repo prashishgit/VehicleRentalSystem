@@ -140,22 +140,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="PaypalConfiguration.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BannerController.cs" />
-    <Compile Include="Controllers\BookingController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
-    <Compile Include="Controllers\CommentController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ItemController.cs" />
-    <Compile Include="Controllers\MailSenderController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GenericRepository\GenericRepository.cs" />
-    <Compile Include="Models\GenericRepository\IGenericRepository.cs" />
-    <Compile Include="Models\MailModel.cs" />
+    <Compile Include="Controllers\TestimonyController.cs" />
     <Compile Include="Models\Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -192,12 +177,32 @@
     <Compile Include="Models\tblRole.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblTestimony.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblUser.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblUserRole.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModel\TestimonyViewModel.cs" />
+    <Compile Include="PaypalConfiguration.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BannerController.cs" />
+    <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\MailSenderController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GenericRepository\GenericRepository.cs" />
+    <Compile Include="Models\GenericRepository\IGenericRepository.cs" />
+    <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\ViewModel\BannerViewModel.cs" />
     <Compile Include="Models\ViewModel\BookingViewModel.cs" />
     <Compile Include="Models\ViewModel\CategoryViewModel.cs" />
@@ -441,6 +446,7 @@
     <Content Include="css\main.css" />
     <Content Include="css\owl.carousel.min.css" />
     <Content Include="css\owl.theme.default.min.css" />
+    <Content Include="css\Profile.css" />
     <Content Include="css\slicknav.min.css" />
     <Content Include="css\style.css" />
     <Content Include="css\util.css" />
@@ -2669,13 +2675,6 @@
     <Content Include="Booking\scss\theme\_pages.scss" />
     <Content Include="Booking\scss\theme\_reset.scss" />
     <Content Include="Booking\scss\theme\_variables.scss" />
-    <EntityDeploy Include="Models\Model.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
-    </Content>
     <Content Include="images\icon\fontawesome-free-5.9.0-web\less\brands.less" />
     <Content Include="images\icon\fontawesome-free-5.9.0-web\less\fontawesome.less" />
     <Content Include="images\icon\fontawesome-free-5.9.0-web\less\regular.less" />
@@ -2730,6 +2729,13 @@
     <Content Include="images\icon\fontawesome-free-5.9.0-web\webfonts\fa-solid-900.ttf" />
     <Content Include="images\icon\fontawesome-free-5.9.0-web\webfonts\fa-solid-900.woff" />
     <Content Include="images\icon\fontawesome-free-5.9.0-web\webfonts\fa-solid-900.woff2" />
+    <EntityDeploy Include="Models\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\DataTables-1.10.18\css\dataTables.bootstrap.css" />
     <Content Include="Scripts\DataTables-1.10.18\css\dataTables.bootstrap.min.css" />
@@ -2802,7 +2808,6 @@
     <Content Include="Views\Home\_Testimony.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Home\AdminIndex.cshtml" />
-    <Content Include="Views\Home\UserIndex.cshtml" />
     <Content Include="Views\Banner\Create.cshtml" />
     <Content Include="Views\Banner\Index.cshtml" />
     <Content Include="Views\Banner\Edit.cshtml" />
@@ -2833,12 +2838,17 @@
     <Content Include="Views\Item\Rate.cshtml" />
     <Content Include="Views\Item\_CommentBox.cshtml" />
     <Content Include="Views\Category\_CategoryPopup.cshtml" />
-    <Content Include="Views\Booking\Index.cshtml" />
+    <Content Include="Views\Testimony\Create.cshtml" />
+    <Content Include="Views\Shared\_LayoutUser.cshtml" />
+    <Content Include="Views\Home\UserIndex.cshtml" />
+    <Content Include="Views\Home\_UserProfileCard.cshtml" />
+    <Content Include="Views\Home\_UserBookingList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\Banner\" />
     <Folder Include="images\CitizenshipPhoto\" />
+    <Folder Include="images\UserPhoto\" />
     <Folder Include="img\Banner\" />
     <Folder Include="Views\Comment\" />
   </ItemGroup>

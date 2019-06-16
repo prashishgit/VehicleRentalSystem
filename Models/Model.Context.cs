@@ -32,6 +32,7 @@ namespace Project.Models
         public virtual DbSet<tblComment> tblComments { get; set; }
         public virtual DbSet<tblItem> tblItems { get; set; }
         public virtual DbSet<tblRole> tblRoles { get; set; }
+        public virtual DbSet<tblTestimony> tblTestimonies { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblUserRole> tblUserRoles { get; set; }
     }
