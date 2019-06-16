@@ -14,24 +14,24 @@
             <ul class="slides">
                 @foreach (var item in Model)
                 {
-                <li style="background-image: url(images/Banner/@item.Photo);">
-                    <div class="overlay"></div>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3 col-md-pull-2 col-sm-12 col-xs-12 slider-text">
-                                <div class="slider-text-inner">
-                                    <div class="desc">
-                                        <h1 class="head-1">@item.HeadingOne</h1>
-                                        <h2 class="head-2">@item.HeadingTwo</h2>
-                                        <h3>@item.Title</h3>
-                                        <p class="category"><span>@item.Description</span></p>
-                                        <p><a href="@Url.Action("Shop", "Home")" class="btn btn-primary">Book Now</a></p>
+                    <li style="background-image: url(images/Banner/@item.Photo);">
+                        <div class="overlay"></div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-3 col-md-pull-2 col-sm-12 col-xs-12 slider-text">
+                                    <div class="slider-text-inner">
+                                        <div class="desc">
+                                            <h1 class="head-1">@item.HeadingOne</h1>
+                                            <h2 class="head-2">@item.HeadingTwo</h2>
+                                            <h3>@item.Title</h3>
+                                            <p class="category"><span>@item.Description</span></p>
+                                            <p><a href="@Url.Action("Shop", "Home")" class="btn btn-primary">Book Now</a></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
                 }
 
 
@@ -40,6 +40,7 @@
     </aside>
 
 }
+
 @Html.Action("Vehicle")
 @Html.Action("Testimony")
 

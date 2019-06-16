@@ -127,6 +127,7 @@ namespace Project.Controllers
                 return HttpNotFound();
             }
             ItemViewModel bvm = new ItemViewModel();
+            
             bvm.VehicleId = id;
             bvm.VehicleTitle = banners.VehicleTitle;
             bvm.Description = banners.Description;
@@ -160,6 +161,7 @@ namespace Project.Controllers
          
 
             BookingViewModel bvm = new BookingViewModel();
+          
             bvm.VehicleId = bvmm.VehicleId;
             bvm.PickUpDate = bvmm.PickUpDate;
             bvm.DropOffDate = bvmm.DropOffDate;

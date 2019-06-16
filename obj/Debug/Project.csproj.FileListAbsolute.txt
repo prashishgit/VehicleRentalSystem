@@ -82,6 +82,7 @@ E:\Broadway\Project\Project\bin\PagedList.dll
 E:\Broadway\Project\Project\bin\PagedList.Mvc.dll
 E:\Broadway\Project\Project\bin\PagedList.xml
 E:\Broadway\Project\Project\bin\PagedList.Mvc.xml
+G:\Project\Project\obj\Debug\Project.csproj.CoreCompileInputs.cache
 G:\Project\Project\bin\Project.dll.config
 G:\Project\Project\bin\Project.dll
 G:\Project\Project\bin\Project.pdb
@@ -139,6 +140,7 @@ G:\Project\Project\bin\Microsoft.Web.Infrastructure.dll
 G:\Project\Project\bin\Newtonsoft.Json.dll
 G:\Project\Project\bin\PagedList.dll
 G:\Project\Project\bin\PagedList.Mvc.dll
+G:\Project\Project\bin\PayPal.dll
 G:\Project\Project\bin\System.Web.Helpers.dll
 G:\Project\Project\bin\System.Web.Mvc.dll
 G:\Project\Project\bin\System.Web.Optimization.dll
@@ -151,6 +153,7 @@ G:\Project\Project\bin\EntityFramework.xml
 G:\Project\Project\bin\EntityFramework.SqlServer.xml
 G:\Project\Project\bin\PagedList.xml
 G:\Project\Project\bin\PagedList.Mvc.xml
+G:\Project\Project\bin\PayPal.xml
 G:\Project\Project\bin\System.Web.Helpers.xml
 G:\Project\Project\bin\System.Web.Mvc.xml
 G:\Project\Project\bin\System.Web.Optimization.xml
@@ -161,8 +164,7 @@ G:\Project\Project\bin\System.Web.WebPages.Razor.xml
 G:\Project\Project\bin\Newtonsoft.Json.xml
 G:\Project\Project\bin\Antlr3.Runtime.pdb
 G:\Project\Project\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-G:\Project\Project\obj\Debug\Project.csprojAssemblyReference.cache
-G:\Project\Project\obj\Debug\Project.csproj.CoreCompileInputs.cache
 G:\Project\Project\obj\Debug\Project.csproj.CopyComplete
 G:\Project\Project\obj\Debug\Project.dll
 G:\Project\Project\obj\Debug\Project.pdb
+G:\Project\Project\obj\Debug\Project.csprojAssemblyReference.cache

@@ -34,7 +34,7 @@
     <!-- Main CSS-->
     <link href="~/Admin/css/theme.css" rel="stylesheet" media="all">
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-
+    <link href="~/Scripts/DataTables-1.10.18/css/site.css" rel="stylesheet" />
     <link href="~/bulma-0.7.4/css/bulma.css" rel="stylesheet" />
 </head>
 
@@ -494,21 +494,8 @@
     <!-- Main JS-->
     <script src="~/Admin/js/main.js"></script>
 
-
-    <script>
-        window.onload = function () {
-            var chart1 = document.getElementById("line-chart").getContext("2d");
-            window.myLine = new Chart(chart1).Line(lineChartData, {
-                responsive: true,
-                scaleLineColor: "rgba(0,0,0,.2)",
-                scaleGridLineColor: "rgba(0,0,0,.05)",
-                scaleFontColor: "#c5c7cc"
-            });
-        };</script>
-    
-    @RenderSection("scripts", required: false)
-
-
+    @RenderSection("scripts", required: false);
+   
 </body>
 
 

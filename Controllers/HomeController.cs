@@ -1,4 +1,5 @@
-﻿using Project.Models;
+﻿using PagedList;
+using Project.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,13 @@ namespace Project.Controllers
             var user = _db.tblBanners.ToList();
             return View(user);
         }
+      
         [AllowAnonymous]
         public ActionResult Vehicle()
         {
-            return PartialView("_Vehicle", _db.tblItems.Take(8).ToList());
+            return PartialView("_Vehicle", _db.tblItems.OrderBy(r => Guid.NewGuid()).Take(8));
         }
+       
         [AllowAnonymous]
         public ActionResult Testimony()
         {
@@ -74,8 +77,9 @@ namespace Project.Controllers
             return View();
         }
         [AllowAnonymous]
-        public ActionResult Shop(int id = 0)
+        public ActionResult Shop(int id)
         {
+           
             if(id == 0)
             {
                 var vehicle = _db.tblItems.ToList();

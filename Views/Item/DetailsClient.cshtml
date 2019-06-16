@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "DetailsClient";
     Layout = "~/Views/Shared/_Layout.cshtml";
-     var comments = (IEnumerable<Project.Models.tblComment>)ViewBag.Comments;
+    var comments = (IEnumerable<Project.Models.tblComment>)ViewBag.Comments;
     var ratingSum = ViewBag.RatingSum;
     var ratingCount = ViewBag.RatingCount;
 
@@ -14,7 +14,7 @@
     }
     var totalRating = decimal.Parse(rating.ToString());
 }
-    <link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <aside id="colorlib-hero" class="breadcrumbs">
@@ -38,6 +38,7 @@
 </aside>
 <div class="colorlib-shop">
     <div class="container">
+        
         <div class="row row-pb-lg">
             <div class="col-md-10 col-md-offset-1">
                 <div class="product-detail-wrap">
@@ -144,128 +145,38 @@
                             <div id="review" class="tab-pane fade">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h3>23 Reviews</h3>
+                                        <h3>@ratingCount Reviews</h3>
                                         <div class="review">
-                                            <div class="user-img" style="background-image: url(images/person1.jpg)"></div>
-                                            <div class="desc">
-                                                <h4>
-                                                    <span class="text-left">Jacob Webb</span>
-                                                    <span class="text-right">14 March 2018</span>
-                                                </h4>
-                                                <p class="star">
-                                                    <span>
-                                                        <i class="icon-star-full"></i>
-                                                        <i class="icon-star-full"></i>
-                                                        <i class="icon-star-full"></i>
-                                                        <i class="icon-star-half"></i>
-                                                        <i class="icon-star-empty"></i>
-                                                    </span>
-                                                    <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                                </p>
-                                                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-                                            </div>
+                                            @foreach (var c in comments)
+                                            {
+                                                <div class="desc">
+                                                    <h4>
+                                                        <span class="text-left">@c.UserName</span>
+                                                        <span class="text-right">@c.ThisDateTime</span>
+                                                    </h4>
+                                                    <p class="star">
+                                                        @for (var i = 1; i <= c.Rating; i++)
+                                                        {
+                                                            <i class="starGlowN"></i>
+                                                        }
+                                                        @for (var i = (c.Rating + 1); i <= 5; i++)
+                                                        {
+                                                            <i class="starFadeN"></i>
+                                                        }
+                                                        <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
+                                                    </p>
+                                                    <p> @Html.Raw(c.Comments.Replace("\n", "<br />"))</p>
+                                                    <hr />
+                                                </div>
+
+
+                                            }
+
+
                                         </div>
-                                        <div class="review">
-                                            <div class="user-img" style="background-image: url(images/person2.jpg)"></div>
-                                            <div class="desc">
-                                                <h4>
-                                                    <span class="text-left">Jacob Webb</span>
-                                                    <span class="text-right">14 March 2018</span>
-                                                </h4>
-                                                <p class="star">
-                                                    <span>
-                                                        <i class="icon-star-full"></i>
-                                                        <i class="icon-star-full"></i>
-                                                        <i class="icon-star-full"></i>
-                                                        <i class="icon-star-half"></i>
-                                                        <i class="icon-star-empty"></i>
-                                                    </span>
-                                                    <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                                </p>
-                                                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-                                            </div>
-                                        </div>
-                                        <div class="review">
-                                            <div class="user-img" style="background-image: url(images/person3.jpg)"></div>
-                                            <div class="desc">
-                                                <h4>
-                                                    <span class="text-left">Jacob Webb</span>
-                                                    <span class="text-right">14 March 2018</span>
-                                                </h4>
-                                                <p class="star">
-                                                    <span>
-                                                        <i class="icon-star-full"></i>
-                                                        <i class="icon-star-full"></i>
-                                                        <i class="icon-star-full"></i>
-                                                        <i class="icon-star-half"></i>
-                                                        <i class="icon-star-empty"></i>
-                                                    </span>
-                                                    <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                                </p>
-                                                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-                                            </div>
-                                        </div>
+
                                     </div>
-                                    <div class="col-md-4 col-md-push-1">
-                                        <div class="rating-wrap">
-                                            <h3>Give a Review</h3>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-full"></i>
-                                                    (98%)
-                                                </span>
-                                                <span>20 Reviews</span>
-                                            </p>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-empty"></i>
-                                                    (85%)
-                                                </span>
-                                                <span>10 Reviews</span>
-                                            </p>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-empty"></i>
-                                                    <i class="icon-star-empty"></i>
-                                                    (98%)
-                                                </span>
-                                                <span>5 Reviews</span>
-                                            </p>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-empty"></i>
-                                                    <i class="icon-star-empty"></i>
-                                                    <i class="icon-star-empty"></i>
-                                                    (98%)
-                                                </span>
-                                                <span>0 Reviews</span>
-                                            </p>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="icon-star-full"></i>
-                                                    <i class="icon-star-empty"></i>
-                                                    <i class="icon-star-empty"></i>
-                                                    <i class="icon-star-empty"></i>
-                                                    <i class="icon-star-empty"></i>
-                                                    (98%)
-                                                </span>
-                                                <span>0 Reviews</span>
-                                            </p>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -294,7 +205,7 @@
 
 
 
-
+                   
                     @Html.HiddenFor(model => model.VehicleId);
                     @Html.HiddenFor(model => model.VehiclePhoto);
                     @Html.HiddenFor(model => model.VehiclePrice);
@@ -314,7 +225,7 @@
                         @Html.TextBoxFor(model => model.DropOffDate, new { type = "date", @class = "form-control dates", @id = "cout", placeholder = "Check Out Date" })
                     </div>
 
-                    <input type="submit" value="BOOK" class="btn btn-primary btn-block glyphicon glyphicon-ok" />
+                    <input type="submit" value="BOOK" class="btn btn-primary btn-block glyphicon glyphicon-ok" id="btnSubmit"  />
                     @*<a href="@Url.Action("DetailsClient", "Item")" class="btn btn-primary btn-block">
                             BOOK
                             <span class="glyphicon glyphicon-ok"></span>
@@ -335,7 +246,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $(document).ready(function () {
+         $(document).ready(function () {
 
         })
         $('.dates').change(function () {
@@ -364,6 +275,9 @@
             //$('#days').val(days);
 
         })
+
+
+       
     </script>
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>

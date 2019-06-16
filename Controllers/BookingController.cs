@@ -1,4 +1,5 @@
-﻿using Project.Models;
+﻿using PayPal.Api;
+using Project.Models;
 using Project.Models.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -44,50 +45,7 @@ namespace Project.Controllers
             }
             return View(list);
         }
-        //public ActionResult ManageBooking()
-        //{
-        //    return View();
-        //}
-        //[HttpGet]
-        //public JsonResult GetData()
-        //{
-        //    using (VehicleRentalDBEntities db = new VehicleRentalDBEntities())
-        //    {
-        //        db.Configuration.LazyLoadingEnabled = false;
-        //        List<BookingViewModel> lstitem = new List<BookingViewModel>();
-        //        var lst = db.tblBookings.ToList();
-        //        foreach (var item in lst)
-        //        {
-        //            var users = _db.tblUsers.Where(u => u.UserId == item.UserId).FirstOrDefault();
-        //            var vehicle = _db.tblItems.Where(u => u.VehicleId == item.VehicleId).FirstOrDefault();
-        //            lstitem.Add(new BookingViewModel() { BookingId = item.BookingId, VehiclePhoto=vehicle.VehiclePhoto, UserName = users.UserName, VehicleTitle = vehicle.VehicleTitle, PickUpDate = item.PickUpDate, DropOffDate = item.DropOffDate, TotalAmount = item.TotalAmount, CitizenshipPhoto = item.CitizenshipPhoto, AmountPaid = item.AmountPaid, BookingStatus = item.BookingStatus });
-        //        }
-        //        return Json(new { data = lstitem }, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
-        //[HttpGet]
-        //public ActionResult Edit(int id)
-        //{
-
-        //        using (VehicleRentalDBEntities db = new VehicleRentalDBEntities())
-        //        {
-        //            ViewBag.Action = "Edit Item";
-
-        //            tblBooking item = db.tblBookings.Where(i => i.BookingId == id).FirstOrDefault();
-        //            BookingViewModel itemvm = new BookingViewModel();
-
-
-        //        itemvm.AmountPaid = item.AmountPaid;
-        //        itemvm.TotalAmount = item.TotalAmount;
-        //        itemvm.AmountLeft = Convert.ToInt32(item.TotalAmount - item.AmountPaid);
-
-
-
-
-
-        //            return View(itemvm);
-        //        }
-        //    }
+       
 
         [Authorize]
         [HttpGet]
@@ -99,18 +57,43 @@ namespace Project.Controllers
          
             BookingViewModel bvm = new BookingViewModel();
 
-            bvm.PickUpDate = bvmm.PickUpDate;
-            bvm.DropOffDate = bvmm.DropOffDate;
-            bvm.VehicleId = bvmm.VehicleId;
-            bvm.VehiclePhoto = bvmm.VehiclePhoto;
-            bvm.VehicleTitle = bvmm.VehicleTitle;
-            bvm.VehiclePrice = bvmm.VehiclePrice;
-            int total = Convert.ToInt32(bvmm.VehiclePrice);
-            DateTime pickupday = Convert.ToDateTime(bvm.PickUpDate);
-            DateTime dropofday = Convert.ToDateTime(bvm.DropOffDate);
-            var days = (dropofday - pickupday).Days;
-            bvm.TotalAmount = total * days;
-            bvm.Days = days;
+            var client = User.Identity.Name;
+            var user = _db.tblUsers.Where(u => u.UserName == client).FirstOrDefault();
+            var userId = user.UserId;
+            var bookingUserId = _db.tblBookings.Where(u => u.UserId == userId).FirstOrDefault();
+            if (bookingUserId != null)
+            {
+                bvm.PickUpDate = bvmm.PickUpDate;
+                bvm.DropOffDate = bvmm.DropOffDate;
+                bvm.VehicleId = bvmm.VehicleId;
+                bvm.VehiclePhoto = bvmm.VehiclePhoto;
+                bvm.VehicleTitle = bvmm.VehicleTitle;
+                bvm.VehiclePrice = bvmm.VehiclePrice;
+                int total = Convert.ToInt32(bvmm.VehiclePrice);
+                DateTime pickupday = Convert.ToDateTime(bvm.PickUpDate);
+                DateTime dropofday = Convert.ToDateTime(bvm.DropOffDate);
+                var days = (dropofday - pickupday).Days;
+                bvm.TotalAmount = total * days;
+                bvm.Days = days;
+                bvm.CitizenshipPhoto = bookingUserId.CitizenshipPhoto;
+            }else
+            {
+                bvm.PickUpDate = bvmm.PickUpDate;
+                bvm.DropOffDate = bvmm.DropOffDate;
+                bvm.VehicleId = bvmm.VehicleId;
+                bvm.VehiclePhoto = bvmm.VehiclePhoto;
+                bvm.VehicleTitle = bvmm.VehicleTitle;
+                bvm.VehiclePrice = bvmm.VehiclePrice;
+                int total = Convert.ToInt32(bvmm.VehiclePrice);
+                DateTime pickupday = Convert.ToDateTime(bvm.PickUpDate);
+                DateTime dropofday = Convert.ToDateTime(bvm.DropOffDate);
+                var days = (dropofday - pickupday).Days;
+                bvm.TotalAmount = total * days;
+                bvm.Days = days;
+            }
+            
+            
+         
            
 
             return View(bvm);
@@ -303,5 +286,156 @@ namespace Project.Controllers
         }
 
 
+
+        public ActionResult PaymentWithPaypal(string Cancel = null)
+        {
+            //getting the apiContext
+            APIContext apiContext = PaypalConfiguration.GetAPIContext();
+
+            try
+            {
+                //A resource representing a Payer that funds a payment Payment Method as paypal
+                //Payer Id will be returned when payment proceeds or click to pay
+                string payerId = Request.Params["PayerID"];
+
+                if (string.IsNullOrEmpty(payerId))
+                {
+                    //this section will be executed first because PayerID doesn't exist
+                    //it is returned by the create function call of the payment class
+
+                    // Creating a payment
+                    // baseURL is the url on which paypal sendsback the data.
+                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority +
+                                "/Booking/PaymentWithPayPal?";
+
+                    //here we are generating guid for storing the paymentID received in session
+                    //which will be used in the payment execution
+
+                    var guid = Convert.ToString((new Random()).Next(100000));
+
+                    //CreatePayment function gives us the payment approval url
+                    //on which payer is redirected for paypal account payment
+
+                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
+
+                    //get links returned from paypal in response to Create function call
+
+                    var links = createdPayment.links.GetEnumerator();
+
+                    string paypalRedirectUrl = null;
+
+                    while (links.MoveNext())
+                    {
+                        Links lnk = links.Current;
+
+                        if (lnk.rel.ToLower().Trim().Equals("approval_url"))
+                        {
+                            //saving the payapalredirect URL to which user will be redirected for payment
+                            paypalRedirectUrl = lnk.href;
+                        }
+                    }
+
+                    // saving the paymentID in the key guid
+                    Session.Add(guid, createdPayment.id);
+
+                    return Redirect(paypalRedirectUrl);
+                }
+                else
+                {
+
+                    // This function exectues after receving all parameters for the payment
+
+                    var guid = Request.Params["guid"];
+
+                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
+
+                    //If executed payment failed then we will show payment failure message to user
+                    if (executedPayment.state.ToLower() != "approved")
+                    {
+                        ViewBag.Error = "Approved";
+                        return View("FailureView");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("FailureView");
+            }
+
+            //on successful payment, show success page to user.
+            return View("SuccessView");
+        }
+
+        private PayPal.Api.Payment payment;
+        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
+        {
+            var paymentExecution = new PaymentExecution() { payer_id = payerId };
+            this.payment = new Payment() { id = paymentId };
+            return this.payment.Execute(apiContext, paymentExecution);
+        }
+
+        private Payment CreatePayment(APIContext apiContext, string redirectUrl)
+        {
+
+            //create itemlist and add item objects to it
+            var itemList = new ItemList() { items = new List<Item>() };
+
+            //Adding Item Details like name, currency, price etc
+            itemList.items.Add(new Item()
+            {
+                name = "Item Name comes here",
+                currency = "USD",
+                price = "1",
+                quantity = "1",
+                sku = "sku"
+            });
+
+            var payer = new Payer() { payment_method = "paypal" };
+
+            // Configure Redirect Urls here with RedirectUrls object
+            var redirUrls = new RedirectUrls()
+            {
+                cancel_url = redirectUrl + "&Cancel=true",
+                return_url = redirectUrl
+            };
+
+            // Adding Tax, shipping and Subtotal details
+            var details = new Details()
+            {
+                tax = "1",
+                shipping = "1",
+                subtotal = "1"
+            };
+
+            //Final amount with details
+            var amount = new Amount()
+            {
+                currency = "USD",
+                total = "3", // Total must be equal to sum of tax, shipping and subtotal.
+                details = details
+            };
+
+            var transactionList = new List<Transaction>();
+            // Adding description about the transaction
+            transactionList.Add(new Transaction()
+            {
+                description = "Transaction description",
+                invoice_number = "your generated invoice number", //Generate an Invoice No
+                amount = amount,
+                item_list = itemList
+            });
+
+
+            this.payment = new Payment()
+            {
+                intent = "sale",
+                payer = payer,
+                transactions = transactionList,
+                redirect_urls = redirUrls
+            };
+
+            // Create a payment using a APIContext
+            return this.payment.Create(apiContext);
+        }
     }
 }

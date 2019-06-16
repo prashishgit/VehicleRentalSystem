@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+    
 <aside id="colorlib-hero" class="breadcrumbs">
     <div class="flexslider">
         <ul class="slides">
@@ -28,7 +28,7 @@
 
 
 <div class="container">
-    <div class="card" style="width: 90%;">
+    <div class="card">
         <div class="card-body">
             <h1 class="card-title" style="font-weight:bold; font-size:20px; text-align: center">CONFIRM BOOKING</h1>
             <hr />
@@ -43,13 +43,14 @@
                                     </div>
                                 </div>
                             </div>
-                            @using (Html.BeginForm("Create_Post", "Booking", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                            @using (Html.BeginForm("PaymentWithPaypal", "Booking", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                             {
 
                                 @Html.AntiForgeryToken()
                                 <div class="col-md-7">
                                     <div class="desc">
                                         <h3>
+
                                             @Html.HiddenFor(model => model.VehicleId)
                                             @Html.HiddenFor(model => model.PickUpDate)
                                             @Html.HiddenFor(model => model.DropOffDate)
@@ -95,12 +96,21 @@
                                         <p class="price">
                                             <label>Citizenship Photo:</label>
                                             <span>
-                                                @Html.TextBoxFor(model => model.CitizenshipPhoto, new { @class = "form-control", @Type = "file", id = "citizenship" })
+                                                @if (Model.CitizenshipPhoto != null)
+                                                {
+                                                   
+                                                    <img src="~/images/CitizenshipPhoto/@Model.CitizenshipPhoto" height="50" width="70" />
+                                                }
+                                                else
+                                                {
+                                                    @Html.TextBoxFor(model => model.CitizenshipPhoto, new { @class = "form-control", @Type = "file", id = "citizenship" })
+                                                }
+
                                             </span>
                                         </p>
 
 
-                                        <p><input type="submit" value="BOOK NOW" class="btn btn-primary btn-addtocart" id="SubmitBooking"> </p>
+                                        <p><input type="submit" value="BOOK With Paypal" class="btn btn-primary btn-addtocart" id="SubmitBooking"> </p>
 
 
                                     </div>
