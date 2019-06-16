@@ -1,11 +1,15 @@
-﻿@model IEnumerable<Project.Models.ViewModel.BookingViewModel>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+
+@model IPagedList<Project.Models.ViewModel.BookingViewModel>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/css/bootstrap.css" rel="stylesheet" />
 @using (Html.BeginForm("Index", "Booking", FormMethod.Get, new { @enctype = "multipart/form-data" }))
 {
 
@@ -26,34 +30,34 @@
         <table class="table is-hoverable is-striped" style="width: 100%">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.SN)
+                    @Html.DisplayNameFor(model => model.First().SN)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.VehiclePhoto)
+                    @Html.DisplayNameFor(model => model.First().VehiclePhoto)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.VehicleTitle)
+                    @Html.DisplayNameFor(model => model.First().VehicleTitle)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.UserName)
+                    @Html.DisplayNameFor(model => model.First().UserName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CitizenshipPhoto)
+                    @Html.DisplayNameFor(model => model.First().CitizenshipPhoto)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PickUpDate)
+                    @Html.DisplayNameFor(model => model.First().PickUpDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DropOffDate)
+                    @Html.DisplayNameFor(model => model.First().DropOffDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TotalAmount)
+                    @Html.DisplayNameFor(model => model.First().TotalAmount)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.AmountPaid)
+                    @Html.DisplayNameFor(model => model.First().AmountPaid)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.BookingStatus)
+                    @Html.DisplayNameFor(model => model.First().BookingStatus)
                 </th>
                 <th>
                     Action
@@ -133,6 +137,7 @@
 
             }
         </table>
+        @Html.PagedListPager(Model, page => Url.Action("IndexBooking", new { page, SearchBy = Request.QueryString["SearchBy"], search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true, DisplayItemSliceAndTotal = true })
 
     </div>
 }

@@ -7,7 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-
+using PagedList;
+using PagedList.Mvc;
 namespace Project.Controllers
 {
     public class ItemController : Controller
@@ -16,8 +17,9 @@ namespace Project.Controllers
         VehicleRentalDBEntities _db = new VehicleRentalDBEntities();
         // GET: Banner
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string search, int? page)
         {
+            
             int i = 0;
             List<ItemViewModel> list = new List<ItemViewModel>();
             var items = _db.tblItems.ToList();
@@ -35,7 +37,7 @@ namespace Project.Controllers
                 }) ;
                 i++;
             }
-            return View(list);
+            return View(list.ToPagedList(page ?? 1, 10));
         }
         [Authorize(Roles = "Admin")]
         public ActionResult Create()

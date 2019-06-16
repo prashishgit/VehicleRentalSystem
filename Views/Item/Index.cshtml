@@ -1,10 +1,13 @@
-﻿@model IEnumerable<Project.Models.ViewModel.ItemViewModel>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Project.Models.ViewModel.ItemViewModel>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
 @*<link href="~/bulma-0.7.4/css/bulma.min.css" rel="stylesheet" />*@
 <div class="container">
     <div class="row">
@@ -15,30 +18,33 @@
                 </a>
             </li>
             <li class="active">Manage Vechicle</li>
-            @Html.ActionLink("Create New", "Create", null, new { @class = "button is-primary", style="margin-left:56em" })
+
         </ol>
+
     </div><!--/.row-->
-    
-    
+    @Html.TextBox("search")
+    <input type="submit" value="Search" />
+    @Html.ActionLink("Create New", "Create", null, new { @class = "button is-primary right", style = "margin-left: 70rem" })
+
     <table class="table is-hoverable is-striped" style="width: 100%">
         <tr>
             <th>
                 S.N
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VehiclePrice)
+                @Html.DisplayNameFor(model => model.First().VehiclePrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VehicleTitle)
+                @Html.DisplayNameFor(model => model.First().VehicleTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VehiclePhoto)
+                @Html.DisplayNameFor(model => model.First().VehiclePhoto)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.First().Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VehicleStatus)
+                @Html.DisplayNameFor(model => model.First().VehicleStatus)
             </th>
             <th></th>
         </tr>
@@ -84,4 +90,5 @@
         }
 
     </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, SearchBy = Request.QueryString["SearchBy"], search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true, DisplayItemSliceAndTotal = true })
 </div>

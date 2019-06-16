@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Project.Models.tblItem>
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<Project.Models.tblItem>
 
 @{
     ViewBag.Title = "Shop";
@@ -67,14 +69,15 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <ul class="pagination">
-                            <li class="disabled"><a href="#">&laquo;</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">&raquo;</a></li>
-                        </ul>
+                        @*<ul class="pagination">
+            <li class="disabled"><a href="#">&laquo;</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>*@
+                        @Html.PagedListPager(Model, page => Url.Action("Shop", new { @class = "pagination", page, search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true, DisplayItemSliceAndTotal = true }))
                     </div>
                 </div>
             </div>
@@ -156,6 +159,7 @@
                                 <a href="#" class="size size-4">l</a>
                                 <a href="#" class="size size-5">xl</a>
                                 <a href="#" class="size size-5">xxl</a>
+
                             </p>
                         </div>
                     </div>

@@ -8,7 +8,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
-
+using PagedList;
+using PagedList.Mvc;
 namespace Project.Controllers
 {
     public class BookingController : Controller
@@ -16,7 +17,7 @@ namespace Project.Controllers
         // GET: Booking
         VehicleRentalDBEntities _db = new VehicleRentalDBEntities();
         [HttpGet]
-        public ActionResult IndexBooking()
+        public ActionResult IndexBooking(string search, int? page)
         {
 
             int i = 0;
@@ -43,7 +44,7 @@ namespace Project.Controllers
                 });
                 i++;
             }
-            return View(list);
+            return View(list.ToPagedList(page ?? 1, 10));
         }
        
 

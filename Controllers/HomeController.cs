@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using PagedList;
+using PagedList.Mvc;
 namespace Project.Controllers
 {
     public class HomeController : Controller
@@ -77,12 +78,12 @@ namespace Project.Controllers
             return View();
         }
         [AllowAnonymous]
-        public ActionResult Shop(int id)
+        public ActionResult Shop(int? page, int id)
         {
            
             if(id == 0)
             {
-                var vehicle = _db.tblItems.ToList();
+                var vehicle = _db.tblItems.ToList().ToPagedList(page ?? 1, 9);
 
                 return View(vehicle);
             }
