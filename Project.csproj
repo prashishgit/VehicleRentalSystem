@@ -433,6 +433,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\sweet-alert.css" />
     <Content Include="css\animate.css" />
     <Content Include="css\bootstrap-datepicker.css" />
     <Content Include="css\bootstrap.css" />
@@ -2843,6 +2844,7 @@
     <Content Include="Views\Home\UserIndex.cshtml" />
     <Content Include="Views\Home\_UserProfileCard.cshtml" />
     <Content Include="Views\Home\_UserBookingList.cshtml" />
+    <Content Include="Views\Home\_TestimonyCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

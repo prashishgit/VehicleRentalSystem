@@ -8,10 +8,15 @@
 
 
 
-
+    
 <link rel="stylesheet" href="~/registration/fonts/linearicons/style.css">
 <link rel="stylesheet" href="/registration/css/style.css">
-
+<style> 
+    .text-danger{
+        margin-top: 35px;
+      
+    }
+</style>
 <div class="wrapper">
     <div class="inner">
         @using (Html.BeginForm("CreateUser", "User", FormMethod.Post, new { @id = "Register", @enctype = "multipart/form-data" }))
@@ -28,19 +33,21 @@
             <div class="form-holder">
                 <span class="lnr lnr-user"></span>
                 @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "Username" })
-                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger control-label col-md-12" })
+               
 
             </div>
             <div class="form-holder">
                 <span class="lnr lnr-smile"></span>
                 @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", placeholder = "FullName" })
-                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger control-label col-md-12" })
 
             </div>
             <div class="form-holder">
                 <span class="lnr lnr-envelope"></span>
                 @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger control-label col-md-12" })
 
             </div>
 
@@ -50,17 +57,17 @@
                 <span class="lnr lnr-lock"></span>
                 @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
 
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger control-label col-md-12" })
             </div>
             <div class="form-holder">
                 <span class="lnr lnr-lock"></span>
                 @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger control-label col-md-12" })
             </div>
             <div class="form-holder">
                 <span class="lnr lnr-calendar-full"></span>
                 @Html.TextBoxFor(model => model.Photo, new { @class = "form-control", @Type = "file" })
-                @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger control-label col-md-12" })
             </div>
          
             <button type="submit" value="Create">

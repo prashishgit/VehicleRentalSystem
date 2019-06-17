@@ -88,22 +88,50 @@ namespace Project.Controllers
         public ActionResult UserBookingList()
         {
             var userId = Convert.ToInt32(Session["UserId"]);
-            var userBooking = _db.tblBookings.Where(u => u.UserId == userId).FirstOrDefault();
-            var vehicleBooking = _db.tblItems.Where(u => u.VehicleId == userBooking.VehicleId).FirstOrDefault();
-           
+            var userBooking = _db.tblBookings.Where(u => u.UserId == userId).ToList();
+            
             List<BookingViewModel> list = new List<BookingViewModel>();
-            var items = _db.tblBookings.ToList();
+          
             int i = 0;
-            foreach (var item in items)
+            foreach (var item in userBooking)
             {
+                
                 list.Add(new BookingViewModel()
                 {
                     SN = i + 1,
+                    BookingId = item.BookingId,
+                    BookingStatus = item.BookingStatus,
+                    PickUpDate = item.PickUpDate,
+                    DropOffDate = item.DropOffDate,
+                    VehiclePhoto = item.tblItem.VehiclePhoto,
+                    TotalAmount = item.TotalAmount,
+                    AmountPaid = item.AmountPaid,
                    
-                });
+
+
+                }) ;
                 i++;
             }
-                return PartialView("_UserBookingList");
+                return PartialView("_UserBookingList", list);
+
+        }
+        [HttpGet]
+        public ActionResult TestimonyCreate()
+        {
+            
+            return PartialView("_TestimonyCreate");
+
+        }
+        [HttpPost]
+        public ActionResult TestimonyCreate(TestimonyViewModel tvm)
+        {
+            var userId = Convert.ToInt32(Session["UserId"]);
+            tblTestimony tb = new tblTestimony();
+            tb.UserId = userId;
+            tb.TestimonyDescription = tvm.TestimonyDescription;
+            _db.tblTestimonies.Add(tb);
+            _db.SaveChanges();
+            return PartialView("Index");
 
         }
 

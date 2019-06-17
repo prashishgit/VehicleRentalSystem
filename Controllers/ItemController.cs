@@ -54,6 +54,7 @@ namespace Project.Controllers
             tb.VehiclePrice = itm.VehiclePrice;
             tb.VehicleStatus = itm.VehicleStatus;
             tb.Description = itm.Description;
+            tb.VehicleCategoryId = itm.VehicleCategoryId;
             HttpPostedFileBase fup = Request.Files["VehiclePhoto"];
             if (fup != null)
             {

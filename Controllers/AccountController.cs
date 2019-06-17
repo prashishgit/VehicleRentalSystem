@@ -32,6 +32,7 @@ namespace Project.Controllers
                     Session["Email"] = users.Email;
                     
                     Session["UserId"] = users.UserId;
+                    Session["Photo"] = users.Photo;
                     FormsAuthentication.SetAuthCookie(l.UserName, l.RememberMe);
                     if (Url.IsLocalUrl(ReturnUrl))
                     {

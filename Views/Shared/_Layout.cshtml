@@ -68,7 +68,7 @@
             <div class="top-menu">
                 <div class="container">
                     <div class="row">
-                        
+
                         <div class="col-xs-10 text-right menu-1">
                             <div class="col-xs-3">
                                 <div id="colorlib-logo"><a href="index.html">VEHICLE RENTAL</a></div>
@@ -78,7 +78,7 @@
                                 <li class="has-dropdown">
                                     @*@Html.ActionLink("Vehicle", "Shop", "Home", new { @id = 0 })*@
                                     <a href="@Url.Action("Shop","Home", new { id= 0})">
-                                       Vehicle
+                                        Vehicle
                                     </a>
 
                                     <ul class="dropdown">
@@ -121,7 +121,7 @@
         @RenderBody()
 
 
-        
+
 
         @RenderSection("testimony", required: false)
         <div id="colorlib-subscribe">
@@ -235,7 +235,7 @@
     </div>
 
 
-    
+
 
 
 
@@ -244,6 +244,8 @@
 
     <!-- jQuery -->
     <script src="~/js/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <!-- jQuery Easing -->
     <script src="~/js/jquery.easing.1.3.js"></script>
     <!-- Bootstrap -->

@@ -23,10 +23,6 @@ namespace Project.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            
-             
-            
-
             List<UserViewModel> list = new List<UserViewModel>();
             var users = _db.tblUsers.ToList();
             ViewBag.UserNumber = _db.tblUsers.Count();
@@ -40,19 +36,28 @@ namespace Project.Controllers
                     RoleName = item.tblRole.RoleName,
                     FullName = item.FullName,
                     Email = item.Email,
-                   
-                }) ;
+                    Photo = item.Photo
+
+                });
             }
-            
+
             return View(list);
         }
-      
+
         [HttpGet]
-        
+
         public ActionResult GetAllUser()
         {
-            
+
             return View("_GetAllUser", _db.tblUsers.ToList());
+        }
+        public JsonResult IsUserNameAvailable(string UserName)
+         {
+            return Json(!_db.tblUsers.Any(user => user.UserName == UserName), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult IsEmailAvailable(string email)
+        {
+            return Json(!_db.tblUsers.Any(user => user.Email == email), JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult Create()
@@ -63,35 +68,35 @@ namespace Project.Controllers
         [HttpPost]
         public ActionResult Create(UserViewModel uvm)
         {
-            
-                tblUser tb = new tblUser();
-                tb.RoleId = uvm.RoleId;
-                tb.UserName = uvm.UserName;
-                tb.Password = uvm.Password;
 
-                tb.FullName = uvm.FullName;
-                tb.Email = uvm.Email;
-                HttpPostedFileBase fup = Request.Files["Photo"];
-                if (fup != null)
+            tblUser tb = new tblUser();
+            tb.RoleId = uvm.RoleId;
+            tb.UserName = uvm.UserName;
+            tb.Password = uvm.Password;
+
+            tb.FullName = uvm.FullName;
+            tb.Email = uvm.Email;
+            HttpPostedFileBase fup = Request.Files["Photo"];
+            if (fup != null)
+            {
+                if (fup.FileName != null)
                 {
-                    if (fup.FileName != "")
-                    {
-                        tb.Photo = fup.FileName;
-                        fup.SaveAs(Server.MapPath("~/images/UserPhoto/" + fup.FileName));
-                    }
+                    tb.Photo = fup.FileName;
+                    fup.SaveAs(Server.MapPath("~/images/UserPhoto/" + fup.FileName));
                 }
 
-                _db.tblUsers.Add(tb);
-                _db.SaveChanges();
-                int latestUserId = tb.UserId;
-                tblUserRole userRole = new tblUserRole();
-                userRole.UserId = latestUserId;
-                userRole.RoleId = tb.RoleId;
-                _db.tblUserRoles.Add(userRole);
-                _db.SaveChanges();
-            
+            }
+            _db.tblUsers.Add(tb);
+            _db.SaveChanges();
+            int latestUserId = tb.UserId;
+            tblUserRole userRole = new tblUserRole();
+            userRole.UserId = latestUserId;
+            userRole.RoleId = tb.RoleId;
+            _db.tblUserRoles.Add(userRole);
+            _db.SaveChanges();
 
-           
+
+
             return RedirectToAction("Index");
         }
 
@@ -117,7 +122,7 @@ namespace Project.Controllers
             users.RoleId = uvm.RoleId;
             users.UserName = uvm.UserName;
             users.Password = uvm.Password;
-            
+
             users.FullName = uvm.FullName;
             users.Email = uvm.Email;
             HttpPostedFileBase fup = Request.Files["Photo"];
@@ -144,7 +149,7 @@ namespace Project.Controllers
             uvm.UserId = users.UserId;
             uvm.UserName = users.UserName;
             uvm.Password = users.Password;
-            
+
             uvm.FullName = users.FullName;
             uvm.Email = users.Email;
             uvm.Photo = users.Photo;
@@ -172,7 +177,7 @@ namespace Project.Controllers
         }
         public ActionResult Retrive()
         {
-            
+
             return View();
         }
         [HttpPost]
@@ -180,7 +185,7 @@ namespace Project.Controllers
         {
 
             tblUser tb = _db.tblUsers.Where(e => e.Email == uvm.Email).FirstOrDefault();
-            if(tb != null)
+            if (tb != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -218,11 +223,11 @@ namespace Project.Controllers
                     }
 
                 }
-               
+
             }
             else
             {
-               
+
                 return RedirectToAction("Index", "Home");
             }
 
@@ -233,40 +238,40 @@ namespace Project.Controllers
         [HttpGet]
         public ActionResult CreateUser()
         {
-           
+
             return View();
         }
         [HttpPost]
         public ActionResult CreateUser(UserViewModel uvm)
         {
-            
-                tblUser tb = new tblUser();
-                tb.RoleId = 2;
-                tb.UserName = uvm.UserName;
-                tb.Password = uvm.Password;
 
-                tb.FullName = uvm.FullName;
-                tb.Email = uvm.Email;
-                HttpPostedFileBase fup = Request.Files["Photo"];
-                if (fup != null)
+            tblUser tb = new tblUser();
+            tb.RoleId = 2;
+            tb.UserName = uvm.UserName;
+            tb.Password = uvm.Password;
+
+            tb.FullName = uvm.FullName;
+            tb.Email = uvm.Email;
+            HttpPostedFileBase fup = Request.Files["Photo"];
+            if (fup != null)
+            {
+                if (fup.FileName != "")
                 {
-                    if (fup.FileName != "")
-                    {
-                        tb.Photo = fup.FileName;
-                        fup.SaveAs(Server.MapPath("~/images/UserPhoto/" + fup.FileName));
-                    }
+                    tb.Photo = fup.FileName;
+                    fup.SaveAs(Server.MapPath("~/images/UserPhoto/" + fup.FileName));
                 }
-                _db.tblUsers.Add(tb);
-                _db.SaveChanges();
-                int latestUserId = tb.UserId;
-                tblUserRole userRole = new tblUserRole();
-                userRole.UserId = latestUserId;
-                userRole.RoleId = 2;
-                _db.tblUserRoles.Add(userRole);
-                _db.SaveChanges();
-            
-            
-          
+            }
+            _db.tblUsers.Add(tb);
+            _db.SaveChanges();
+            int latestUserId = tb.UserId;
+            tblUserRole userRole = new tblUserRole();
+            userRole.UserId = latestUserId;
+            userRole.RoleId = 2;
+            _db.tblUserRoles.Add(userRole);
+            _db.SaveChanges();
+
+
+
             return RedirectToAction("Index");
         }
 
