@@ -2845,6 +2845,7 @@
     <Content Include="Views\Home\_UserProfileCard.cshtml" />
     <Content Include="Views\Home\_UserBookingList.cshtml" />
     <Content Include="Views\Home\_TestimonyCreate.cshtml" />
+    <Content Include="Views\Account\Retrive.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

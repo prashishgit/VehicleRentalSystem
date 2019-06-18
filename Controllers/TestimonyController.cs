@@ -26,17 +26,17 @@ namespace Project.Controllers
         {
             tblTestimony tb = new tblTestimony();
 
-            //tb.VehicleTitle = itm.VehicleTitle;
-            //tb.VehiclePrice = itm.VehiclePrice;
-            //tb.VehicleStatus = itm.VehicleStatus;
-            //tb.Description = itm.Description;
-            //HttpPostedFileBase fup = Request.Files["VehiclePhoto"];
-            //if (fup != null)
-            //{
-            //    tb.VehiclePhoto = fup.FileName;
-            //    fup.SaveAs(Server.MapPath("~/images/Vehicle/" + fup.FileName));
-            //}
-            //_db.tblItems.Add(tb);
+           // tb.TestimonyDescription = tvm.TestimonyDescription;
+           //tb.
+           // tb.VehicleStatus = itm.VehicleStatus;
+           // tb.Description = itm.Description;
+           // HttpPostedFileBase fup = Request.Files["VehiclePhoto"];
+           // if (fup != null)
+           // {
+           //     tb.VehiclePhoto = fup.FileName;
+           //     fup.SaveAs(Server.MapPath("~/images/Vehicle/" + fup.FileName));
+           // }
+           // _db.tblItems.Add(tb);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

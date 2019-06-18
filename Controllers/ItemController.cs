@@ -195,6 +195,7 @@ namespace Project.Controllers
        
         public ActionResult Rate(int? id)
         {
+           
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -210,6 +211,7 @@ namespace Project.Controllers
             var comments = _db.tblComments.Where(d => d.VehicleId == id).ToList();
             ViewBag.Comments = comments;
 
+            
             var ratings = _db.tblComments.Where(d => d.VehicleId == id).ToList();
             if (ratings.Count() > 0)
             {

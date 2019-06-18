@@ -1,10 +1,10 @@
 ﻿@model Project.Models.ViewModel.UserViewModel
 
 @{
-          
 
-                ViewBag.Title = "Retrive";
-                Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "Retrive";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -45,22 +45,22 @@
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                        
-                        @Html.EditorFor(model => model.Email,  new { htmlAttributes = new { @class = "input100", placeholder = "Email" } })
+
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input100", placeholder = "Email" } })
                         @Html.ValidationMessageFor(model => model.Email)
-                        
+
                         <span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>
                     </div>
 
-            
+
 
                     <div class="container-login100-form-btn m-t-20">
-                       
+
                         <input type="submit" value="Send" class="login100-form-btn" />
                     </div>
 
-                  
+
                 </form>
             </div>
         </div>

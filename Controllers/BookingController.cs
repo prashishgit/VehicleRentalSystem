@@ -52,10 +52,6 @@ namespace Project.Controllers
         [HttpGet]
         public ActionResult Create(BookingViewModel bvmm)
         {
-
-           
-           
-         
             BookingViewModel bvm = new BookingViewModel();
 
             var client = User.Identity.Name;

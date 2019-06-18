@@ -47,7 +47,7 @@
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.html">
 
-                            <img src="~/images/icon/logo.png" />
+                            <img src="~/images/UserPhoto/@Session["Photo"]" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -413,7 +413,7 @@
                                                     <h5 class="name">
                                                         <a href="#">@User.Identity.Name</a>
                                                     </h5>
-                                                    @*<span class="email">@Session["Email"].ToString()</span>*@
+                                                    <span class="email">@Session["Email"].ToString()</span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">

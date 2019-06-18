@@ -9,6 +9,8 @@ namespace Project.Models.ViewModel
     {
         public int TestimonyId { get; set; }
         public Nullable<int> UserId { get; set; }
+        public string UserName { get; set; }
+        public string UserPhoto { get; set; }
         public string Location { get; set; }
         public string TestimonyDescription { get; set; }
 

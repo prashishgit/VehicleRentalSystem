@@ -30,7 +30,27 @@ namespace Project.Controllers
         [AllowAnonymous]
         public ActionResult Testimony()
         {
-            return PartialView("_Testimony");
+            int i = 0;
+          
+            List<TestimonyViewModel> list = new List<TestimonyViewModel>();
+            var items = _db.tblTestimonies.OrderBy(r => Guid.NewGuid()).Take(3);
+          
+            foreach (var item in items)
+            {
+                list.Add(new TestimonyViewModel()
+                {
+
+                    UserId = item.UserId,
+                    UserName = item.tblUser.UserName,
+                    UserPhoto = item.tblUser.Photo,
+                    TestimonyDescription = item.TestimonyDescription,
+                    Location = item.Location,
+                   
+                });
+                i++;
+            }
+          
+            return PartialView("_Testimony", list);
         }
         [AllowAnonymous]
         [HttpGet]
@@ -116,22 +136,57 @@ namespace Project.Controllers
 
         }
         [HttpGet]
+        public ActionResult Cancel(int id)
+        {
+            var bookingDetails = _db.tblBookings.Where(u => u.BookingId == id).FirstOrDefault();
+            bookingDetails.BookingStatus = "Cancelled";
+            _db.SaveChanges();
+            
+            return View("UserIndex");
+
+        }
+        [HttpGet]
         public ActionResult TestimonyCreate()
         {
+            var userId = Convert.ToInt32(Session["UserId"]);
+            var testimony = _db.tblTestimonies.Where(u => u.UserId == userId).FirstOrDefault();
+            TestimonyViewModel tvm = new TestimonyViewModel();
             
-            return PartialView("_TestimonyCreate");
+            if(testimony != null)
+            {
+                tvm.TestimonyDescription = testimony.TestimonyDescription;
+            }
+            else
+            {
+                tvm.TestimonyDescription = "";
+            }
+            return PartialView("_TestimonyCreate", tvm);
 
         }
         [HttpPost]
         public ActionResult TestimonyCreate(TestimonyViewModel tvm)
         {
+           
             var userId = Convert.ToInt32(Session["UserId"]);
             tblTestimony tb = new tblTestimony();
             tb.UserId = userId;
             tb.TestimonyDescription = tvm.TestimonyDescription;
+            tb.Location = "Kathmandu, Nepal";
             _db.tblTestimonies.Add(tb);
             _db.SaveChanges();
-            return PartialView("Index");
+            return PartialView("Shop", "Home");
+
+        }
+      
+        [HttpPost]
+        public ActionResult TestimonyEdit(TestimonyViewModel tvm)
+        {
+            tblTestimony tb = new tblTestimony();
+            tb.TestimonyId = tvm.TestimonyId;
+            tb.TestimonyDescription = tvm.TestimonyDescription;
+            _db.tblTestimonies.Add(tb);
+            _db.SaveChanges();
+            return PartialView("_TestimonyCreate");
 
         }
 
