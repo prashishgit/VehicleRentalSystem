@@ -357,6 +357,7 @@ namespace Project.Controllers
             }
             catch (Exception ex)
             {
+                
                 return View("FailureView");
             }
 
@@ -379,14 +380,26 @@ namespace Project.Controllers
             var itemList = new ItemList() { items = new List<Item>() };
 
             //Adding Item Details like name, currency, price etc
-            itemList.items.Add(new Item()
+            List<BookingViewModel> listBookings = new List<BookingViewModel>();
+            foreach (var item in listBookings)
             {
-                name = "Item Name comes here",
-                currency = "USD",
-                price = "1",
-                quantity = "1",
-                sku = "sku"
-            });
+                itemList.items.Add(new Item()
+                {
+                    name = item.tblItem.VehicleTitle,
+                    currency = "USD",
+                    price = item.tblItem.VehiclePrice.ToString(),
+                    quantity = item.Days.ToString(),
+                    sku = "sku"
+                });
+            }
+            //itemList.items.Add(new Item()
+            //{
+            //    name = "Item Name comes here",
+            //    currency = "USD",
+            //    price = "1",
+            //    quantity = "1",
+            //    sku = "sku"
+            //});
 
             var payer = new Payer() { payment_method = "paypal" };
 
@@ -400,16 +413,16 @@ namespace Project.Controllers
             // Adding Tax, shipping and Subtotal details
             var details = new Details()
             {
-                tax = "1",
-                shipping = "1",
-                subtotal = "1"
+               
+                fee = "1",
+                subtotal = listBookings.Sum(x => x.TotalAmount).ToString()
             };
 
             //Final amount with details
             var amount = new Amount()
             {
                 currency = "USD",
-                total = "3", // Total must be equal to sum of tax, shipping and subtotal.
+                total = (Convert.ToString(details.fee) + Convert.ToDouble(details.subtotal)).ToString(),
                 details = details
             };
 
@@ -418,7 +431,7 @@ namespace Project.Controllers
             transactionList.Add(new Transaction()
             {
                 description = "Transaction description",
-                invoice_number = "your generated invoice number", //Generate an Invoice No
+                invoice_number = Convert.ToString(new Random().Next(100000)), //Generate an Invoice No
                 amount = amount,
                 item_list = itemList
             });
