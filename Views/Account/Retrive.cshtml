@@ -1,4 +1,4 @@
-﻿@model Project.Models.ViewModel.UserViewModel
+﻿@model Project.Models.ViewModel.RetriveViewModel
 
 @{
 
@@ -32,31 +32,30 @@
 <link rel="stylesheet" type="text/css" href="~/Login_v19/css/main.css">
 <!--===============================================================================================-->
 
-@using (Html.BeginForm("Retrive", "User", FormMethod.Post, new { @id = "Form1", @enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Retrive", "Account", FormMethod.Post, new { @id = "Form1", @enctype = "multipart/form-data" }))
 {
-    @Html.ValidationSummary(true)
+  
     <div class="limiter">
         <div class="container-login100">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
                 <form class="login100-form validate-form">
                     <span class="login100-form-title p-b-33">
-                        Account Login
+
+                        Account Retrive
                     </span>
 
+                  
+
+                   
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input100", placeholder = "Email" } })
-                        @Html.ValidationMessageFor(model => model.Email)
-
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         <span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>
                     </div>
 
-
-
                     <div class="container-login100-form-btn m-t-20">
-
                         <input type="submit" value="Send" class="login100-form-btn" />
                     </div>
 
@@ -67,9 +66,6 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 <!--===============================================================================================-->
 <script src="~/Login_v19/vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->

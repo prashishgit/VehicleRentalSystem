@@ -187,7 +187,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModel\TestimonyViewModel.cs" />
-    <Compile Include="PaypalConfiguration.cs" />
+    <Compile Include="Models\PaypalConfiguration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
@@ -2817,7 +2817,6 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\MailSender\Index.cshtml" />
-    <Content Include="Views\User\Retrive.cshtml" />
     <Content Include="Views\Item\Index.cshtml" />
     <Content Include="Views\Item\Create.cshtml" />
     <Content Include="Views\Item\Edit.cshtml" />

@@ -30,7 +30,7 @@ namespace Project.Controllers
                 {
                     Session.Add("fullname", users.FullName);
                     Session["Email"] = users.Email;
-                    
+
                     Session["UserId"] = users.UserId;
                     Session["Photo"] = users.Photo;
                     FormsAuthentication.SetAuthCookie(l.UserName, l.RememberMe);
@@ -64,12 +64,13 @@ namespace Project.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Retrive(UserViewModel uvm, MailModel objModelMail)
+        public ActionResult Retrive(RetriveViewModel l, MailModel objModelMail)
         {
-
-            tblUser tb = _db.tblUsers.Where(e => e.Email == uvm.Email).FirstOrDefault();
+           
+            tblUser tb = _db.tblUsers.Where(e => e.Email == l.Email).FirstOrDefault();
             if (tb != null)
             {
+                
                 if (ModelState.IsValid)
                 {
                     //https://www.google.com/settings/security/lesssecureapps
@@ -115,10 +116,6 @@ namespace Project.Controllers
             }
 
             return RedirectToAction("Index", "Home");
-
-
         }
-
-
     }
 }

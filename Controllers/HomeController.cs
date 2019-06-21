@@ -148,6 +148,7 @@ namespace Project.Controllers
         [HttpGet]
         public ActionResult TestimonyCreate()
         {
+           
             var userId = Convert.ToInt32(Session["UserId"]);
             var testimony = _db.tblTestimonies.Where(u => u.UserId == userId).FirstOrDefault();
             TestimonyViewModel tvm = new TestimonyViewModel();
@@ -174,7 +175,7 @@ namespace Project.Controllers
             tb.Location = "Kathmandu, Nepal";
             _db.tblTestimonies.Add(tb);
             _db.SaveChanges();
-            return PartialView("Shop", "Home");
+            return View();
 
         }
       
@@ -198,10 +199,10 @@ namespace Project.Controllers
             return View();
         }
         [AllowAnonymous]
-        public ActionResult Shop(int? page, int id)
+        public ActionResult Shop(int? page, int? id)
         {
            
-            if(id == 0)
+            if(id == null)
             {
                 var vehicle = _db.tblItems.ToList().ToPagedList(page ?? 1, 9);
 
@@ -209,7 +210,7 @@ namespace Project.Controllers
             }
             else
             {
-                var vehicle = _db.tblItems.Where(u => u.tblCategory.VehicleCategoryId == id).ToList();
+                var vehicle = _db.tblItems.Where(u => u.tblCategory.VehicleCategoryId == id).ToList().ToPagedList(page ?? 1, 9);
                 return View(vehicle);
             }
 

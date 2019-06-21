@@ -100,7 +100,7 @@ namespace Project.Controllers
         public ActionResult Create_Post(BookingViewModel bvm, MailModel objModelMail)
         {
             tblBooking tb = new tblBooking();
-
+            var vehicle = _db.tblItems.Where(u => u.VehicleId == bvm.VehicleId).FirstOrDefault();
             tb.VehicleId = bvm.VehicleId;
             tb.UserId = Convert.ToInt32(@Session["UserId"]);
 
@@ -108,6 +108,7 @@ namespace Project.Controllers
             tb.DropOffDate = bvm.DropOffDate;
             tb.TotalAmount = bvm.TotalAmount;
             tb.AmountPaid = 0;
+            vehicle.VehicleStatus = "Booked";
             tb.BookingStatus = "Pending";
             HttpPostedFileBase fup = Request.Files["CitizenshipPhoto"];
             if (fup != null)
@@ -228,7 +229,7 @@ namespace Project.Controllers
         {
             
             var booking = _db.tblBookings.Where(b => b.BookingId == bvmm.BookingId).FirstOrDefault();
-            
+            var vehicle = _db.tblItems.Where(u => u.VehicleId == bvmm.VehicleId).FirstOrDefault();
             booking.TotalAmount = bvmm.TotalAmount;
             booking.AmountPaid = booking.AmountPaid + bvmm.Payment;
             if (booking.TotalAmount >= booking.AmountPaid)
@@ -244,6 +245,7 @@ namespace Project.Controllers
                 else 
                 {
                     booking.BookingStatus = "Checked Out";
+                   
                 }
                 _db.SaveChanges();
             }
@@ -302,8 +304,7 @@ namespace Project.Controllers
 
                     // Creating a payment
                     // baseURL is the url on which paypal sendsback the data.
-                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority +
-                                "/Booking/PaymentWithPayPal?";
+                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Booking/PaymentWithPayPal?";
 
                     //here we are generating guid for storing the paymentID received in session
                     //which will be used in the payment execution

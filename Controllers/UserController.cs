@@ -55,9 +55,9 @@ namespace Project.Controllers
          {
             return Json(!_db.tblUsers.Any(user => user.UserName == UserName), JsonRequestBehavior.AllowGet);
         }
-        public JsonResult IsEmailAvailable(string email)
+        public JsonResult IsEmailAvailable(string Email)
         {
-            return Json(!_db.tblUsers.Any(user => user.Email == email), JsonRequestBehavior.AllowGet);
+            return Json(!_db.tblUsers.Any(user => user.Email == Email), JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult Create()
@@ -175,67 +175,7 @@ namespace Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-        //public ActionResult Retrive()
-        //{
 
-        //    return View();
-        //}
-        //[HttpPost]
-        //public ActionResult Retrive(UserViewModel uvm, MailModel objModelMail)
-        //{
-
-        //    tblUser tb = _db.tblUsers.Where(e => e.Email == uvm.Email).FirstOrDefault();
-        //    if (tb != null)
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            //https://www.google.com/settings/security/lesssecureapps
-        //            //Make Access for less secure apps=true
-
-        //            string from = "vehiclerentalsystem09@gmail.com";
-        //            objModelMail.To = tb.Email;
-        //            using (MailMessage mail = new MailMessage(from, objModelMail.To))
-        //            {
-        //                try
-        //                {
-        //                    mail.Subject = "Your Password";
-        //                    mail.Body = tb.Password;
-
-        //                    mail.IsBodyHtml = false;
-        //                    SmtpClient smtp = new SmtpClient();
-        //                    smtp.Host = "smtp.gmail.com";
-        //                    smtp.EnableSsl = true;
-        //                    NetworkCredential networkCredential = new NetworkCredential(from, "159753159753p");
-        //                    smtp.UseDefaultCredentials = false;
-        //                    smtp.Credentials = networkCredential;
-        //                    smtp.Port = 587;
-        //                    smtp.Send(mail);
-        //                }
-        //                catch (Exception ex)
-        //                {
-        //                    throw ex;
-        //                }
-        //                finally
-        //                {
-        //                    ViewBag.Message = "Sent";
-        //                }
-
-        //            }
-
-        //        }
-
-        //    }
-        //    else
-        //    {
-
-        //        return RedirectToAction("Index", "Home");
-        //    }
-
-        //    return RedirectToAction("Index", "Home");
-
-
-        //}
-        //[HttpGet]
         public ActionResult CreateUser()
         {
 
