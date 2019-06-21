@@ -88,10 +88,10 @@ namespace Project.Controllers
                 bvm.TotalAmount = total * days;
                 bvm.Days = days;
             }
-            
-            
+
          
-           
+
+
 
             return View(bvm);
         }

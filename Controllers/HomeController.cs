@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using PagedList;
 using PagedList.Mvc;
 using Project.Models.ViewModel;
+using System.Threading;
 
 namespace Project.Controllers
 {
@@ -20,13 +21,43 @@ namespace Project.Controllers
             var user = _db.tblBanners.ToList();
             return View(user);
         }
-      
-        [AllowAnonymous]
-        public ActionResult Vehicle()
-        {
-            return PartialView("_Vehicle", _db.tblItems.OrderBy(r => Guid.NewGuid()).Take(8));
-        }
        
+        [AllowAnonymous]
+
+        public PartialViewResult Vehicle()
+        {
+
+            var vehicle = _db.tblItems.OrderBy(r => Guid.NewGuid()).Take(8);
+            
+            return PartialView("_Vehicle", vehicle);
+        }
+        public PartialViewResult NewArrival()
+        {
+
+            var vehicle = _db.tblItems.OrderBy(r => Guid.NewGuid()).ToList();
+            var vehicleAvailable = vehicle.Where(u => u.VehicleStatus == "Available Now").Take(4);
+
+            return PartialView("_NewArrival", vehicleAvailable);
+        }
+        public static int x = 8;
+        public ActionResult SeeMore()
+        {
+            if (x <= 12)
+            {
+                x = x + 5;
+                var lst = _db.tblItems.Take(x).ToList();
+                Thread.Sleep(2000);
+                return PartialView("_SeeMore", lst);
+            }
+            else
+            {
+                return RedirectToAction("Shop");
+            }
+               
+            
+           
+        }
+
         [AllowAnonymous]
         public ActionResult Testimony()
         {
@@ -219,6 +250,33 @@ namespace Project.Controllers
         public ActionResult CategoryList()
         {
             return PartialView("_CategoryList", _db.tblCategories.ToList());
+        }
+        public ActionResult DateRange()
+        {
+            return PartialView("_DateRange");
+        }
+        [HttpPost]
+        public ActionResult DateRange(ItemViewModel ivm)
+        {
+            int i = 0;
+            List<BookingViewModel> list = new List<BookingViewModel>();
+            var items = _db.tblBookings.ToList();
+
+            foreach (var item in items)
+            {
+                list.Add(new BookingViewModel()
+                {
+
+                    PickUpDate = item.PickUpDate,
+                    DropOffDate = item.DropOffDate,
+
+
+                });
+                i++;
+                var vehicle = _db.tblItems.Where(u => ivm.Start != Convert.ToDateTime(item.PickUpDate) && ivm.End != Convert.ToDateTime(item.DropOffDate)).ToList();
+            }
+           
+                return PartialView("_DateRange");
         }
     }
 }

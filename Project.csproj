@@ -465,6 +465,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="icon-fonts\Flaticon.svg" />
     <Content Include="icon-fonts\fontawesome-webfont.svg" />
+    <Content Include="images\22.gif" />
     <Content Include="images\about.jpg" />
     <Content Include="images\blog-1.jpg" />
     <Content Include="images\blog-2.jpg" />
@@ -2795,6 +2796,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -2885,6 +2888,9 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Booking\SuccessView.cshtml" />
+    <Content Include="Views\Home\_DateRange.cshtml" />
+    <Content Include="Views\Home\_NewArrival.cshtml" />
+    <Content Include="Views\Home\_SeeMore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
