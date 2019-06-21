@@ -51,6 +51,7 @@ namespace Project.Controllers
             }
             else
             {
+                x = 8;
                 return RedirectToAction("Shop");
             }
                
