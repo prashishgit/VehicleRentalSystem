@@ -1,0 +1,90 @@
+﻿@model Project.Models.ViewModel.ItemViewModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container">
+    <div class="card" style="width: 50%;">
+        <div class="card-body">
+            <h5 class="card-title">Delete</h5>
+            <h2></h2>
+            <h6 class="card-subtitle mb-2 text-muted"> Are you sure you want to delete this?</h6>
+
+            <div>
+
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.HiddenFor(model => model.VehicleId)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.VehicleCategoryId)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CategoryName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.CategoryName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.VehiclePrice)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.VehiclePrice)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.VehicleTitle)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.VehicleTitle)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.VehiclePhoto)
+                    </dt>
+
+                    <dd>
+                        <img src="~/images/Vehicle/@Model.VehiclePhoto" height="60" width="60" />
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.VehicleStatus)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.VehicleStatus)
+                    </dd>
+
+
+
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete" class="btn btn-danger" /> |
+                        @*@Html.ActionLink("Back to List", "Index", new { @class = "btn btn-secondary"})*@
+                    <a href="@Url.Action("Index", "Item")" class ="btn btn-light">Back to List</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

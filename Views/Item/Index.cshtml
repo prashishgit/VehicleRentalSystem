@@ -83,8 +83,8 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.VehicleId }, new { @class = "button is-info" }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }, new { @class = "button is-warning" }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "button is-danger" })
+                    @Html.ActionLink("Details", "Details", new { id = item.VehicleId }, new { @class = "button is-warning" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.VehicleId }, new { @class = "button is-danger" })
                 </td>
             </tr>
         }

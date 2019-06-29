@@ -176,19 +176,21 @@ namespace Project.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var banners = _db.tblBanners.Where(b => b.BannerId == id).FirstOrDefault();
-            BannerViewModel bvm = new BannerViewModel();
-            bvm.BannerId = banners.BannerId;
-
-            return View(bvm);
+            var vehicle = _db.tblItems.Where(b => b.VehicleId == id).FirstOrDefault();
+            ItemViewModel ivm = new ItemViewModel();
+            ivm.VehicleTitle = vehicle.VehicleTitle;
+            ivm.Description = vehicle.Description;
+            ivm.VehiclePrice = vehicle.VehiclePrice;
+            ivm.CategoryName = vehicle.tblCategory.CategoryName.ToString();
+            ivm.VehicleStatus = vehicle.VehicleStatus;
+            ivm.VehiclePhoto = vehicle.VehiclePhoto;
+            return View(ivm);
         }
         [HttpPost, ActionName("Delete")]
-        public ActionResult Delete_Post(BannerViewModel bvmm)
+        public ActionResult Delete_Post(int id)
         {
-            tblBanner tb = new tblBanner();
-            BannerViewModel bvm = new BannerViewModel();
-            tb.BannerId = bvm.BannerId;
-            _db.tblBanners.Remove(tb);
+            tblItem tb = _db.tblItems.Where(u => u.VehicleId == id).FirstOrDefault();
+            _db.tblItems.Remove(tb);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

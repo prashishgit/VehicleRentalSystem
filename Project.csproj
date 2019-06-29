@@ -2084,6 +2084,7 @@
     <Content Include="images\StarFade.gif" />
     <Content Include="images\StarGlow.gif" />
     <Content Include="images\Vehicle\Bike1.jpg" />
+    <Content Include="images\Vehicle\Buggati Divo.jpg" />
     <Content Include="images\Vehicle\buggati.jpg" />
     <Content Include="images\Vehicle\DUCATI.jpg" />
     <Content Include="images\Vehicle\Hilux.jpg" />
@@ -2891,6 +2892,7 @@
     <Content Include="Views\Home\_DateRange.cshtml" />
     <Content Include="Views\Home\_NewArrival.cshtml" />
     <Content Include="Views\Home\_SeeMore.cshtml" />
+    <Content Include="Views\Item\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
