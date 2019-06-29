@@ -209,7 +209,7 @@ namespace Project.Controllers
             userRole.RoleId = 2;
             _db.tblUserRoles.Add(userRole);
             _db.SaveChanges();
-
+            ViewBag.Successfull = "User Created Successfully";
 
 
             return RedirectToAction("Index");

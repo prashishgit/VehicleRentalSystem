@@ -35,30 +35,11 @@ namespace Project.Controllers
         {
 
             var vehicle = _db.tblItems.OrderBy(r => Guid.NewGuid()).ToList();
-            var vehicleAvailable = vehicle.Where(u => u.VehicleStatus == "Available Now").Take(4);
+            var vehicleAvailable = vehicle.Where(u => u.VehicleStatus == "Available").Take(4);
 
             return PartialView("_NewArrival", vehicleAvailable);
         }
-        public static int x = 8;
-        public ActionResult SeeMore()
-        {
-            if (x <= 12)
-            {
-                x = x + 5;
-                var lst = _db.tblItems.Take(x).ToList();
-                Thread.Sleep(2000);
-                return PartialView("_SeeMore", lst);
-            }
-            else
-            {
-                x = 8;
-                return RedirectToAction("Shop");
-            }
-               
-            
-           
-        }
-
+       
         [AllowAnonymous]
         public ActionResult Testimony()
         {
@@ -172,6 +153,7 @@ namespace Project.Controllers
         {
             var bookingDetails = _db.tblBookings.Where(u => u.BookingId == id).FirstOrDefault();
             bookingDetails.BookingStatus = "Cancelled";
+            bookingDetails.tblItem.VehicleStatus = "Available";
             _db.SaveChanges();
             
             return View("UserIndex");
@@ -248,6 +230,26 @@ namespace Project.Controllers
 
           
         }
+        public static int x = 8;
+        public ActionResult SeeMore()
+        {
+            if (x <= 12)
+            {
+                x = x + 5;
+                var lst = _db.tblItems.Take(x).ToList();
+                Thread.Sleep(2000);
+                return PartialView("_SeeMore", lst);
+            }
+            else
+            {
+                x = 8;
+                var vehicle = _db.tblItems.ToList();
+                Thread.Sleep(2000);
+                return RedirectToAction("Shop");
+            }
+          
+        }
+
         public ActionResult CategoryList()
         {
             return PartialView("_CategoryList", _db.tblCategories.ToList());

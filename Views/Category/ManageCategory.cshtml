@@ -6,8 +6,9 @@
 
 <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
 <div class="main container" style="width: 100%;">
-    @*<div class="row">
+  <div class="row">
             <ol class="breadcrumb">
                 <li>
                     <a href="#">
@@ -16,7 +17,7 @@
                 </li>
                 <li class="active">manage category</li>
             </ol>
-        </div>*@<!--/.row-->
+        </div>
 
 
 
@@ -44,7 +45,7 @@
                                 <tr>
                                     <th>Category Id</th>
                                     <th>CategoryName</th>
-                                    <th>Action</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
@@ -64,8 +65,9 @@
 @section scripts{
 
     <script src="~/Scripts/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-    
+
     <script src="~/Scripts/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
+
     <script>
         var Popup, dataTable;
         $(document).ready(function () {
@@ -80,8 +82,8 @@
                     { "data": "CategoryName" },
 
                     {"data":"VehicleCategoryId" , "render" : function (data) {
-                        return "<a class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("AddOrEdit","Category")/" + data + "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete("+data+")><i class='fa fa-trash'></i> Delete</a>";
-                    },
+                         return "<a class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("AddOrEdit","Category")/" + data + "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete("+data+")><i class='fa fa-trash'></i> Delete</a>";
+                     },
                         "orderable": false,
                         "searchable":false,
                         "width":"150px"
@@ -110,7 +112,7 @@
                     close: function () {
                         Popup.dialog('destroy').remove();
                     },
-                   
+
 
                 });
             });

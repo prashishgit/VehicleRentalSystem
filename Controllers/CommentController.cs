@@ -38,9 +38,9 @@ namespace Project.Controllers
         {
             return View();
         }
-
+      
         [HttpPost]
-        
+       
         [ValidateAntiForgeryToken]
         public ActionResult Add(FormCollection form)
         {

@@ -8,13 +8,14 @@
 
 
 
-    
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link rel="stylesheet" href="~/registration/fonts/linearicons/style.css">
 <link rel="stylesheet" href="/registration/css/style.css">
-<style> 
-    .text-danger{
+
+<style>
+    .text-danger {
         margin-top: 35px;
-      
+        color: #dc3545 !important;
     }
 </style>
 <div class="wrapper">
@@ -23,64 +24,84 @@
         {
             @Html.ValidationSummary(true)
 
-        <form class="login100-form validate-form">
+            <form class="login100-form validate-form">
 
-            <h3>New Account?</h3>
-            <div class="form-group">
-                @Html.HiddenFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <h3>New Account?</h3>
+                <div class="form-group">
+                    @Html.HiddenFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
 
-            </div>
-            <div class="form-holder">
-                <span class="lnr lnr-user"></span>
-                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "Username" })
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-user"></span>
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "Username" })
 
-                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger control-label col-md-12" })
-               
-
-            </div>
-            <div class="form-holder">
-                <span class="lnr lnr-smile"></span>
-                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", placeholder = "FullName" })
-                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger control-label col-md-12" })
-
-            </div>
-            <div class="form-holder">
-                <span class="lnr lnr-envelope"></span>
-                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger control-label col-md-12" })
-
-            </div>
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger control-label col-md-12" })
 
 
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-smile"></span>
+                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", placeholder = "FullName" })
+                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger control-label col-md-12" })
 
-            <div class="form-holder">
-                <span class="lnr lnr-lock"></span>
-                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-envelope"></span>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger control-label col-md-12" })
 
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger control-label col-md-12" })
-            </div>
-            <div class="form-holder">
-                <span class="lnr lnr-lock"></span>
-                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger control-label col-md-12" })
-            </div>
-            <div class="form-holder">
-                <span class="lnr lnr-calendar-full"></span>
-                @Html.TextBoxFor(model => model.Photo, new { @class = "form-control", @Type = "file" })
-                @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger control-label col-md-12" })
-            </div>
-         
-            <button type="submit" value="Create">
-                <span>Register</span>
-            </button>
+                </div>
 
-        </form>
+
+
+                <div class="form-holder">
+                    <span class="lnr lnr-lock"></span>
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password", id = "pwd" })
+
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger control-label col-md-12" })
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-lock"></span>
+                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password", id = "cpwd" })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger control-label col-md-12", id = "showErrorPwd" })
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-calendar-full"></span>
+                    @Html.TextBoxFor(model => model.Photo, new { @class = "form-control", @Type = "file" })
+                    @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger control-label col-md-12" })
+                </div>
+
+                <button type="submit" value="Create">
+                    <span>Register</span>
+                </button>
+
+            </form>
         }
-        
-        </div>
+
+    </div>
 
 </div>
 
 
 <script src="~/registration/js/jquery-3.3.1.min.js"></script>
 <script src="~/registration/js/main.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $('#cpwd').keyup(function () {
+            var pwd = $('#pwd').val();
+            var cpwd = $('#cpwd').val();
+            if (cpwd != pwd) {
+                $('#showErrorPwd').html('**Password are not matching');
+                $('#showErrorPwd').css('color', 'red');
+                return false;
+            }
+            else {
+                $('#showErrorPwd').html('');
+                return true;
+            }
+        });
+       
+    });
+</script>

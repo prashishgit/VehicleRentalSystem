@@ -89,8 +89,8 @@ namespace Project.Controllers
                 bvm.Days = days;
             }
 
-         
 
+            Session["Booking"] = bvm;
 
 
             return View(bvm);
@@ -160,7 +160,7 @@ namespace Project.Controllers
                             }
 
                         }
-
+                        vehicle.VehicleStatus = "Booked";
                     }
                     else
                     {
@@ -247,6 +247,7 @@ namespace Project.Controllers
                     booking.BookingStatus = "Checked Out";
                    
                 }
+               
                 _db.SaveChanges();
             }
             else
@@ -381,6 +382,7 @@ namespace Project.Controllers
 
             //Adding Item Details like name, currency, price etc
             List<BookingViewModel> listBookings = new List<BookingViewModel>();
+            var booking = Session["Booking"];
             foreach (var item in listBookings)
             {
                 itemList.items.Add(new Item()
@@ -392,6 +394,7 @@ namespace Project.Controllers
                     sku = "sku"
                 });
             }
+
             //itemList.items.Add(new Item()
             //{
             //    name = "Item Name comes here",

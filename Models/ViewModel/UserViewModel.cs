@@ -25,8 +25,14 @@ namespace Project.Models.ViewModel
         [Required]
         public string UserName { get; set; }
 
+       
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [System.ComponentModel.DataAnnotations.Compare("Password")]
+        public string ConfirmPassword { get; set; }
         [Required]
         public string FullName { get; set; }
         [Remote("IsEmailAvailable", "User", ErrorMessage = "Email already in use")]
