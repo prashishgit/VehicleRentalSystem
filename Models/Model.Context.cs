@@ -30,6 +30,7 @@ namespace Project.Models
         public virtual DbSet<tblBooking> tblBookings { get; set; }
         public virtual DbSet<tblCategory> tblCategories { get; set; }
         public virtual DbSet<tblComment> tblComments { get; set; }
+        public virtual DbSet<tblContact> tblContacts { get; set; }
         public virtual DbSet<tblItem> tblItems { get; set; }
         public virtual DbSet<tblRole> tblRoles { get; set; }
         public virtual DbSet<tblTestimony> tblTestimonies { get; set; }

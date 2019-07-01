@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Project.Models.ViewModel.ContactViewModel>
+<span class="quantity">@ViewBag.EmailNumber</span>
+<div class="email-dropdown js-dropdown">
+    <div class="email__title">
+        <p>You have @ViewBag.EmailNumber New Emails</p>
+    </div>
+    <div class="email__item">
+        <div class="image img-cir img-40">
+
+            <img src="~/images/icon/user.png" />
+        </div>
+        <div class="content">
+            @foreach (var item in Model)
+            {
+                <p>@item.Subject</p>
+                <span>@item.FirstName @item.LastName, 3 min ago</span>
+            }
+
+        </div>
+    </div>
+
+    <div class="email__footer">
+        <a href="#">See all emails</a>
+    </div>
+</div>

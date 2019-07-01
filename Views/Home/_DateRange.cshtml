@@ -1,8 +1,16 @@
-﻿<form method="post" class="colorlib-form-2">
+﻿@model Project.Models.ViewModel.ItemViewModel
+
+<style>
+    input, button {
+        width: 134px;
+    }
+</style>
+
+<form method="post" class="colorlib-form-2">
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <label for="guests">Price from:</label>
+                <label for="guests">Available from:</label>
                 <div class="form-field">
                     @*<i class="icon icon-arrow-down3"></i>*@
                     @*<select name="people" id="people" class="form-control">
@@ -12,16 +20,14 @@
                             <option value="#">400</option>
                             <option value="#">1000</option>
                         </select>*@
-                    <input type="date" id="start" name="trip-start"
-                           value="2018-07-22"
-                           min="2018-01-01" max="2018-12-31">
+                    @Html.TextBoxFor(model => model.Start, new { type = "date", @class = "dates", @id = "start", placeholder = "Check Out Date" })
 
                 </div>
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <label for="guests">Price to:</label>
+                <label for="guests">Available to:</label>
                 <div class="form-field">
                     @*<i class="icon icon-arrow-down3"></i>*@
                     @*<select name="people" id="people" class="form-control">
@@ -31,9 +37,8 @@
                             <option value="#">8000</option>
                             <option value="#">10000</option>
                         </select>*@
-                    <input type="date" id="start" name="trip-start"
-                           value="2018-07-22"
-                           min="2018-01-01" max="2018-12-31">
+                    @Html.TextBoxFor(model => model.End, new { type = "date", @class = "dates", @id = "end", placeholder = "Check Out Date" })
+
 
 
                 </div>
@@ -41,6 +46,42 @@
             </div>
         </div>
     </div>
-    <input type="submit" id="start"
-           value="Check">
+    <input type="submit" id="start" value="Check">
 </form>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+
+    })
+    $('.dates').change(function () {
+        var cin = $('#start').val();
+        var checkin = new Date(cin);
+        var cout = $('#end').val();
+        var checkout = new Date(cout);
+        var date = new Date();
+
+        date.setDate(date.getDate() - 1);
+
+        if (checkin < date) {
+            $('#start').val('');
+        }
+
+        if (cin != null && cout != null) {
+            if (checkin > checkout) {
+                $('#start').val('');
+                $('#end').val('');
+            }
+        }
+
+        // var millisecondsPerDay = 1000 * 60 * 60 * 24;
+        // var millisBetween = checkout.getTime() - checkin.getTime();
+        // var days = millisBetween / millisecondsPerDay;
+        //$('#days').val(days);
+
+    })
+
+
+
+</script>

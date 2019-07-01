@@ -36,9 +36,9 @@
         </ul>
     </div>
 </aside>
+
 <div class="colorlib-shop">
     <div class="container">
-        
         <div class="row row-pb-lg">
             <div class="col-md-10 col-md-offset-1">
                 <div class="product-detail-wrap">
@@ -205,7 +205,7 @@
 
 
 
-                   
+
                     @Html.HiddenFor(model => model.VehicleId);
                     @Html.HiddenFor(model => model.VehiclePhoto);
                     @Html.HiddenFor(model => model.VehiclePrice);
@@ -225,7 +225,7 @@
                         @Html.TextBoxFor(model => model.DropOffDate, new { type = "date", @class = "form-control dates", @id = "cout", placeholder = "Check Out Date" })
                     </div>
 
-                    <input type="submit" value="BOOK" class="btn btn-primary btn-block glyphicon glyphicon-ok" id="btnSubmit"  />
+                    <input type="submit" value="BOOK" class="btn btn-primary btn-block glyphicon glyphicon-ok" id="btnSubmit" />
                     @*<a href="@Url.Action("DetailsClient", "Item")" class="btn btn-primary btn-block">
                             BOOK
                             <span class="glyphicon glyphicon-ok"></span>
@@ -243,45 +243,46 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-         $(document).ready(function () {
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
 
-        })
-        $('.dates').change(function () {
-            var cin = $('#cin').val();
-            var checkin = new Date(cin);
-            var cout = $('#cout').val();
-            var checkout = new Date(cout);
-            var date = new Date();
+    })
+    $('.dates').change(function () {
+        var cin = $('#cin').val();
+        var checkin = new Date(cin);
+        var cout = $('#cout').val();
+        var checkout = new Date(cout);
+        var date = new Date();
 
-            date.setDate(date.getDate() - 1);
+        date.setDate(date.getDate() - 1);
 
-            if (checkin < date) {
+        if (checkin < date) {
+            $('#cin').val('');
+        }
+
+        if (cin != null && cout != null) {
+            if (checkin > checkout) {
                 $('#cin').val('');
+                $('#cout').val('');
             }
+        }
 
-            if (cin != null && cout != null) {
-                if (checkin > checkout) {
-                    $('#cin').val('');
-                    $('#cout').val('');
-                }
-            }
+        // var millisecondsPerDay = 1000 * 60 * 60 * 24;
+        // var millisBetween = checkout.getTime() - checkin.getTime();
+        // var days = millisBetween / millisecondsPerDay;
+        //$('#days').val(days);
 
-            // var millisecondsPerDay = 1000 * 60 * 60 * 24;
-            // var millisBetween = checkout.getTime() - checkin.getTime();
-            // var days = millisBetween / millisecondsPerDay;
-            //$('#days').val(days);
-
-        })
+    })
 
 
-       
-    </script>
-    <script src="~/Scripts/bootstrap.js"></script>
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script>
+
+</script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
     function SCRate() {
         for (var i = 1; i <= @totalRating; i++) {
             $("#sRate" + i).attr('class', 'starGlowN');
@@ -290,4 +291,4 @@
     $(function(){
         SCRate();
     });
-    </script>
+</script>

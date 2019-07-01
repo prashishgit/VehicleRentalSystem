@@ -166,16 +166,20 @@ namespace Project.Controllers
             var userId = Convert.ToInt32(Session["UserId"]);
             var testimony = _db.tblTestimonies.Where(u => u.UserId == userId).FirstOrDefault();
             TestimonyViewModel tvm = new TestimonyViewModel();
-            
+           
             if(testimony != null)
             {
+                tvm.TestimonyId = testimony.TestimonyId;
+                tvm.UserId = testimony.UserId;
                 tvm.TestimonyDescription = testimony.TestimonyDescription;
+                return PartialView("_TestimonyEdit", tvm);
             }
             else
             {
                 tvm.TestimonyDescription = "";
+                return PartialView("_TestimonyCreate", tvm);
             }
-            return PartialView("_TestimonyCreate", tvm);
+         
 
         }
         [HttpPost]
@@ -189,28 +193,67 @@ namespace Project.Controllers
             tb.Location = "Kathmandu, Nepal";
             _db.tblTestimonies.Add(tb);
             _db.SaveChanges();
-            return View();
+            return RedirectToAction("UserIndex", "Home");
+
 
         }
-      
+
         [HttpPost]
         public ActionResult TestimonyEdit(TestimonyViewModel tvm)
         {
-            tblTestimony tb = new tblTestimony();
+            var tb = _db.tblTestimonies.Where(b => b.TestimonyId == tvm.TestimonyId).FirstOrDefault();
             tb.TestimonyId = tvm.TestimonyId;
             tb.TestimonyDescription = tvm.TestimonyDescription;
-            _db.tblTestimonies.Add(tb);
+            tb.Location = "Kathmandu, Nepal";
+           
             _db.SaveChanges();
-            return PartialView("_TestimonyCreate");
+            return RedirectToAction("UserIndex", "Home");
 
         }
-
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+        [HttpPost]
+        public ActionResult Contact(ContactViewModel cvm)
+        {
+            tblContact tb = new tblContact();
+
+            tb.FirstName = cvm.FirstName;
+            tb.LastName = cvm.LastName;
+            tb.Email = cvm.Email;
+            tb.Subject = cvm.Subject;
+            tb.Message = cvm.Message;
+            _db.tblContacts.Add(tb);
+            _db.SaveChanges();
+
+            return View();
+        }
+        public ActionResult Emails()
+        {
+            ViewBag.EmailNumber = _db.tblContacts.Count();
+            int i = 0;
+            List<ContactViewModel> list = new List<ContactViewModel>();
+            var contacts = _db.tblContacts.ToList();
+            foreach (var item in contacts)
+            {
+                list.Add(new ContactViewModel()
+                {
+                   
+                    ContactId = item.ContactId,
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    Subject = item.Subject,
+                    Email = item.Email,
+                    Message = item.Message
+                });
+                i++;
+            }
+            return PartialView("_Emails", list);
         }
         [AllowAnonymous]
         public ActionResult Shop(int? page, int? id)
@@ -245,7 +288,7 @@ namespace Project.Controllers
                 x = 8;
                 var vehicle = _db.tblItems.ToList();
                 Thread.Sleep(2000);
-                return RedirectToAction("Shop");
+                return RedirectToAction("Shop", "Home", vehicle);
             }
           
         }
@@ -261,25 +304,20 @@ namespace Project.Controllers
         [HttpPost]
         public ActionResult DateRange(ItemViewModel ivm)
         {
-            int i = 0;
-            List<BookingViewModel> list = new List<BookingViewModel>();
-            var items = _db.tblBookings.ToList();
-
-            foreach (var item in items)
-            {
-                list.Add(new BookingViewModel()
-                {
-
-                    PickUpDate = item.PickUpDate,
-                    DropOffDate = item.DropOffDate,
-
-
-                });
-                i++;
-                var vehicle = _db.tblItems.Where(u => ivm.Start != Convert.ToDateTime(item.PickUpDate) && ivm.End != Convert.ToDateTime(item.DropOffDate)).ToList();
-            }
+          
+          var booking = _db.tblBookings.ToList();
+            var item = _db.tblItems.ToList();
+          
+            var start = ivm.Start;
+            var end = ivm.End;
+            var vehicleList = _db.tblItems.ToList();
+            var items = _db.tblBookings.Where(u => u.PickUpDate != start || u.DropOffDate != end).ToList();
            
-                return PartialView("_DateRange");
+          
+          
+            return View("Shop");
+
         }
+
     }
 }

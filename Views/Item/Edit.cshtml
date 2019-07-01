@@ -39,7 +39,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.VehiclePhoto, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <img src="~/images/Vehicle/@Model.VehiclePhoto" height="100" width="100" />>
+                <img src="~/images/Vehicle/@Model.VehiclePhoto" height="100" width="100" />
                 @Html.HiddenFor(model => model.VehiclePhoto)
                 @Html.TextBoxFor(model => model.VehiclePhoto, new { @class = "form-control", @Type = "file" })
                 @Html.ValidationMessageFor(model => model.VehiclePhoto, "", new { @class = "text-danger" })

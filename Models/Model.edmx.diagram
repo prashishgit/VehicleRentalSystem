@@ -4,12 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="67bcb0f3f5ff481791541193c0894aaa" Name="Diagram1">
+      <Diagram DiagramId="5531996365534175bd3b2fcb6889e941" Name="Diagram1">
         <EntityTypeShape EntityType="VehicleRentalDBModel.sysdiagram" Width="1.5" PointX="7.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="VehicleRentalDBModel.tblBanner" Width="1.5" PointX="7.75" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="VehicleRentalDBModel.tblBooking" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="VehicleRentalDBModel.tblCategory" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="VehicleRentalDBModel.tblComment" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VehicleRentalDBModel.tblContact" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="VehicleRentalDBModel.tblItem" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VehicleRentalDBModel.tblRole" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="VehicleRentalDBModel.tblTestimony" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
