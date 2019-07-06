@@ -28,7 +28,6 @@
     <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="VehicleId" Type="int" />
     <Property Name="UserId" Type="int" />
-    <Property Name="CitizenshipPhoto" Type="nvarchar" MaxLength="50" />
     <Property Name="PickUpDate" Type="nvarchar" MaxLength="50" />
     <Property Name="DropOffDate" Type="nvarchar" MaxLength="50" />
     <Property Name="TotalAmount" Type="int" />
@@ -103,6 +102,7 @@
     <Property Name="FullName" Type="nvarchar" MaxLength="50" />
     <Property Name="Email" Type="nvarchar" MaxLength="50" />
     <Property Name="Photo" Type="nvarchar" MaxLength="50" />
+    <Property Name="CitizenshipPhoto" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tblUserRole">
     <Key>

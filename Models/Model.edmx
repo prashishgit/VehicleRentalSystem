@@ -33,7 +33,6 @@
           <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="VehicleId" Type="int" />
           <Property Name="UserId" Type="int" />
-          <Property Name="CitizenshipPhoto" Type="nvarchar" MaxLength="50" />
           <Property Name="PickUpDate" Type="nvarchar" MaxLength="50" />
           <Property Name="DropOffDate" Type="nvarchar" MaxLength="50" />
           <Property Name="TotalAmount" Type="int" />
@@ -108,6 +107,7 @@
           <Property Name="FullName" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Photo" Type="nvarchar" MaxLength="50" />
+          <Property Name="CitizenshipPhoto" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblUserRole">
           <Key>
@@ -299,7 +299,6 @@
           <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="VehicleId" Type="Int32" />
           <Property Name="UserId" Type="Int32" />
-          <Property Name="CitizenshipPhoto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PickUpDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DropOffDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TotalAmount" Type="Int32" />
@@ -384,6 +383,7 @@
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CitizenshipPhoto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblBookings" Relationship="Self.FK_tblBooking_tblUser" FromRole="tblUser" ToRole="tblBooking" />
           <NavigationProperty Name="tblRole" Relationship="Self.FK_tblUser_tblRole" FromRole="tblUser" ToRole="tblRole" />
           <NavigationProperty Name="tblTestimonies" Relationship="Self.FK_tblTestimony_tblUser" FromRole="tblUser" ToRole="tblTestimony" />
@@ -583,7 +583,6 @@
                 <ScalarProperty Name="BookingId" ColumnName="BookingId" />
                 <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="CitizenshipPhoto" ColumnName="CitizenshipPhoto" />
                 <ScalarProperty Name="PickUpDate" ColumnName="PickUpDate" />
                 <ScalarProperty Name="DropOffDate" ColumnName="DropOffDate" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
@@ -665,6 +664,7 @@
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="CitizenshipPhoto" ColumnName="CitizenshipPhoto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

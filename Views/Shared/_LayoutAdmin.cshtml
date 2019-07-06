@@ -317,7 +317,7 @@
                                     </div>
                                     <div class="noti__item js-item-menu">
                                         <i class="zmdi zmdi-email"></i>
-                                      @Html.Action("Emails");
+                                      @*@Html.Action("Emails");*@
                                         
                                     </div>
                                     <div class="noti__item js-item-menu">
@@ -379,7 +379,7 @@
                                                     <h5 class="name">
                                                         <a href="#">@User.Identity.Name</a>
                                                     </h5>
-                                                    <span class="email">@*@Session["Email"].ToString()*@</span>
+                                                    <span class="email">@Session["Email"].ToString()</span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">

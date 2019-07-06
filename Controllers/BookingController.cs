@@ -14,6 +14,7 @@ namespace Project.Controllers
 {
     public class BookingController : Controller
     {
+        public string strCart = "Cart";
         // GET: Booking
         VehicleRentalDBEntities _db = new VehicleRentalDBEntities();
         [HttpGet]
@@ -35,18 +36,18 @@ namespace Project.Controllers
                     UserName = users.UserName,
                     VehicleTitle = vehicle.VehicleTitle,
                     VehiclePhoto = vehicle.VehiclePhoto,
+                    CitizenshipPhoto = users.CitizenshipPhoto,
                     PickUpDate = item.PickUpDate,
                     DropOffDate = item.DropOffDate,
                     TotalAmount = item.TotalAmount,
                     AmountPaid = item.AmountPaid,
-                    CitizenshipPhoto = item.CitizenshipPhoto,
                     BookingStatus = item.BookingStatus
                 });
                 i++;
             }
             return View(list.ToPagedList(page ?? 1, 10));
         }
-       
+
 
         [Authorize]
         [HttpGet]
@@ -58,8 +59,9 @@ namespace Project.Controllers
             var user = _db.tblUsers.Where(u => u.UserName == client).FirstOrDefault();
             var userId = user.UserId;
             var bookingUserId = _db.tblBookings.Where(u => u.UserId == userId).FirstOrDefault();
-            if (bookingUserId != null)
+            if (user.CitizenshipPhoto != null)
             {
+                bvm.UserId = userId;
                 bvm.PickUpDate = bvmm.PickUpDate;
                 bvm.DropOffDate = bvmm.DropOffDate;
                 bvm.VehicleId = bvmm.VehicleId;
@@ -70,11 +72,14 @@ namespace Project.Controllers
                 DateTime pickupday = Convert.ToDateTime(bvm.PickUpDate);
                 DateTime dropofday = Convert.ToDateTime(bvm.DropOffDate);
                 var days = (dropofday - pickupday).Days;
+
                 bvm.TotalAmount = total * days;
                 bvm.Days = days;
-                bvm.CitizenshipPhoto = bookingUserId.CitizenshipPhoto;
-            }else
+                bvm.CitizenshipPhoto = user.CitizenshipPhoto;
+            }
+            else
             {
+                bvm.UserId = userId;
                 bvm.PickUpDate = bvmm.PickUpDate;
                 bvm.DropOffDate = bvmm.DropOffDate;
                 bvm.VehicleId = bvmm.VehicleId;
@@ -90,119 +95,93 @@ namespace Project.Controllers
             }
 
 
-            Session["Booking"] = bvm;
+
 
 
             return View(bvm);
         }
-        [Authorize]
-        [HttpPost]
-        public ActionResult Create_Post(BookingViewModel bvm, MailModel objModelMail)
+
+
+
+        public ActionResult Create_Post(MailModel objModelMail)
         {
-            tblBooking tb = new tblBooking();
-            var vehicle = _db.tblItems.Where(u => u.VehicleId == bvm.VehicleId).FirstOrDefault();
-            tb.VehicleId = bvm.VehicleId;
-            tb.UserId = Convert.ToInt32(@Session["UserId"]);
-
-            tb.PickUpDate = bvm.PickUpDate;
-            tb.DropOffDate = bvm.DropOffDate;
-            tb.TotalAmount = bvm.TotalAmount;
-            tb.AmountPaid = 0;
-            vehicle.VehicleStatus = "Booked";
-            tb.BookingStatus = "Pending";
-            HttpPostedFileBase fup = Request.Files["CitizenshipPhoto"];
-            if (fup != null)
+            List<Cart> lstCart = (List<Cart>)Session[strCart];
+            foreach (var item in lstCart)
             {
-                if (fup.FileName != "")
+                tblBooking tb = new tblBooking();
+                var vehicle = _db.tblItems.Where(u => u.VehicleId == item.Vehicle.VehicleId).FirstOrDefault();
+                tb.VehicleId = vehicle.VehicleId;
+                tb.UserId = Convert.ToInt32(@Session["UserId"]);
+
+                tb.PickUpDate = item.Vehicle.PickUpDate;
+                tb.DropOffDate = item.Vehicle.DropOffDate;
+                tb.TotalAmount = item.Vehicle.TotalAmount;
+                tb.AmountPaid = item.Vehicle.AmountPaid;
+                vehicle.VehicleStatus = "Booked";
+                tb.BookingStatus = "Pending";
+                _db.tblBookings.Add(tb);
+                _db.SaveChanges();
+                var email = @Session["Email"].ToString();
+                if (tb != null)
                 {
-                    tb.CitizenshipPhoto = fup.FileName;
-                    fup.SaveAs(Server.MapPath("~/images/CitizenshipPhoto/" + fup.FileName));
-                    _db.tblBookings.Add(tb);
-                    _db.SaveChanges();
-                    var email = @Session["Email"].ToString();
-
-
-                    if (tb != null)
+                    if (ModelState.IsValid)
                     {
-                        if (ModelState.IsValid)
+                        //https://www.google.com/settings/security/lesssecureapps
+                        //Make Access for less secure apps=true
+
+                        string from = "vehiclerentalsystem09@gmail.com";
+                        objModelMail.To = email;
+                        using (MailMessage mail = new MailMessage(from, objModelMail.To))
                         {
-                            //https://www.google.com/settings/security/lesssecureapps
-                            //Make Access for less secure apps=true
-
-                            string from = "vehiclerentalsystem09@gmail.com";
-                            objModelMail.To = email;
-                            using (MailMessage mail = new MailMessage(from, objModelMail.To))
+                            try
                             {
-                                try
-                                {
-                                    mail.Subject = "Booking Details";
-                                    mail.Body = "To Confirm you booking please visit our office for the partial payment of Total Amount:";
+                                mail.Subject = "Booking Details";
+                                mail.Body = "To Confirm you booking please visit our office for the partial payment of Total Amount:";
 
-                                    mail.IsBodyHtml = false;
-                                    SmtpClient smtp = new SmtpClient();
-                                    smtp.Host = "smtp.gmail.com";
-                                    smtp.EnableSsl = true;
-                                    NetworkCredential networkCredential = new NetworkCredential(from, "159753159753p");
-                                    smtp.UseDefaultCredentials = false;
-                                    smtp.Credentials = networkCredential;
-                                    smtp.Port = 587;
-                                    smtp.Send(mail);
-                                }
-                                catch (Exception ex)
-                                {
-                                    throw ex;
-                                }
-                                finally
-                                {
-                                    ViewBag.Message = "Sent";
-                                }
-
+                                mail.IsBodyHtml = false;
+                                SmtpClient smtp = new SmtpClient();
+                                smtp.Host = "smtp.gmail.com";
+                                smtp.EnableSsl = true;
+                                NetworkCredential networkCredential = new NetworkCredential(from, "159753159753p");
+                                smtp.UseDefaultCredentials = false;
+                                smtp.Credentials = networkCredential;
+                                smtp.Port = 587;
+                                smtp.Send(mail);
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+                            finally
+                            {
+                                ViewBag.Message = "Sent";
                             }
 
                         }
-                        vehicle.VehicleStatus = "Booked";
-                    }
-                    else
-                    {
 
-                        return RedirectToAction("Index", "Home");
                     }
-
-                  
+                    vehicle.VehicleStatus = "Booked";
                 }
                 else
                 {
-                    BookingViewModel bvmm = new BookingViewModel();
-                    bvmm.PickUpDate = bvm.PickUpDate;
-                    bvmm.DropOffDate = bvm.DropOffDate;
-                    bvmm.VehicleId = bvm.VehicleId;
-                    bvmm.VehiclePhoto = bvm.VehiclePhoto;
-                    bvmm.VehicleTitle = bvm.VehicleTitle;
-                    bvmm.VehiclePrice = bvm.VehiclePrice;
-                    int total = Convert.ToInt32(bvm.VehiclePrice);
-                    DateTime pickupday = Convert.ToDateTime(bvm.PickUpDate);
-                    DateTime dropofday = Convert.ToDateTime(bvm.DropOffDate);
-                    var days = (dropofday - pickupday).Days;
-                    bvmm.TotalAmount = total * days;
-                    bvmm.Days = days;
-                    return RedirectToAction("Create", "Booking", bvmm);
+
+                    return RedirectToAction("PaymentWithPaypal", "Home");
                 }
-
             }
+            Session.Remove(strCart);
             return RedirectToAction("Index", "Home");
-
-
-
         }
         [HttpGet]
         public ActionResult Edit(int id)
         {
-           
+
             var booking = _db.tblBookings.Where(b => b.BookingId == id).FirstOrDefault();
+            var vehicle = _db.tblItems.Where(b => b.VehicleId == booking.VehicleId).FirstOrDefault();
             if (booking.BookingStatus != "Checked Out")
             {
                 BookingViewModel bvm = new BookingViewModel();
                 bvm.BookingId = booking.BookingId;
+                bvm.VehicleId = vehicle.VehicleId;
                 bvm.TotalAmount = booking.TotalAmount;
                 bvm.AmountPaid = booking.AmountPaid;
                 bvm.BookingStatus = booking.BookingStatus;
@@ -212,8 +191,9 @@ namespace Project.Controllers
             }
             else
             {
-                 BookingViewModel bvm = new BookingViewModel();
+                BookingViewModel bvm = new BookingViewModel();
                 bvm.BookingId = booking.BookingId;
+                bvm.VehicleId = vehicle.VehicleId;
                 bvm.TotalAmount = booking.TotalAmount;
                 bvm.AmountPaid = booking.AmountPaid;
                 bvm.BookingStatus = booking.BookingStatus;
@@ -221,13 +201,13 @@ namespace Project.Controllers
 
                 return RedirectToAction("IndexBooking", "Booking");
             }
-           
+
         }
-        
+
         [HttpPost]
         public ActionResult Edit(BookingViewModel bvmm)
         {
-            
+
             var booking = _db.tblBookings.Where(b => b.BookingId == bvmm.BookingId).FirstOrDefault();
             var vehicle = _db.tblItems.Where(u => u.VehicleId == bvmm.VehicleId).FirstOrDefault();
             booking.TotalAmount = bvmm.TotalAmount;
@@ -238,26 +218,27 @@ namespace Project.Controllers
                 {
                     booking.BookingStatus = "Confirm";
                 }
-                else if(bvmm.AmountPaid == 0)
+                else if (bvmm.AmountPaid == 0)
                 {
                     booking.BookingStatus = "Pending";
                 }
-                else 
+                else
                 {
                     booking.BookingStatus = "Checked Out";
-                   
+                    vehicle.VehicleStatus = "Available";
+
                 }
-               
+
                 _db.SaveChanges();
             }
             else
             {
                 return RedirectToAction("Edit", "Booking");
             }
-           
-          
-          
-            return RedirectToAction("Edit","Booking");
+
+
+
+            return RedirectToAction("Edit", "Booking");
         }
         [HttpGet]
         public ActionResult Details(int id)
@@ -271,7 +252,7 @@ namespace Project.Controllers
             bvm.UserName = users.UserName;
             bvm.VehicleTitle = vehicle.VehicleTitle;
             bvm.PickUpDate = booking.PickUpDate;
-            
+
             bvm.DropOffDate = booking.DropOffDate;
             DateTime pickupday = Convert.ToDateTime(bvm.PickUpDate);
             DateTime dropofday = Convert.ToDateTime(bvm.DropOffDate);
@@ -280,12 +261,73 @@ namespace Project.Controllers
             bvm.VehiclePrice = vehicle.VehiclePrice;
             bvm.AmountPaid = booking.AmountPaid;
             bvm.AmountLeft = Convert.ToInt32(booking.TotalAmount - booking.AmountPaid);
-           
+
 
             return View(bvm);
         }
 
 
+
+        [HttpPost]
+        public ActionResult OrderNow(BookingViewModel bvm)
+        {
+
+
+            var id = _db.tblItems.Where(x => x.VehicleId == bvm.VehicleId).FirstOrDefault();
+
+            if (bvm == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (Session[strCart] == null)
+            {
+                List<Cart> lstCart = new List<Cart>
+                {
+                    new Cart(bvm, 1)
+                };
+                Session[strCart] = lstCart;
+            }
+            else
+            {
+                List<Cart> lstCart = (List<Cart>)Session[strCart];
+                int check = IsExistingCheck(id.VehicleId);
+                if (check == -1)
+                {
+
+                    lstCart.Add(new Cart(bvm, 1));
+                }
+                else
+                {
+                    lstCart[check].Quantity++;
+                }
+
+                Session[strCart] = lstCart;
+               
+            }
+            var tb = _db.tblUsers.Where(x => x.UserId == bvm.UserId).FirstOrDefault();
+
+            HttpPostedFileBase fup = Request.Files["CitizenshipPhoto"];
+            if (fup != null)
+            {
+                if (fup.FileName != "")
+                {
+                    tb.CitizenshipPhoto = fup.FileName;
+                    fup.SaveAs(Server.MapPath("~/images/CitizenshipPhoto/" + fup.FileName));
+                    _db.SaveChanges();
+                }
+            }
+            return View("Cart");
+        }
+
+        private int IsExistingCheck(int? id)
+        {
+            List<Cart> lstCart = (List<Cart>)Session[strCart];
+            for (int i = 0; i < lstCart.Count; i++)
+            {
+                if (lstCart[i].Vehicle.VehicleId == id) return i;
+            }
+            return -1;
+        }
 
         public ActionResult PaymentWithPaypal(string Cancel = null)
         {
@@ -336,7 +378,7 @@ namespace Project.Controllers
 
                     // saving the paymentID in the key guid
                     Session.Add(guid, createdPayment.id);
-
+                   
                     return Redirect(paypalRedirectUrl);
                 }
                 else
@@ -358,12 +400,12 @@ namespace Project.Controllers
             }
             catch (Exception ex)
             {
-                
-                return View("FailureView");
+                ViewBag.Error = ex.Message;
+                return View("SuccessView");
             }
 
             //on successful payment, show success page to user.
-            return View("SuccessView");
+            return RedirectToAction("Create_Post", "Booking");
         }
 
         private PayPal.Api.Payment payment;
@@ -378,31 +420,23 @@ namespace Project.Controllers
         {
 
             //create itemlist and add item objects to it
+
             var itemList = new ItemList() { items = new List<Item>() };
 
             //Adding Item Details like name, currency, price etc
-            List<BookingViewModel> listBookings = new List<BookingViewModel>();
-            var booking = Session["Booking"];
+            List<Cart> listBookings = (List<Cart>)Session[strCart];
+
             foreach (var item in listBookings)
             {
                 itemList.items.Add(new Item()
                 {
-                    name = item.tblItem.VehicleTitle,
+                    name = item.Vehicle.VehicleTitle,
                     currency = "USD",
-                    price = item.tblItem.VehiclePrice.ToString(),
-                    quantity = item.Days.ToString(),
+                    price = (Convert.ToInt32(item.Vehicle.VehiclePrice) * item.Vehicle.Days).ToString(),
+                    quantity = item.Quantity.ToString(),
                     sku = "sku"
                 });
             }
-
-            //itemList.items.Add(new Item()
-            //{
-            //    name = "Item Name comes here",
-            //    currency = "USD",
-            //    price = "1",
-            //    quantity = "1",
-            //    sku = "sku"
-            //});
 
             var payer = new Payer() { payment_method = "paypal" };
 
@@ -416,9 +450,10 @@ namespace Project.Controllers
             // Adding Tax, shipping and Subtotal details
             var details = new Details()
             {
-               
-                fee = "1",
-                subtotal = listBookings.Sum(x => x.TotalAmount).ToString()
+
+
+                subtotal = listBookings.Sum(x => Convert.ToInt32(x.Vehicle.AmountPaid) * x.Quantity).ToString()
+
             };
 
             //Final amount with details

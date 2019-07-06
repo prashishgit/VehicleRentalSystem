@@ -40,6 +40,7 @@ namespace Project.Models.ViewModel
         public string Email { get; set; }
         [Required]
         public string Photo { get; set; }
+        public string CitizenshipPhoto { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblUserRole> tblUserRoles { get; set; }

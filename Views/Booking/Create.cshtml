@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    
+
 <aside id="colorlib-hero" class="breadcrumbs">
     <div class="flexslider">
         <ul class="slides">
@@ -43,14 +43,14 @@
                                     </div>
                                 </div>
                             </div>
-                            @using (Html.BeginForm("PaymentWithPaypal", "Booking", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                            @using (Html.BeginForm("OrderNow", "Booking", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                             {
 
                                 @Html.AntiForgeryToken()
                                 <div class="col-md-7">
                                     <div class="desc">
                                         <h3>
-
+                                            @Html.HiddenFor(model => model.UserId)
                                             @Html.HiddenFor(model => model.VehicleId)
                                             @Html.HiddenFor(model => model.PickUpDate)
                                             @Html.HiddenFor(model => model.DropOffDate)
@@ -98,20 +98,29 @@
                                             <span>
                                                 @if (Model.CitizenshipPhoto != null)
                                                 {
-                                                   
+
                                                     <img src="~/images/CitizenshipPhoto/@Model.CitizenshipPhoto" height="50" width="70" />
                                                 }
                                                 else
                                                 {
                                                     @Html.TextBoxFor(model => model.CitizenshipPhoto, new { @class = "form-control", @Type = "file", id = "citizenship" })
                                                 }
+                                                @Html.HiddenFor(model => model.CitizenshipPhoto)
 
                                             </span>
                                         </p>
 
 
-                                        <p><input type="submit" value="BOOK With Paypal" class="btn btn-primary btn-addtocart" id="SubmitBooking"> </p>
+                                        <p class="price">
+                                            <label class="col-md-3">Amount Pay:</label>
 
+                                            @Html.EditorFor(model => model.AmountPaid)
+                                        </p>
+                                        @*<p><input type="submit" value="BOOK With Paypal" class="btn btn-primary btn-addtocart" id="SubmitBooking"> </p>*@
+                                        <p>
+                                            @*<a data-toggle="modal" class="btn btn-primary btn-addtocart" data-target="#myModal"><i class="icon-calendar"></i> Book With Paypal</a>*@
+                                            <input type="submit" value="Book" class="btn btn-primary btn-block glyphicon glyphicon-ok" />
+                                        </p>
 
                                     </div>
                                 </div>

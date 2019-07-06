@@ -47,11 +47,12 @@
 
 
 
-        </div> <div id="loader" style="display:none; margin-left: 45%">
+        </div>
+        <div id="loader" style="display:none; margin-left: 45%">
 
             <img src="~/Images/22.gif" />
         </div>
-        
+
         <p>
             @*<a href="@Url.Action("Shop", "Home")" class="btn btn-primary" style="margin-left: 45%">See More</a>*@
             @Ajax.ActionLink("See More....", "SeeMore", null, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "vehicleSeemore", InsertionMode = InsertionMode.Replace, LoadingElementId = "loader", LoadingElementDuration = 2000 }, new { @class = "btn btn-primary", style = "margin-left: 45%" })

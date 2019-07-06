@@ -30,7 +30,6 @@
           <ScalarProperty Name="BookingId" ColumnName="BookingId" />
           <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="CitizenshipPhoto" ColumnName="CitizenshipPhoto" />
           <ScalarProperty Name="PickUpDate" ColumnName="PickUpDate" />
           <ScalarProperty Name="DropOffDate" ColumnName="DropOffDate" />
           <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
@@ -112,6 +111,7 @@
           <ScalarProperty Name="FullName" ColumnName="FullName" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="CitizenshipPhoto" ColumnName="CitizenshipPhoto" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

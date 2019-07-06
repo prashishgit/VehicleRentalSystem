@@ -30,5 +30,7 @@ namespace Project.Models.ViewModel
 
         public virtual tblItem tblItem { get; set; }
         public virtual tblUser tblUser { get; set; }
+        
     }
+    
 }

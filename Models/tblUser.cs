@@ -29,6 +29,7 @@ namespace Project.Models
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Photo { get; set; }
+        public string CitizenshipPhoto { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblBooking> tblBookings { get; set; }

@@ -17,7 +17,6 @@ namespace Project.Models
         public int BookingId { get; set; }
         public Nullable<int> VehicleId { get; set; }
         public Nullable<int> UserId { get; set; }
-        public string CitizenshipPhoto { get; set; }
         public string PickUpDate { get; set; }
         public string DropOffDate { get; set; }
         public Nullable<int> TotalAmount { get; set; }

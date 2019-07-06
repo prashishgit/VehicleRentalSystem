@@ -1,0 +1,29 @@
+﻿@using Project.Models;
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <table class="table is-hoverable is-striped" style="width: 100%">
+        <tr>
+            <th>Vehicle Name:</th>
+            <th>Vehicle Price:</th>
+
+            <th>Total Amount:</th>
+            <th>Amount Paid:</th>
+
+        </tr>
+        @foreach (var cart in (List<Cart>)Session["Cart"])
+        {
+            <tr>
+                <td>@cart.Vehicle.VehicleTitle</td>
+                <td>@cart.Vehicle.VehiclePrice</td>
+                <td>@cart.Vehicle.TotalAmount</td>
+                <td>@cart.Vehicle.AmountPaid</td>
+                <td></td>
+            </tr>
+        }
+    </table>
+    <p><a href="@Url.Action("PaymentWithPaypal", "Booking", new { @class="btn btn-default"})">CheckOut</a></p>
+</div>

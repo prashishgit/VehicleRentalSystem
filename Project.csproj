@@ -141,6 +141,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\TestimonyController.cs" />
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2900,6 +2901,7 @@
     <Content Include="Views\Item\Delete.cshtml" />
     <Content Include="Views\Home\_TestimonyEdit.cshtml" />
     <Content Include="Views\Home\_Emails.cshtml" />
+    <Content Include="Views\Booking\Cart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

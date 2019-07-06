@@ -276,21 +276,13 @@ namespace Project.Controllers
         public static int x = 8;
         public ActionResult SeeMore()
         {
-            if (x <= 12)
-            {
-                x = x + 5;
+            
+                x = x + 4;
                 var lst = _db.tblItems.Take(x).ToList();
                 Thread.Sleep(2000);
                 return PartialView("_SeeMore", lst);
-            }
-            else
-            {
-                x = 8;
-                var vehicle = _db.tblItems.ToList();
-                Thread.Sleep(2000);
-                return RedirectToAction("Shop", "Home", vehicle);
-            }
-          
+            
+           
         }
 
         public ActionResult CategoryList()
@@ -312,10 +304,20 @@ namespace Project.Controllers
             var end = ivm.End;
             var vehicleList = _db.tblItems.ToList();
             var items = _db.tblBookings.Where(u => u.PickUpDate != start || u.DropOffDate != end).ToList();
-           
-          
-          
-            return View("Shop");
+         
+                //from s in items // outer sequence
+                //         join st in vehicleList //inner sequence 
+                //         on s.VehicleId equals st.VehicleId // key selector 
+                //         select new
+                //         { // result selector 
+                //             VechileId = s.tblItem.VehicleId,
+                            
+
+                           
+                //         };
+
+
+            return View("Shop", items);
 
         }
 
