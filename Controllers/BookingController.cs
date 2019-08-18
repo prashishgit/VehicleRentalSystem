@@ -298,7 +298,7 @@ namespace Project.Controllers
                 }
                 else
                 {
-                    lstCart[check].Quantity++;
+                    lstCart[check].Quantity = 1;
                 }
 
                 Session[strCart] = lstCart;

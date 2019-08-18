@@ -34,7 +34,9 @@
     <!-- Main CSS-->
     <link href="~/Admin/css/theme.css" rel="stylesheet" media="all">
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
+   
     <link href="~/Scripts/DataTables-1.10.18/css/site.css" rel="stylesheet" />
+
     <link href="~/bulma-0.7.4/css/bulma.css" rel="stylesheet" />
 </head>
 
@@ -60,98 +62,56 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="index.html">Dashboard 1</a>
-                                </li>
+                        <li><a href="@Url.Action("AdminIndex","Home")"><i class="fas fa-tachometer-alt"></i>DashBoard</a></li>
+                        @*<li>@Html.ActionLink("Banner", "Index", "Banner", null, new { @class = "fas fa-adjust" })</li>*@
+                        <li><a href="@Url.Action("Index","Banner")"><i class="fas fa-adjust"></i>Banner</a></li>
 
-                            </ul>
-                        </li>
+                        @*<li>@Html.ActionLink("Mail", "Index", "MailSender", null, new { @class = "fas fa-user" })</li>*@
+                        <li><a href="@Url.Action("Index","MailSender")"><i class="fas fa-mail-bulk"></i>Mail</a></li>
+                        @*<li>@Html.ActionLink("Vehicle", "Index", "Item", null, new { @class = "fas fa-user" })</li>*@
+                        <li><a href="@Url.Action("Index","Item")"><i class="fas fa-car"></i>Vehicle</a></li>
+                        @*<li>
+                                <a href="@Url.Action("Index","Booking"))"><i class="fas fa-table"></i>Booking</a>
+                            </li>*@
                         <li>
-                            <a href="chart.html">
-                                <i class="fas fa-chart-bar"></i>Charts
-                            </a>
+                            <a href="@Url.Action("IndexBooking", "Booking")"><i class="fas fa-table"></i>Booking</a>
                         </li>
+
+
+                        @*<li>
+                                <a href="form.html">
+                                    <i class="far fa-check-square"></i>Forms
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-calendar-alt"></i>Calendar
+                                </a>
+                            </li>*@
                         <li>
-                            <a href="table.html">
-                                <i class="fas fa-table"></i>Tables
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form.html">
-                                <i class="far fa-check-square"></i>Forms
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-calendar-alt"></i>Calendar
-                            </a>
-                        </li>
-                        <li>
-                            <a href="map.html">
+                            <a href="@Url.Action("Index_Map", "Map")">
                                 <i class="fas fa-map-marker-alt"></i>Maps
                             </a>
                         </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Pages
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="login.html">Login</a>
-                                </li>
-                                <li>
-                                    <a href="register.html">Register</a>
-                                </li>
-                                <li>
-                                    <a href="forget-pass.html">Forget Password</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-desktop"></i>UI Elements
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="button.html">Button</a>
-                                </li>
-                                <li>
-                                    <a href="badge.html">Badges</a>
-                                </li>
-                                <li>
-                                    <a href="tab.html">Tabs</a>
-                                </li>
-                                <li>
-                                    <a href="card.html">Cards</a>
-                                </li>
-                                <li>
-                                    <a href="alert.html">Alerts</a>
-                                </li>
-                                <li>
-                                    <a href="progress-bar.html">Progress Bars</a>
-                                </li>
-                                <li>
-                                    <a href="modal.html">Modals</a>
-                                </li>
-                                <li>
-                                    <a href="switch.html">Switchs</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grids</a>
-                                </li>
-                                <li>
-                                    <a href="fontawesome.html">Fontawesome Icon</a>
-                                </li>
-                                <li>
-                                    <a href="typo.html">Typography</a>
-                                </li>
-                            </ul>
-                        </li>
+                        @*<li class="has-sub">
+                                <a class="js-arrow" href="#">
+                                    <i class="fas fa-copy"></i>Pages
+                                </a>
+                                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    <li>
+                                        <a href="login.html">Login</a>
+                                    </li>
+                                    <li>
+                                        <a href="register.html">Register</a>
+                                    </li>
+                                    <li>
+                                        <a href="forget-pass.html">Forget Password</a>
+                                    </li>
+                                </ul>
+                            </li>*@
+                        @*<li>@Html.ActionLink("Back To Home", "Index", "Home")</li>*@
+                        <li><a href="@Url.Action("Index","Home")"><i class="fas fa-home"></i>Back To Home</a></li>
+
                     </ul>
                 </div>
             </nav>
@@ -179,44 +139,43 @@
                         <li><a href="@Url.Action("Index","Item")"><i class="fas fa-car"></i>Vehicle</a></li>
                         @*<li>
                                 <a href="@Url.Action("Index","Booking"))"><i class="fas fa-table"></i>Booking</a>
-
                             </li>*@
                         <li>
                             <a href="@Url.Action("IndexBooking", "Booking")"><i class="fas fa-table"></i>Booking</a>
                         </li>
 
 
+                        @*<li>
+                                <a href="form.html">
+                                    <i class="far fa-check-square"></i>Forms
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-calendar-alt"></i>Calendar
+                                </a>
+                            </li>*@
                         <li>
-                            <a href="form.html">
-                                <i class="far fa-check-square"></i>Forms
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-calendar-alt"></i>Calendar
-                            </a>
-                        </li>
-                        <li>
-                            <a href="map.html">
+                            <a href="@Url.Action("Index_Map", "Map")">
                                 <i class="fas fa-map-marker-alt"></i>Maps
                             </a>
                         </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Pages
-                            </a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="login.html">Login</a>
-                                </li>
-                                <li>
-                                    <a href="register.html">Register</a>
-                                </li>
-                                <li>
-                                    <a href="forget-pass.html">Forget Password</a>
-                                </li>
-                            </ul>
-                        </li>
+                        @*<li class="has-sub">
+                                <a class="js-arrow" href="#">
+                                    <i class="fas fa-copy"></i>Pages
+                                </a>
+                                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    <li>
+                                        <a href="login.html">Login</a>
+                                    </li>
+                                    <li>
+                                        <a href="register.html">Register</a>
+                                    </li>
+                                    <li>
+                                        <a href="forget-pass.html">Forget Password</a>
+                                    </li>
+                                </ul>
+                            </li>*@
                         @*<li>@Html.ActionLink("Back To Home", "Index", "Home")</li>*@
                         <li><a href="@Url.Action("Index","Home")"><i class="fas fa-home"></i>Back To Home</a></li>
                         @*<li class="has-sub">
@@ -254,7 +213,6 @@
                                     <li>
                                         <a href="fontawesome.html">Fontawesome Icon</a>
                                     </li>
-
                                 </ul>
                             </li>*@
                     </ul>
@@ -317,8 +275,8 @@
                                     </div>
                                     <div class="noti__item js-item-menu">
                                         <i class="zmdi zmdi-email"></i>
-                                      @*@Html.Action("Emails");*@
-                                        
+                                        @*@Html.Action("Emails");*@
+
                                     </div>
                                     <div class="noti__item js-item-menu">
                                         <i class="zmdi zmdi-notifications"></i>
@@ -379,7 +337,7 @@
                                                     <h5 class="name">
                                                         <a href="#">@User.Identity.Name</a>
                                                     </h5>
-                                                    <span class="email">@Session["Email"].ToString()</span>
+                                                    @*<span class="email">@Session["Email"].ToString()</span>*@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -428,13 +386,16 @@
 
     <!-- Jquery JS-->
     <script src="~/Admin/vendor/jquery-3.2.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
+
     <script src="~/js/jquery.min.js"></script>
-    <script src="~/js/notify.min.js"></script>
+
+
     <script src="~/js/jquery-ui-1.12.1.min.js"></script>
-    <script src="~/Scripts/notify.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/Scripts/notify.min.js"></script>
     <!-- Bootstrap JS-->
     <script src="~/Admin/vendor/bootstrap-4.1/popper.min.js"></script>
 
@@ -461,6 +422,6 @@
     <script src="~/Admin/js/main.js"></script>
 
     @RenderSection("scripts", required: false);
-   
+
 </body>
 </html>

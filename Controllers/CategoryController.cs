@@ -10,12 +10,12 @@ namespace Project.Controllers
 {
     public class CategoryController : Controller
     {
+        VehicleRentalDBEntities db = new VehicleRentalDBEntities();
         // GET: Category
-        public ActionResult ManageCategory()
+        public ActionResult Index()
         {
             return View();
         }
-
         public JsonResult GetData()
         {
             using (VehicleRentalDBEntities db = new VehicleRentalDBEntities())
@@ -38,7 +38,7 @@ namespace Project.Controllers
                 using (VehicleRentalDBEntities db = new VehicleRentalDBEntities())
                 {
                     ViewBag.Action = "New Category";
-                    return View(new CategoryViewModel());
+                    return Json(new CategoryViewModel(), JsonRequestBehavior.AllowGet);
                 }
             }
             else
@@ -50,7 +50,7 @@ namespace Project.Controllers
                     sub.VehicleCategoryId = menu.VehicleCategoryId;
                     sub.CategoryName = menu.CategoryName;
                     ViewBag.Action = "Edit Category";
-                    return View(sub);
+                    return Json(sub, JsonRequestBehavior.AllowGet);
                 }
             }
         }
@@ -91,4 +91,3 @@ namespace Project.Controllers
         }
     }
 }
-

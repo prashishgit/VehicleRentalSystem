@@ -56,7 +56,7 @@ namespace Project.Controllers
                     {
                         ViewBag.Message = "Sent";
                     }
-                    return View("Index", objModelMail);
+                    return View(objModelMail);
                 }
 
             }

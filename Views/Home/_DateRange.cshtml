@@ -5,8 +5,10 @@
         width: 134px;
     }
 </style>
+@using (Html.BeginForm("Shop", "Home", FormMethod.Post, new { @enctype = "multipart/form-data", autocomplete = "off" }))
+{
 
-<form method="post" class="colorlib-form-2">
+    @Html.AntiForgeryToken()
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
@@ -47,41 +49,35 @@
         </div>
     </div>
     <input type="submit" id="start" value="Check">
-</form>
+}
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-    $(document).ready(function () {
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
 
-    })
-    $('.dates').change(function () {
-        var cin = $('#start').val();
-        var checkin = new Date(cin);
-        var cout = $('#end').val();
-        var checkout = new Date(cout);
-        var date = new Date();
+        })
+        $('.dates').change(function () {
+            var cin = $('#start').val();
+            var checkin = new Date(cin);
+            var cout = $('#end').val();
+            var checkout = new Date(cout);
+            var date = new Date();
 
-        date.setDate(date.getDate() - 1);
+            date.setDate(date.getDate() - 1);
 
-        if (checkin < date) {
-            $('#start').val('');
-        }
-
-        if (cin != null && cout != null) {
-            if (checkin > checkout) {
+            if (checkin < date) {
                 $('#start').val('');
-                $('#end').val('');
             }
-        }
 
-        // var millisecondsPerDay = 1000 * 60 * 60 * 24;
-        // var millisBetween = checkout.getTime() - checkin.getTime();
-        // var days = millisBetween / millisecondsPerDay;
-        //$('#days').val(days);
+            if (cin != null && cout != null) {
+                if (checkin > checkout) {
+                    $('#start').val('');
+                    $('#end').val('');
+                }
+            }
+        })
 
-    })
 
 
-
-</script>
+    </script>

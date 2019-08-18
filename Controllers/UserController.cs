@@ -59,6 +59,10 @@ namespace Project.Controllers
         {
             return Json(!_db.tblUsers.Any(user => user.Email == Email), JsonRequestBehavior.AllowGet);
         }
+        public JsonResult EmailExists(string Email)
+        {
+            return Json(_db.tblUsers.Any(user => user.Email == Email), JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public ActionResult Create()
         {

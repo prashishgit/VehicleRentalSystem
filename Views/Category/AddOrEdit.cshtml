@@ -5,26 +5,15 @@
 
 @using (Html.BeginForm("AddOrEdit", "Category", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
 {
-    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.VehicleCategoryId)
+    <div class="form-group">
+        @Html.LabelFor(model => model.CategoryName, new { @class = "control-label" })
+        @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.CategoryName)
+    </div>
 
-    <div class="form-horizontal">
-        <h4>@ViewBag.Action</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        @Html.HiddenFor(model => model.VehicleCategoryId)
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryName, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.CategoryName,  new { @class = "form-control" } )
-            @Html.ValidationMessageFor(model => model.CategoryName)
-        </div>
-      
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Submit" class="btn btn-info" />
-                <input type="submit" value="Reset" class="btn btn-warning" />
-            </div>
-        </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Reset" class="btn" />
     </div>
 }

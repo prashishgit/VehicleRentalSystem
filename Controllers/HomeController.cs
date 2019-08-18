@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PagedList;
 using PagedList.Mvc;
 using Project.Models.ViewModel;
 using System.Threading;
@@ -21,33 +20,33 @@ namespace Project.Controllers
             var user = _db.tblBanners.ToList();
             return View(user);
         }
-       
+
         [AllowAnonymous]
 
         public PartialViewResult Vehicle()
         {
 
             var vehicle = _db.tblItems.OrderBy(r => Guid.NewGuid()).Take(8);
-            
+
             return PartialView("_Vehicle", vehicle);
         }
         public PartialViewResult NewArrival()
         {
 
             var vehicle = _db.tblItems.OrderBy(r => Guid.NewGuid()).ToList();
-            var vehicleAvailable = vehicle.Where(u => u.VehicleStatus == "Available").Take(4);
+            var vehicleAvailable = vehicle.OrderByDescending(u => u.VehicleStatus == "Available").Take(4);
 
             return PartialView("_NewArrival", vehicleAvailable);
         }
-       
+
         [AllowAnonymous]
         public ActionResult Testimony()
         {
             int i = 0;
-          
+
             List<TestimonyViewModel> list = new List<TestimonyViewModel>();
             var items = _db.tblTestimonies.OrderBy(r => Guid.NewGuid()).Take(3);
-          
+
             foreach (var item in items)
             {
                 list.Add(new TestimonyViewModel()
@@ -58,11 +57,11 @@ namespace Project.Controllers
                     UserPhoto = item.tblUser.Photo,
                     TestimonyDescription = item.TestimonyDescription,
                     Location = item.Location,
-                   
+
                 });
                 i++;
             }
-          
+
             return PartialView("_Testimony", list);
         }
         [AllowAnonymous]
@@ -71,7 +70,7 @@ namespace Project.Controllers
         {
             return View();
         }
-       
+
         [Authorize(Roles = "Admin")]
         public ActionResult AdminIndex()
         {
@@ -89,8 +88,8 @@ namespace Project.Controllers
         }
         public ActionResult TotalAmount()
         {
-           var total = 0;
-           var booking = _db.tblBookings.ToList();
+            var total = 0;
+            var booking = _db.tblBookings.ToList();
             foreach (var item in booking)
             {
                 total = Convert.ToInt32(total + item.AmountPaid);
@@ -110,7 +109,7 @@ namespace Project.Controllers
             var userId = Convert.ToInt32(Session["UserId"]);
             var userDetails = _db.tblUsers.Where(u => u.UserId == userId).FirstOrDefault();
             var userRole = _db.tblRoles.Where(u => u.RoleId == userDetails.RoleId).FirstOrDefault();
-          
+
             ViewBag.UserName = userDetails.UserName;
             ViewBag.Email = userDetails.Email;
             ViewBag.FullName = userDetails.FullName;
@@ -122,13 +121,13 @@ namespace Project.Controllers
         {
             var userId = Convert.ToInt32(Session["UserId"]);
             var userBooking = _db.tblBookings.Where(u => u.UserId == userId).ToList();
-            
+
             List<BookingViewModel> list = new List<BookingViewModel>();
-          
+
             int i = 0;
             foreach (var item in userBooking)
             {
-                
+
                 list.Add(new BookingViewModel()
                 {
                     SN = i + 1,
@@ -139,13 +138,13 @@ namespace Project.Controllers
                     VehiclePhoto = item.tblItem.VehiclePhoto,
                     TotalAmount = item.TotalAmount,
                     AmountPaid = item.AmountPaid,
-                   
 
 
-                }) ;
+
+                });
                 i++;
             }
-                return PartialView("_UserBookingList", list);
+            return PartialView("_UserBookingList", list);
 
         }
         [HttpGet]
@@ -155,19 +154,19 @@ namespace Project.Controllers
             bookingDetails.BookingStatus = "Cancelled";
             bookingDetails.tblItem.VehicleStatus = "Available";
             _db.SaveChanges();
-            
+
             return View("UserIndex");
 
         }
         [HttpGet]
         public ActionResult TestimonyCreate()
         {
-           
+
             var userId = Convert.ToInt32(Session["UserId"]);
             var testimony = _db.tblTestimonies.Where(u => u.UserId == userId).FirstOrDefault();
             TestimonyViewModel tvm = new TestimonyViewModel();
-           
-            if(testimony != null)
+
+            if (testimony != null)
             {
                 tvm.TestimonyId = testimony.TestimonyId;
                 tvm.UserId = testimony.UserId;
@@ -179,13 +178,13 @@ namespace Project.Controllers
                 tvm.TestimonyDescription = "";
                 return PartialView("_TestimonyCreate", tvm);
             }
-         
+
 
         }
         [HttpPost]
         public ActionResult TestimonyCreate(TestimonyViewModel tvm)
         {
-           
+
             var userId = Convert.ToInt32(Session["UserId"]);
             tblTestimony tb = new tblTestimony();
             tb.UserId = userId;
@@ -205,7 +204,7 @@ namespace Project.Controllers
             tb.TestimonyId = tvm.TestimonyId;
             tb.TestimonyDescription = tvm.TestimonyDescription;
             tb.Location = "Kathmandu, Nepal";
-           
+
             _db.SaveChanges();
             return RedirectToAction("UserIndex", "Home");
 
@@ -243,7 +242,7 @@ namespace Project.Controllers
             {
                 list.Add(new ContactViewModel()
                 {
-                   
+
                     ContactId = item.ContactId,
                     FirstName = item.FirstName,
                     LastName = item.LastName,
@@ -256,14 +255,33 @@ namespace Project.Controllers
             return PartialView("_Emails", list);
         }
         [AllowAnonymous]
-        public ActionResult Shop(int? page, int? id)
+        public ActionResult Shop(int? page, int? id, ItemViewModel ivm)
         {
-           
-            if(id == null)
+
+            if (id==null && (ivm.Start == null || ivm.End==null))
             {
-                var vehicle = _db.tblItems.ToList().ToPagedList(page ?? 1, 9);
+                var vehicle = _db.tblItems.OrderBy(r => Guid.NewGuid()).ToList().ToPagedList(page ?? 1, 9);
 
                 return View(vehicle);
+            }
+            else if (ivm.Start!= null&& ivm.End!=null && id == null)
+            {
+                var start = ivm.Start;
+                var end = ivm.End;
+                //var st = DateTime.Now.AddDays(1);
+                //var et = DateTime.Now.AddDays(5);
+                //ivm.Pt = DateTime.Now;
+
+
+
+                //     var bookedItem1 = _db.tblItems.Where(m => m.tblBookings.All(r => r.PickUpDate > start && r.DropOffDate < end)).ToList().ToPagedList(page ?? 1, 9);
+                var bookedItem = _db.tblItems.Where(m => m.tblBookings.All(r => r.BookingStatus != "Confirm" && r.BookingStatus != "Pending")).ToList().ToPagedList(page ?? 1, 9);
+                //IEnumerable<tblItem> bookedItem1 = bookedItem.Where(x => x.tblBookings.All(r => (r.PickUpDate >= start && r.DropOffDate < end) && r.PickUpDate >= DateTime.Now)).ToList().ToPagedList(page ?? 1, 9);
+                //var bookedItem = _db.tblItems.Where(m => m.VehicleStatus == "Available").ToList().ToPagedList(page ?? 1, 9);
+                var bookedItem1 = bookedItem.Where(x => x.tblBookings.All(r => r.PickUpDate >= start && r.DropOffDate <= end)).ToList().ToPagedList(page ?? 1, 9);
+
+                return View(bookedItem1);
+
             }
             else
             {
@@ -271,18 +289,19 @@ namespace Project.Controllers
                 return View(vehicle);
             }
 
-          
+
         }
+
         public static int x = 8;
         public ActionResult SeeMore()
         {
-            
-                x = x + 4;
-                var lst = _db.tblItems.Take(x).ToList();
-                Thread.Sleep(2000);
-                return PartialView("_SeeMore", lst);
-            
-           
+
+            x = x + 4;
+            var lst = _db.tblItems.Take(x).ToList();
+            Thread.Sleep(2000);
+            return PartialView("_SeeMore", lst);
+
+
         }
 
         public ActionResult CategoryList()
@@ -293,33 +312,22 @@ namespace Project.Controllers
         {
             return PartialView("_DateRange");
         }
-        [HttpPost]
-        public ActionResult DateRange(ItemViewModel ivm)
-        {
-          
-          var booking = _db.tblBookings.ToList();
-            var item = _db.tblItems.ToList();
-          
-            var start = ivm.Start;
-            var end = ivm.End;
-            var vehicleList = _db.tblItems.ToList();
-            var items = _db.tblBookings.Where(u => u.PickUpDate != start || u.DropOffDate != end).ToList();
-         
-                //from s in items // outer sequence
-                //         join st in vehicleList //inner sequence 
-                //         on s.VehicleId equals st.VehicleId // key selector 
-                //         select new
-                //         { // result selector 
-                //             VechileId = s.tblItem.VehicleId,
-                            
-
-                           
-                //         };
+        //[HttpPost]
+        //public ActionResult DateRange(ItemViewModel ivm, int ? page)
+        //{
 
 
-            return View("Shop", items);
+        //    var start = ivm.Start;
+        //    var end = ivm.End;
 
-        }
+
+        //    var bookedItem = _db.tblItems.Where(m => m.tblBookings.All(r =>r.PickUpDate != start || r.DropOffDate != end)).ToList().ToPagedList(page ?? 1, 9);
+
+
+        //    return View("Shop", bookedItem);
+
+
+        //}
 
     }
 }

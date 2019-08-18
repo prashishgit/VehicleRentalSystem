@@ -50,10 +50,10 @@
                             <img src="~/images/Vehicle/@item.VehiclePhoto" height="40" width="40" />
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.PickUpDate)
+                            @Html.FormatValue("yyy-MM-dd", item.PickUpDate.Value.ToString("dddd, dd MMMM yyyy"))
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DropOffDate)
+                            @Html.FormatValue("yyy-MM-dd", item.DropOffDate.Value.ToString("dddd, dd MMMM yyyy"))
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.TotalAmount)

@@ -51,6 +51,7 @@
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input100", placeholder = "Email" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        @ViewBag.Message
                         <span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>
                     </div>

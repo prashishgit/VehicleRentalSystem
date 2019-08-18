@@ -198,7 +198,7 @@
             <div class="modal-body">
 
 
-                @using (Html.BeginForm("DetailsClient", "Item", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("DetailsClient", "Item", FormMethod.Post, new { @enctype = "multipart/form-data", autocomplete = "off" }))
                 {
                     @Html.AntiForgeryToken()
 
@@ -209,19 +209,22 @@
                     @Html.HiddenFor(model => model.VehiclePhoto);
                     @Html.HiddenFor(model => model.VehiclePrice);
                     @Html.HiddenFor(model => model.VehicleTitle);
-                    <div class="form-group">
+
+
+                    <div class="form-group col-xs-6">
                         <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> PickUp Date:</label>
                         @*<input type="date" name="cin" class="form-control dates" id="fromDate"
                             placeholder="Check In Date">*@
-                        @Html.TextBoxFor(model => model.PickUpDate, new { type = "date", @class = "form-control dates", @id = "cin", placeholder = "Check In Date" })
-
+                        @*@Html.TextBoxFor(model => model.PickUpDate, new {type = "text", @class = "form-control dates", @id = "fromDate", placeholder = "Check In Date" })*@
+                        <input type="text" id="fromDate" name="PickUpDate" class="form-control dates" placeholder="Pick Up Date">
 
                     </div>
-                    <div class="form-group">
+                    <div class="form-group  col-xs-6">
                         <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> DropOff Date:</label>
                         @*<input type="date" name="cout" class="form-control dates" id="toDate"
                             placeholder="Check Out Date">*@
-                        @Html.TextBoxFor(model => model.DropOffDate, new { type = "date", @class = "form-control dates", @id = "cout", placeholder = "Check Out Date" })
+                        @*@Html.TextBoxFor(model => model.DropOffDate, new { @class = "form-control dates", @id = "toDate", placeholder = "Check Out Date" })*@
+                        <input type="text" id="toDate" name="DropOffDate" class="form-control dates" placeholder="Drop Off Date">
                     </div>
 
                     <input type="submit" value="BOOK" class="btn btn-primary btn-block glyphicon glyphicon-ok" id="btnSubmit" />
@@ -243,38 +246,83 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
+   
+
     $(document).ready(function () {
+        var dateToday = new Date();
+        var disabledDates = '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DisabledDates))';
 
-    })
-    $('.dates').change(function () {
-        var cin = $('#cin').val();
-        var checkin = new Date(cin);
-        var cout = $('#cout').val();
-        var checkout = new Date(cout);
-        var date = new Date();
+        console.log(disabledDates);
 
-        date.setDate(date.getDate() - 1);
+        var from = $("#fromDate")
+            .datepicker({
+                dateFormat: "yy-mm-dd",
+                changeMonth: true,
+                disabledDates: disabledDates,
+                minDate: dateToday,
+                todayHighlight: true
+            })
+            .on("change", function () {
+                to.datepicker("option", "minDate", getDate(this));
+            }),
+            to = $("#toDate")
+                .datepicker({
+                    dateFormat: "yy-mm-dd",
+                    changeMonth: true,
+                    minDate: dateToday,
+                    todayHighlight: true
+                })
+                .on("change", function () {
+                    from.datepicker("option", "maxDate", getDate(this));
+                });
 
-        if (checkin < date) {
-            $('#cin').val('');
-        }
-
-        if (cin != null && cout != null) {
-            if (checkin > checkout) {
-                $('#cin').val('');
-                $('#cout').val('');
+        function getDate(element) {
+            var date;
+            var dateFormat = "yy-mm-dd";
+            try {
+                date = $.datepicker.parseDate(dateFormat, element.value);
+            } catch (error) {
+                date = null;
             }
+
+            return date;
         }
+        var pick = $('#pick').val();
+        var drop = $('#drop').val();
+        
+        $('.dates').change(function () {
+            var from = $('#fromDate').val();
+            var checkin = new Date(from);
+            var to = $('#toDate').val();
+            var checkout = new Date(to);
+            var date = new Date();
 
-        // var millisecondsPerDay = 1000 * 60 * 60 * 24;
-        // var millisBetween = checkout.getTime() - checkin.getTime();
-        // var days = millisBetween / millisecondsPerDay;
-        //$('#days').val(days);
+            date.setDate(date.getDate() - 1);
 
+            if (checkin < date) {
+                $('#fromDate').val('');
+            }
+
+            if (from != null && to != null) {
+                if (checkin > checkout) {
+                    $('#fromDate').val('');
+                    $('#toDate').val('');
+                }
+            }
+
+            // var millisecondsPerDay = 1000 * 60 * 60 * 24;
+            // var millisBetween = checkout.getTime() - checkin.getTime();
+            // var days = millisBetween / millisecondsPerDay;
+            //$('#days').val(days);
+
+        })
     })
+
 
 
 

@@ -19,25 +19,49 @@ namespace Project.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index(string search, int? page)
         {
-            
             int i = 0;
             List<ItemViewModel> list = new List<ItemViewModel>();
             var items = _db.tblItems.ToList();
-            foreach (var item in items)
+            if (search != null)
             {
-                list.Add(new ItemViewModel()
+                foreach (var item in items)
                 {
-                    SN = i + 1,
-                    VehicleId = item.VehicleId,
-                    VehicleTitle = item.VehicleTitle,
-                    Description = item.Description,
-                    VehiclePrice = item.VehiclePrice,
-                    VehicleStatus = item.VehicleStatus,
-                    VehiclePhoto = item.VehiclePhoto
-                }) ;
-                i++;
+                    list.Add(new ItemViewModel()
+                    {
+                        SN = i + 1,
+                        VehicleId = item.VehicleId,
+                        VehicleTitle = item.VehicleTitle,
+                        Description = item.Description,
+                        VehiclePrice = item.VehiclePrice,
+                        VehicleStatus = item.VehicleStatus,
+                        VehiclePhoto = item.VehiclePhoto
+                    });
+                    i++;
+                }
+                return View(list.Where(x => x.VehicleTitle.Contains(search) || x.Description.Contains(search) || search == null).ToList().ToPagedList(page ?? 1, 10));
+              
             }
-            return View(list.ToPagedList(page ?? 1, 10));
+            else
+            {
+
+
+              
+                foreach (var item in items)
+                {
+                    list.Add(new ItemViewModel()
+                    {
+                        SN = i + 1,
+                        VehicleId = item.VehicleId,
+                        VehicleTitle = item.VehicleTitle,
+                        Description = item.Description,
+                        VehiclePrice = item.VehiclePrice,
+                        VehicleStatus = item.VehicleStatus,
+                        VehiclePhoto = item.VehiclePhoto
+                    });
+                    i++;
+                }
+                return View(list.ToPagedList(page ?? 1, 10));
+            }
         }
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
@@ -65,6 +89,15 @@ namespace Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public JsonResult GetReservedDates(int id)
+        {
+
+            var dates = _db.tblBookings.ToList().Where(x => x.BookingStatus == "Pending" || x.BookingStatus == "Confirm");
+            var bookedDates = dates.Where(x => x.VehicleId == id);
+
+            return Json(new { bookedDates }, "text/x-json", JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -77,14 +110,14 @@ namespace Project.Controllers
             ivm.VehicleStatus = vehicle.VehicleStatus;
             ivm.VehiclePhoto = vehicle.VehiclePhoto;
             return View(ivm);
-        
-       
+
+
         }
         [HttpPost]
         public ActionResult Edit(ItemViewModel ivm)
         {
             var vehicle = _db.tblItems.Where(b => b.VehicleId == ivm.VehicleId).FirstOrDefault();
-           
+
 
             vehicle.VehicleTitle = ivm.VehicleTitle;
             vehicle.Description = ivm.Description;
@@ -104,7 +137,7 @@ namespace Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-        
+
         [HttpGet]
         public ActionResult Details(int id)
         {
@@ -119,24 +152,31 @@ namespace Project.Controllers
 
             return View(bvm);
         }
-       
+        //[HttpGet]
+        //public ActionResult BookedDate(int id)
+        //{
+        //    var bookedDate = _db.tblBookings.Where()
+        //    return View();
+        //}
         [HttpGet]
         public ActionResult DetailsClient(int id)
         {
-           
+
             var banners = _db.tblItems.Where(b => b.VehicleId == id).FirstOrDefault();
             if (banners == null)
             {
                 return HttpNotFound();
             }
+
             ItemViewModel bvm = new ItemViewModel();
-            
+
             bvm.VehicleId = id;
             bvm.VehicleTitle = banners.VehicleTitle;
             bvm.Description = banners.Description;
             bvm.VehicleStatus = banners.VehicleStatus;
             bvm.VehiclePrice = banners.VehiclePrice;
             bvm.VehiclePhoto = banners.VehiclePhoto;
+
             ViewBag.ArticleId = id;
             var comments = _db.tblComments.Where(d => d.VehicleId == id).ToList();
             ViewBag.Comments = comments;
@@ -154,17 +194,22 @@ namespace Project.Controllers
                 ViewBag.RatingCount = 0;
             }
 
+            //from database
+            var disabledDates = new List<string> { "08/15/2019 00:01", "08/16/2019 00:01", "08/17/2019 00:01" };
+
+            ViewBag.DisabledDates = disabledDates;
+
             return View(bvm);
-           
+
         }
-       
+
         [HttpPost]
         public ActionResult DetailsClient(BookingViewModel bvmm)
         {
-         
+
 
             BookingViewModel bvm = new BookingViewModel();
-          
+
             bvm.VehicleId = bvmm.VehicleId;
             bvm.PickUpDate = bvmm.PickUpDate;
             bvm.DropOffDate = bvmm.DropOffDate;
@@ -172,6 +217,21 @@ namespace Project.Controllers
             bvm.VehicleTitle = bvmm.VehicleTitle;
             bvm.VehiclePrice = bvmm.VehiclePrice;
             return RedirectToAction("Create", "Booking", bvm);
+        }
+        [HttpGet]
+        public JsonResult GetBookingDate(int id)
+        {
+            BookingViewModel bvm = new BookingViewModel();
+            var bookedDate = _db.tblBookings.Where(x => x.VehicleId == id && (x.BookingStatus == "Pending" || x.BookingStatus == "Confirm")).FirstOrDefault();
+            if (bookedDate != null)
+            {
+                return Json(bookedDate, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(JsonRequestBehavior.AllowGet);
+            }
+           
         }
         [HttpGet]
         public ActionResult Delete(int id)
@@ -194,10 +254,10 @@ namespace Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-       
+
         public ActionResult Rate(int? id)
         {
-           
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -213,7 +273,7 @@ namespace Project.Controllers
             var comments = _db.tblComments.Where(d => d.VehicleId == id).ToList();
             ViewBag.Comments = comments;
 
-            
+
             var ratings = _db.tblComments.Where(d => d.VehicleId == id).ToList();
             if (ratings.Count() > 0)
             {

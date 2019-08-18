@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -16,11 +17,13 @@ namespace Project.Models.ViewModel
         public string VehiclePhoto { get; set; }
         public string Description { get; set; }
         public string VehicleStatus { get; set; }
+        [Required]
         public DateTime PickUpDate { get; set; }
+        [Required]
         public DateTime DropOffDate { get; set; }
-        public string Start { get; set; }
-        public string End { get; set; }
-
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
+        public DateTime Pt { get; set; }
         public virtual tblCategory tblCategory { get; set; }
     }
 }
