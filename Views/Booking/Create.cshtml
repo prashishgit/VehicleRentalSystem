@@ -81,14 +81,14 @@
                                         <p class="price">
                                             <label>PickUp Date:</label>
                                             <span>
-                                                @Html.DisplayFor(model => model.PickUpDate)
+                                                @Html.FormatValue("dddd, dd MMMM yyyy", Model.PickUpDate.Value.ToString("dddd, dd MMMM yyyy"))
                                             </span>
 
                                         </p>
                                         <p class="price">
                                             <label>DropOff Date: </label>
                                             <span>
-                                                @Html.DisplayFor(model => model.DropOffDate)
+                                                @Html.FormatValue("dddd, dd MMMM yyyy", Model.DropOffDate.Value.ToString("dddd, dd MMMM yyyy"))
                                             </span>
 
                                         </p>
