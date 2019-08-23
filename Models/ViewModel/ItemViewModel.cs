@@ -23,7 +23,7 @@ namespace Project.Models.ViewModel
         public DateTime DropOffDate { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
-        public DateTime Pt { get; set; }
+       
         public virtual tblCategory tblCategory { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace Project.Models.ViewModel
         public int AmountLeft { get; set; }
         [Required]
         public int Payment { get; set; }
-
+        
 
         public virtual tblItem tblItem { get; set; }
         public virtual tblUser tblUser { get; set; }

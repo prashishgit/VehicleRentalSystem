@@ -15,8 +15,8 @@
     var totalRating = decimal.Parse(rating.ToString());
 }
 <link href="~/Content/Site.css" rel="stylesheet" />
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css">
 <aside id="colorlib-hero" class="breadcrumbs">
     <div class="flexslider">
         <ul class="slides">
@@ -66,6 +66,13 @@
                         </div>
                         <div class="col-md-7">
                             <div class="desc">
+                                @if (ViewBag.PickUpDate != null)
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        The Vehicle is booked from @ViewBag.PickUpDate to  @ViewBag.DropOffDate. <br>
+                                        Please Choose different Dates.
+                                    </div>
+                                }
                                 <h3>@Html.DisplayFor(model => model.VehicleTitle)</h3>
                                 <p class="price">
                                     <span> $ @Html.DisplayFor(model => model.VehiclePrice)/PerDay</span>
@@ -139,7 +146,6 @@
                             @*<div id="manufacturer" class="tab-pane fade">
                                     <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
                                     <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-
                                 </div>*@
                             <div id="review" class="tab-pane fade">
                                 <div class="row">
@@ -215,16 +221,16 @@
                         <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> PickUp Date:</label>
                         @*<input type="date" name="cin" class="form-control dates" id="fromDate"
                             placeholder="Check In Date">*@
-                        @*@Html.TextBoxFor(model => model.PickUpDate, new {type = "text", @class = "form-control dates", @id = "fromDate", placeholder = "Check In Date" })*@
-                        <input type="text" id="fromDate" name="PickUpDate" class="form-control dates" placeholder="Pick Up Date">
+                        @Html.TextBoxFor(model => model.PickUpDate, new { type = "text", @class = "form-control dates", @id = "fromDate", placeholder = "Pick Up Date" })
+                        @*<input type="text" id="fromDate" name="PickUpDate" class="form-control dates" placeholder="Pick Up Date">*@
 
                     </div>
                     <div class="form-group  col-xs-6">
                         <label for="psw"><span class="glyphicon glyphicon-shopping-cart"></span> DropOff Date:</label>
                         @*<input type="date" name="cout" class="form-control dates" id="toDate"
                             placeholder="Check Out Date">*@
-                        @*@Html.TextBoxFor(model => model.DropOffDate, new { @class = "form-control dates", @id = "toDate", placeholder = "Check Out Date" })*@
-                        <input type="text" id="toDate" name="DropOffDate" class="form-control dates" placeholder="Drop Off Date">
+                        @Html.TextBoxFor(model => model.DropOffDate, new { @class = "form-control dates", @id = "toDate", placeholder = "Drop Off Date" })
+                        @*<input type="text" id="toDate" name="DropOffDate" class="form-control dates" placeholder="Drop Off Date">*@
                     </div>
 
                     <input type="submit" value="BOOK" class="btn btn-primary btn-block glyphicon glyphicon-ok" id="btnSubmit" />
@@ -247,87 +253,66 @@
     </div>
 </div>
 
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Scripts/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
    
-
-    $(document).ready(function () {
-        var dateToday = new Date();
-        var disabledDates = '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DisabledDates))';
-
-        console.log(disabledDates);
-
-        var from = $("#fromDate")
-            .datepicker({
-                dateFormat: "yy-mm-dd",
-                changeMonth: true,
-                disabledDates: disabledDates,
-                minDate: dateToday,
-                todayHighlight: true
-            })
-            .on("change", function () {
-                to.datepicker("option", "minDate", getDate(this));
-            }),
-            to = $("#toDate")
-                .datepicker({
-                    dateFormat: "yy-mm-dd",
-                    changeMonth: true,
-                    minDate: dateToday,
-                    todayHighlight: true
-                })
-                .on("change", function () {
-                    from.datepicker("option", "maxDate", getDate(this));
-                });
-
-        function getDate(element) {
-            var date;
-            var dateFormat = "yy-mm-dd";
-            try {
-                date = $.datepicker.parseDate(dateFormat, element.value);
-            } catch (error) {
-                date = null;
-            }
-
-            return date;
+   var startDate = "@ViewBag.pt", // some start date
+            endDate = "@ViewBag.dt",  // some end date
+        dateRange = [];           // array to hold the range
+    if (startDate == "" || endDate == "") {
+         var currentDate = new Date();  
+       $(".dates").datepicker().datepicker("setDate", new Date());
+       
+    }
+    else {
+        for (var d = new Date(startDate);
+            d <= new Date(endDate);
+            d.setDate(d.getDate() + 1)) {
+            dateRange.push($.datepicker.formatDate('yy-mm-dd', d));
         }
-        var pick = $('#pick').val();
-        var drop = $('#drop').val();
-        
-        $('.dates').change(function () {
-            var from = $('#fromDate').val();
-            var checkin = new Date(from);
-            var to = $('#toDate').val();
-            var checkout = new Date(to);
-            var date = new Date();
 
-            date.setDate(date.getDate() - 1);
+        $('.dates').datepicker({
+            beforeShowDay: function (date) {
+                var dateString = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                console.log(dateString);
+                return [dateRange.indexOf(dateString) == -1];
+            }
+        });
+    }
+       
+   
+    
+</script>
+<script>
+    $(document).ready(function () {
+       
+    })
+    $('.dates').change(function () {
+        var cin = $('#fromDate').val();
+        var checkin = new Date(cin);
+        var cout = $('#toDate').val();
+        var checkout = new Date(cout);
+        var date = new Date();
 
-            if (checkin < date) {
+        date.setDate(date.getDate() - 1);
+
+        if (checkin < date) {
+            $('#fromDate').val('');
+        }
+
+        if (cin != null && cout != null) {
+            if (checkin > checkout) {
                 $('#fromDate').val('');
+                $('#toDate').val('');
             }
-
-            if (from != null && to != null) {
-                if (checkin > checkout) {
-                    $('#fromDate').val('');
-                    $('#toDate').val('');
-                }
-            }
-
-            // var millisecondsPerDay = 1000 * 60 * 60 * 24;
-            // var millisBetween = checkout.getTime() - checkin.getTime();
-            // var days = millisBetween / millisecondsPerDay;
-            //$('#days').val(days);
-
-        })
+        }
     })
 
 
 
-
 </script>
-<script src="~/Scripts/bootstrap.js"></script>
+
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script>
     function SCRate() {

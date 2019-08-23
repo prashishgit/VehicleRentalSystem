@@ -57,11 +57,13 @@
                                     <label for="fname">First Name</label>
                                     @*<input type="text" id="fname" class="form-control" placeholder="Your firstname">*@
                                     @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "Your firstname" })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger control-label col-md-12" })
                                 </div>
                                 <div class="col-md-6">
                                     <label for="lname">Last Name</label>
                                     @*<input type="text" id="lname" class="form-control" placeholder="Your lastname">*@
                                     @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "Your lastname" })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger control-label col-md-12" })
                                 </div>
                             </div>
 
@@ -70,6 +72,7 @@
                                     <label for="email">Email</label>
                                     @*<input type="text" id="email" class="form-control" placeholder="Your email address">*@
                                     @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Your email address" })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger control-label col-md-12" })
                                 </div>
                             </div>
 
@@ -78,6 +81,7 @@
                                     <label for="subject">Subject</label>
                                     @*<input type="text" id="subject" class="form-control" placeholder="Your subject of this message">*@
                                     @Html.TextBoxFor(model => model.Subject, new { @class = "form-control", placeholder = "Your subject of this message" })
+                                    @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger control-label col-md-12" })
                                 </div>
                             </div>
 
@@ -85,7 +89,8 @@
                                 <div class="col-md-12">
                                     <label for="message">Message</label>
                                     @*<textarea name="message" id="message" cols="30" rows="10" class="form-control" placeholder="Say something about us"></textarea>*@
-                                    @Html.TextAreaFor(model => model.Message, new { @class = "form-control", placeholder = "Say something about us", cols="30", rows="10" })
+                                    @Html.TextAreaFor(model => model.Message, new { @class = "form-control", placeholder = "Say something about us", cols = "30", rows = "10" })
+                                    @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger control-label col-md-12" })
                                 </div>
                             </div>
                             <div class="form-group text-center">

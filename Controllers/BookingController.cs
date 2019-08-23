@@ -216,6 +216,7 @@ namespace Project.Controllers
             {
                 if (booking.TotalAmount != booking.AmountPaid && booking.AmountPaid != 0)
                 {
+                    ViewBag.BookingConfirm = "Booking Confirmed";
                     booking.BookingStatus = "Confirm";
                 }
                 else if (bvmm.AmountPaid == 0)
@@ -224,6 +225,7 @@ namespace Project.Controllers
                 }
                 else
                 {
+                   
                     booking.BookingStatus = "Checked Out";
                     vehicle.VehicleStatus = "Available";
 
@@ -233,12 +235,13 @@ namespace Project.Controllers
             }
             else
             {
-                return RedirectToAction("Edit", "Booking");
+                ViewBag.FailedBooking = "Booking Confirmed Failed";
+                return View();
             }
 
 
-
-            return RedirectToAction("Edit", "Booking");
+          
+            return View();
         }
         [HttpGet]
         public ActionResult Details(int id)

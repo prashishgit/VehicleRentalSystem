@@ -167,39 +167,83 @@ namespace Project.Controllers
             {
                 return HttpNotFound();
             }
-
-            ItemViewModel bvm = new ItemViewModel();
-
-            bvm.VehicleId = id;
-            bvm.VehicleTitle = banners.VehicleTitle;
-            bvm.Description = banners.Description;
-            bvm.VehicleStatus = banners.VehicleStatus;
-            bvm.VehiclePrice = banners.VehiclePrice;
-            bvm.VehiclePhoto = banners.VehiclePhoto;
-
-            ViewBag.ArticleId = id;
-            var comments = _db.tblComments.Where(d => d.VehicleId == id).ToList();
-            ViewBag.Comments = comments;
-            var ratings = _db.tblComments.Where(d => d.VehicleId == id).ToList();
-            if (ratings.Count() > 0)
+            var bookingDetails = _db.tblBookings.Where(x => x.VehicleId == id && (x.BookingStatus == "Confirm" || x.BookingStatus == "Pending")).FirstOrDefault();
+            if (bookingDetails == null)
             {
-                var ratingSum = ratings.Sum(d => d.Rating.Value);
-                ViewBag.RatingSum = ratingSum;
-                var ratingCount = ratings.Count();
-                ViewBag.RatingCount = ratingCount;
+                ItemViewModel bvm = new ItemViewModel();
+
+                bvm.VehicleId = id;
+                bvm.VehicleTitle = banners.VehicleTitle;
+                bvm.Description = banners.Description;
+                bvm.VehicleStatus = banners.VehicleStatus;
+                bvm.VehiclePrice = banners.VehiclePrice;
+                bvm.VehiclePhoto = banners.VehiclePhoto;
+
+                ViewBag.ArticleId = id;
+                var comments = _db.tblComments.Where(d => d.VehicleId == id).ToList();
+                ViewBag.Comments = comments;
+                var ratings = _db.tblComments.Where(d => d.VehicleId == id).ToList();
+                if (ratings.Count() > 0)
+                {
+                    var ratingSum = ratings.Sum(d => d.Rating.Value);
+                    ViewBag.RatingSum = ratingSum;
+                    var ratingCount = ratings.Count();
+                    ViewBag.RatingCount = ratingCount;
+                }
+                else
+                {
+                    ViewBag.RatingSum = 0;
+                    ViewBag.RatingCount = 0;
+                }
+
+                //from database
+                var disabledDates = new List<string> { "08/20/2019 00:01", "08/21/2019 00:01", "08/22/2019 00:01" };
+
+                ViewBag.DisabledDates = disabledDates;
+
+                return View(bvm);
             }
             else
             {
-                ViewBag.RatingSum = 0;
-                ViewBag.RatingCount = 0;
+                ItemViewModel bvm = new ItemViewModel();
+
+                bvm.VehicleId = id;
+                bvm.VehicleTitle = banners.VehicleTitle;
+                bvm.Description = banners.Description;
+                bvm.VehicleStatus = banners.VehicleStatus;
+                bvm.VehiclePrice = banners.VehiclePrice;
+                bvm.VehiclePhoto = banners.VehiclePhoto;
+                bvm.PickUpDate = Convert.ToDateTime(bookingDetails.PickUpDate);
+                bvm.DropOffDate = Convert.ToDateTime(bookingDetails.DropOffDate);
+                ViewBag.PickUpDate = bvm.PickUpDate.ToString("dddd, dd MMMM yyyy");
+                ViewBag.DropOffDate = bvm.DropOffDate.ToString("dddd, dd MMMM yyyy");
+                ViewBag.pt = bvm.PickUpDate.ToString("yyyy-MM-dd");
+                ViewBag.dt = bvm.DropOffDate.ToString("yyyy-MM-dd");
+                ViewBag.ArticleId = id;
+                var comments = _db.tblComments.Where(d => d.VehicleId == id).ToList();
+                ViewBag.Comments = comments;
+                var ratings = _db.tblComments.Where(d => d.VehicleId == id).ToList();
+                if (ratings.Count() > 0)
+                {
+                    var ratingSum = ratings.Sum(d => d.Rating.Value);
+                    ViewBag.RatingSum = ratingSum;
+                    var ratingCount = ratings.Count();
+                    ViewBag.RatingCount = ratingCount;
+                }
+                else
+                {
+                    ViewBag.RatingSum = 0;
+                    ViewBag.RatingCount = 0;
+                }
+
+                //from database
+                var disabledDates = new List<string> { "08/15/2019 00:01", "08/16/2019 00:01", "08/17/2019 00:01" };
+
+                ViewBag.DisabledDates = disabledDates;
+
+                return View(bvm);
             }
 
-            //from database
-            var disabledDates = new List<string> { "08/15/2019 00:01", "08/16/2019 00:01", "08/17/2019 00:01" };
-
-            ViewBag.DisabledDates = disabledDates;
-
-            return View(bvm);
 
         }
 
@@ -209,7 +253,7 @@ namespace Project.Controllers
 
 
             BookingViewModel bvm = new BookingViewModel();
-
+         
             bvm.VehicleId = bvmm.VehicleId;
             bvm.PickUpDate = bvmm.PickUpDate;
             bvm.DropOffDate = bvmm.DropOffDate;
