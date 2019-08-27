@@ -275,10 +275,25 @@
         $('.dates').datepicker({
             beforeShowDay: function (date) {
                 var dateString = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                console.log(dateString);
+                
                 return [dateRange.indexOf(dateString) == -1];
             }
         });
+        $('.dates').change(function () {
+            var cin = $('#fromDate').val();
+            var checkin = new Date(cin);
+            var cout = $('#toDate').val();
+            var checkout = new Date(cout);
+            var start = new Date(startDate);
+             var end = new Date(endDate);
+            var date = new Date();
+            date.setDate(date.getDate() - 1);
+            if (checkin <= start && checkout >= end) {
+
+                $('#fromDate').val('');
+                $('#toDate').val('');
+            }
+        })
     }
        
    

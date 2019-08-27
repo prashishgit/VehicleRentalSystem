@@ -331,6 +331,18 @@ namespace Project.Controllers
             }
             return -1;
         }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            int check = IsExistingCheck(id);
+            List<Cart> lstCart = (List<Cart>)Session[strCart];
+            lstCart.RemoveAt(check);
+            ViewBag.CartValue = lstCart.Count;
+            return RedirectToAction("Index", "Home");
+        }
 
         public ActionResult PaymentWithPaypal(string Cancel = null)
         {

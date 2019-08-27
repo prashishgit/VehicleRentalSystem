@@ -88,7 +88,7 @@ namespace Project.Controllers
             HttpPostedFileBase fup = Request.Files["Photo"];
             if (fup != null)
             {
-                if (fup.FileName != null)
+                if (fup.FileName != "")
                 {
                     System.IO.File.Delete(Server.MapPath("~/images/Banner" + bvmm.Photo));
                     banners.Photo = fup.FileName;

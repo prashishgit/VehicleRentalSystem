@@ -45,17 +45,24 @@
                         Account Retrive
                     </span>
 
-                  
 
-                   
+
+
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input100", placeholder = "Email" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                        @ViewBag.Message
+
+
                         <span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>
                     </div>
-
+                    <br />
+                    @if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            @ViewBag.Message
+                        </div>
+                    }
                     <div class="container-login100-form-btn m-t-20">
                         <input type="submit" value="Send" class="login100-form-btn" />
                     </div>

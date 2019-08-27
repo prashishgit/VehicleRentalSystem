@@ -76,7 +76,7 @@ namespace Project.Controllers
 
             tb.VehicleTitle = itm.VehicleTitle;
             tb.VehiclePrice = itm.VehiclePrice;
-            tb.VehicleStatus = itm.VehicleStatus;
+            tb.VehicleStatus = "Available";
             tb.Description = itm.Description;
             tb.VehicleCategoryId = itm.VehicleCategoryId;
             HttpPostedFileBase fup = Request.Files["VehiclePhoto"];
@@ -101,9 +101,12 @@ namespace Project.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            ViewBag.CategoryName = _db.tblCategories.ToList();
+            
             var vehicle = _db.tblItems.Where(b => b.VehicleId == id).FirstOrDefault();
             ItemViewModel ivm = new ItemViewModel();
             ivm.VehicleId = vehicle.VehicleId;
+            ivm.VehicleCategoryId = vehicle.VehicleCategoryId;
             ivm.VehicleTitle = vehicle.VehicleTitle;
             ivm.Description = vehicle.Description;
             ivm.VehiclePrice = vehicle.VehiclePrice;
@@ -118,7 +121,7 @@ namespace Project.Controllers
         {
             var vehicle = _db.tblItems.Where(b => b.VehicleId == ivm.VehicleId).FirstOrDefault();
 
-
+            vehicle.VehicleCategoryId = ivm.VehicleCategoryId;
             vehicle.VehicleTitle = ivm.VehicleTitle;
             vehicle.Description = ivm.Description;
             vehicle.VehicleStatus = ivm.VehicleStatus;
@@ -135,6 +138,7 @@ namespace Project.Controllers
 
             }
             _db.SaveChanges();
+            ViewBag.EditSuccess = "Vehicle Editing is Complete";
             return RedirectToAction("Index");
         }
 
@@ -262,21 +266,7 @@ namespace Project.Controllers
             bvm.VehiclePrice = bvmm.VehiclePrice;
             return RedirectToAction("Create", "Booking", bvm);
         }
-        [HttpGet]
-        public JsonResult GetBookingDate(int id)
-        {
-            BookingViewModel bvm = new BookingViewModel();
-            var bookedDate = _db.tblBookings.Where(x => x.VehicleId == id && (x.BookingStatus == "Pending" || x.BookingStatus == "Confirm")).FirstOrDefault();
-            if (bookedDate != null)
-            {
-                return Json(bookedDate, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(JsonRequestBehavior.AllowGet);
-            }
-           
-        }
+       
         [HttpGet]
         public ActionResult Delete(int id)
         {
