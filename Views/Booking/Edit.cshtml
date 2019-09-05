@@ -70,7 +70,7 @@
                             <div class="col-sm" ">
                                 @Html.LabelFor(model => model.AmountLeft, htmlAttributes: new { @class = "col-sm" })
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.AmountLeft, new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(model => model.AmountLeft, new { @class = "form-control", id = "amountleft", @readonly = "readonly" })
                                     @Html.ValidationMessageFor(model => model.AmountLeft, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
 
         var amountpaid = $("#amountpaid").val();
         var totalamount = $("#totalamount").val();
-        if (amountpaid > totalamount || amountpaid == "") {
+        if (amountpaid > totalamount) {
             $("#amountpaid").focus();
             alert("Please Enter a valid input");
             $("#SubmitProject").attr("disabled", true);
