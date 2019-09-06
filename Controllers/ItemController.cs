@@ -288,7 +288,7 @@ namespace Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         public ActionResult Rate(int? id)
         {
 

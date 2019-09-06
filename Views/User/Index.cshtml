@@ -13,11 +13,17 @@
 
 
     <p>
-       
+
         @Html.ActionLink("Create New", "Create", null, new { @class = "button is-primary" })
 
     </p>
     <br />
+    @if (!string.IsNullOrEmpty(ViewBag.Delete))
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.Delete
+        </div>
+    }
     <table class="table is-hoverable is-striped" style="width:95%">
         <tr>
             <th>
@@ -51,39 +57,40 @@
 
         @foreach (var item in Model)
         {
-           
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoleName)
-        </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            <img src="~/images/UserPhoto/@item.Photo" height="40" width="40" />
-        </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <img src="~/images/UserPhoto/@item.Photo" height="40" width="40" />
+                </td>
 
 
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "button is-info" }) |
-            @Html.ActionLink("Details", "Details", new { id = item.UserId }, new { @class = "button is-warning" }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "button is-danger" })
-        </td>
-    </tr>
-            
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "button is-info" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.UserId }, new { @class = "button is-warning" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "button is-danger" } )
+                    
+                </td>
+            </tr>
+
 
 
         }

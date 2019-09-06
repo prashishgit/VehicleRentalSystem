@@ -1661,6 +1661,8 @@
     <Content Include="icon-fonts\fontawesome-webfont.svg" />
     <Content Include="images\22.gif" />
     <Content Include="images\about.jpg" />
+    <Content Include="images\Banner\banner1.gif" />
+    <Content Include="images\Banner\car_banner.gif" />
     <Content Include="images\blog-1.jpg" />
     <Content Include="images\blog-2.jpg" />
     <Content Include="images\blog-3.jpg" />
@@ -4039,6 +4041,7 @@
     <Content Include="Scripts\esm\popper.js" />
     <Content Include="Scripts\esm\popper.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -4075,6 +4078,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\sweet-alert.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -4152,12 +4156,13 @@
     <Content Include="Views\Map\Index_Map.cshtml" />
     <Content Include="Views\Emails\Emails.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
-    <Content Include="Views\Category\AddOrEdit.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Category\Add.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="images\Banner\" />
     <Folder Include="images\CitizenshipPhoto\" />
     <Folder Include="images\UserPhoto\" />
     <Folder Include="img\Banner\" />

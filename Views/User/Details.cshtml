@@ -1,0 +1,89 @@
+﻿@model Project.Models.ViewModel.UserViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container">
+    <div class="card" style="width: 90%;">
+        <div class="card-body">
+            <h3 class="card-title" style="font-weight:bold; font-size:20px">Details User</h3>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.RoleId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.RoleId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.RoleName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.RoleName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Password)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Password)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Photo)
+                </dt>
+
+                <dd>
+                    <img src="~/images/UserPhoto/@Model.Photo" height="40" width="40" />
+                </dd>
+
+
+
+            </dl>
+        </div>
+        <div class="container">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }, new { @class = "btn btn-warning" }) |
+            @Html.ActionLink("Back to List", "Index")
+
+        </div>
+        <br />
+    </div>
+</div>
