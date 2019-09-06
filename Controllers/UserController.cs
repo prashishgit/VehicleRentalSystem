@@ -110,6 +110,7 @@ namespace Project.Controllers
             var users = _db.tblUsers.Where(b => b.UserId == id).FirstOrDefault();
             UserViewModel bvm = new UserViewModel();
             bvm.UserId = users.UserId;
+            bvm.RoleId = users.tblRole.RoleId;
             bvm.UserName = users.UserName;
             bvm.Password = users.Password;
             ViewBag.RoleName = _db.tblRoles.ToList();

@@ -17,7 +17,7 @@ namespace Project.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            var user = _db.tblBanners.ToList();
+           var user = _db.tblBanners.ToList();
             return View(user);
         }
 

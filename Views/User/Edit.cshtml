@@ -28,7 +28,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.RoleName, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownListFor(model => model.RoleId, new SelectList(ViewBag.RoleName, "RoleId", "RoleName"), "Choose UserType", new { @class = "form-control"})
+                                @Html.DropDownListFor(model => model.RoleId, new SelectList(ViewBag.RoleName, "RoleId", "RoleName"), "Choose Category", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -69,7 +69,7 @@
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Edit" class="button is success" />
+                                <input type="submit" value="Save" class="btn btn-primary" />
                             </div>
                         </div>
                     </div>

@@ -257,3 +257,4 @@ E:\Project\Project\obj\Debug\Project.csproj.CoreCompileInputs.cache
 E:\Project\Project\obj\Debug\Project.csproj.CopyComplete
 E:\Project\Project\obj\Debug\Project.dll
 E:\Project\Project\obj\Debug\Project.pdb
+E:\Project\Project\obj\Debug\Project.csprojAssemblyReference.cache

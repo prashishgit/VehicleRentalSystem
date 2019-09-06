@@ -52,7 +52,7 @@ namespace Project.Controllers
             HttpPostedFileBase fup = Request.Files["Photo"];
             if (fup != null)
             {
-                if (fup.FileName != null)
+                if (fup.FileName != "")
                 {
                     tb.Photo = fup.FileName;
                     fup.SaveAs(Server.MapPath("~/images/Banner/" + fup.FileName));
