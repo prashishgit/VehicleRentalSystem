@@ -59,6 +59,10 @@ namespace Project.Controllers
         {
             return Json(!_db.tblUsers.Any(user => user.Email == Email), JsonRequestBehavior.AllowGet);
         }
+        public JsonResult EmailExists(string Email)
+        {
+            return Json(_db.tblUsers.Any(user => user.Email == Email), JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public ActionResult Create()
         {
@@ -106,6 +110,7 @@ namespace Project.Controllers
             var users = _db.tblUsers.Where(b => b.UserId == id).FirstOrDefault();
             UserViewModel bvm = new UserViewModel();
             bvm.UserId = users.UserId;
+            bvm.RoleId = users.tblRole.RoleId;
             bvm.UserName = users.UserName;
             bvm.Password = users.Password;
             ViewBag.RoleName = _db.tblRoles.ToList();
@@ -128,7 +133,7 @@ namespace Project.Controllers
             HttpPostedFileBase fup = Request.Files["Photo"];
             if (fup != null)
             {
-                if (fup.FileName != null)
+                if (fup.FileName != "")
                 {
                     System.IO.File.Delete(Server.MapPath("~/images/UserPhoto" + uvm.Photo));
                     users.Photo = fup.FileName;
@@ -149,7 +154,8 @@ namespace Project.Controllers
             uvm.UserId = users.UserId;
             uvm.UserName = users.UserName;
             uvm.Password = users.Password;
-
+            uvm.RoleId = users.tblRole.RoleId;
+            uvm.RoleName = users.tblRole.RoleName;
             uvm.FullName = users.FullName;
             uvm.Email = users.Email;
             uvm.Photo = users.Photo;
@@ -162,17 +168,21 @@ namespace Project.Controllers
             var user = _db.tblUsers.Where(b => b.UserId == id).FirstOrDefault();
             UserViewModel uvm = new UserViewModel();
             uvm.UserId = user.UserId;
-
+            uvm.UserName = user.UserName;
+            uvm.RoleName = user.tblRole.RoleName;
+            uvm.FullName = user.FullName;
+            uvm.Email = user.Email;
+            uvm.Photo = user.Photo;
             return View(uvm);
         }
         [HttpPost, ActionName("Delete")]
-        public ActionResult Delete_Post(UserViewModel uvm)
+        public ActionResult Delete_Post(int id)
         {
-            tblUser tb = new tblUser();
-            UserViewModel bvm = new UserViewModel();
-            tb.UserId = bvm.UserId;
-            _db.tblUsers.Remove(tb);
+
+            var user = _db.tblUsers.Where(u => u.UserId == id).FirstOrDefault();
+            _db.tblUsers.Remove(user);
             _db.SaveChanges();
+            ViewBag.Delete = "Delete User Successfull";
             return RedirectToAction("Index");
         }
 

@@ -2,6 +2,7 @@
 using Project.Models.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,12 +11,12 @@ namespace Project.Controllers
 {
     public class CategoryController : Controller
     {
+        VehicleRentalDBEntities db = new VehicleRentalDBEntities();
         // GET: Category
-        public ActionResult ManageCategory()
+        public ActionResult Index()
         {
             return View();
         }
-
         public JsonResult GetData()
         {
             using (VehicleRentalDBEntities db = new VehicleRentalDBEntities())
@@ -31,50 +32,38 @@ namespace Project.Controllers
             }
         }
         [HttpGet]
-        public ActionResult AddOrEdit(int id = 0)
+        public ActionResult Add(int id = 0)
         {
             if (id == 0)
-            {
-                using (VehicleRentalDBEntities db = new VehicleRentalDBEntities())
-                {
-                    ViewBag.Action = "New Category";
-                    return View(new CategoryViewModel());
-                }
-            }
+                return View(new tblCategory());
             else
             {
                 using (VehicleRentalDBEntities db = new VehicleRentalDBEntities())
                 {
-                    CategoryViewModel sub = new CategoryViewModel();
-                    var menu = db.tblCategories.Where(x => x.VehicleCategoryId == id).FirstOrDefault();
-                    sub.VehicleCategoryId = menu.VehicleCategoryId;
-                    sub.CategoryName = menu.CategoryName;
-                    ViewBag.Action = "Edit Category";
-                    return View(sub);
+                    return View(db.tblCategories.Where(x => x.VehicleCategoryId == id).FirstOrDefault<tblCategory>());
                 }
             }
         }
+
         [HttpPost]
-        public ActionResult AddOrEdit(CategoryViewModel sm)
+        public ActionResult Add(tblCategory emp)
         {
             using (VehicleRentalDBEntities db = new VehicleRentalDBEntities())
             {
-                if (sm.VehicleCategoryId == 0)
+                if (emp.VehicleCategoryId == 0)
                 {
-                    tblCategory tb = new tblCategory();
-                    tb.CategoryName = sm.CategoryName;
-                    db.tblCategories.Add(tb);
+                    db.tblCategories.Add(emp);
                     db.SaveChanges();
                     return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    tblCategory tbm = db.tblCategories.Where(m => m.VehicleCategoryId == sm.VehicleCategoryId).FirstOrDefault();
-                    tbm.CategoryName = sm.CategoryName;
+                    db.Entry(emp).State = EntityState.Modified;
                     db.SaveChanges();
                     return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
                 }
             }
+
 
 
         }
@@ -91,4 +80,3 @@ namespace Project.Controllers
         }
     }
 }
-

@@ -7,9 +7,15 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-    <link href="~/css/bootstrap.css" rel="stylesheet" />
-@*<link href="~/bulma-0.7.4/css/bulma.min.css" rel="stylesheet" />*@
+<link href="~/css/bootstrap.css" rel="stylesheet" />
+
 <div class="container">
+    @if (ViewBag.EditSuccess != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.EditSuccess
+        </div>
+    }
     <div class="row">
         <ol class="breadcrumb">
             <li>
@@ -20,75 +26,91 @@
             <li class="active">Manage Vechicle</li>
 
         </ol>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "button is-primary level-right", style = "margin-left:90em" })
 
     </div><!--/.row-->
-    @Html.TextBox("search")
-    <input type="submit" value="Search" />
-    @Html.ActionLink("Create New", "Create", null, new { @class = "button is-primary right", style = "margin-left: 70rem" })
+    @using (Html.BeginForm("Index", "Item", FormMethod.Get))
+    {
 
-    <table class="table is-hoverable is-striped" style="width: 100%">
-        <tr>
-            <th>
-                S.N
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().VehiclePrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().VehicleTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().VehiclePhoto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().VehicleStatus)
-            </th>
-            <th></th>
-        </tr>
+        <b>Search by:</b><text>Keywords</text>
+        @Html.TextBox("search")
+        <input type="submit" value="Search" />
 
-        @foreach (var item in Model)
-        {
+
+        <table class="table is-striped is-narrow is-hoverable is-fullwidth" style="width: 100%">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SN)
-                    @Html.HiddenFor(modelItem => item.VehicleId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VehiclePrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VehicleTitle)
-                </td>
-                <td>
-
-                    <img src="~/images/Vehicle/@item.VehiclePhoto" height="40" width="40" />
-                </td>
-                <td>
-                    @if (item.Description.Length <= 11)
-                    {
-                        @Html.DisplayFor(modelItem => item.Description)
-                    }
-                    else
-                    {
-                        string parameterValue = item.Description.ToString().Substring(0, 11) + "....";
-                        @Html.DisplayFor(modelItem => parameterValue)
-                    }
-
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VehicleStatus)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.VehicleId }, new { @class = "button is-info" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.VehicleId }, new { @class = "button is-warning" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.VehicleId }, new { @class = "button is-danger" })
-                </td>
+                <th>
+                    S.N
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().VehiclePrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().VehicleTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().VehiclePhoto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().VehicleStatus)
+                </th>
+                <th></th>
             </tr>
-        }
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="5">
+                        No Data were found
+                    </td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SN)
+                            @Html.HiddenFor(modelItem => item.VehicleId)
+                        </td>
+                        <td>
+                            $ @Html.DisplayFor(modelItem => item.VehiclePrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VehicleTitle)
+                        </td>
+                        <td>
 
-    </table>
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, SearchBy = Request.QueryString["SearchBy"], search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true, DisplayItemSliceAndTotal = true })
+                            <img src="~/images/Vehicle/@item.VehiclePhoto" height="40" width="40" />
+                        </td>
+                        <td>
+                            @if (item.Description.Length <= 11)
+                            {
+                                @Html.DisplayFor(modelItem => item.Description)
+                            }
+                            else
+                            {
+                                string parameterValue = item.Description.ToString().Substring(0, 11) + "....";
+                                @Html.DisplayFor(modelItem => parameterValue)
+                            }
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VehicleStatus)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.VehicleId }, new { @class = "button is-info" }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.VehicleId }, new { @class = "button is-warning" }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.VehicleId }, new { @class = "button is-danger" })
+                        </td>
+                    </tr>
+                }
+            }
+
+        </table>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, SearchBy = Request.QueryString["SearchBy"], search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true, DisplayItemSliceAndTotal = true })
+    }
 </div>

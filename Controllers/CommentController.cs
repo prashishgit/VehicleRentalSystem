@@ -40,7 +40,7 @@ namespace Project.Controllers
         }
       
         [HttpPost]
-       
+
         [ValidateAntiForgeryToken]
         public ActionResult Add(FormCollection form)
         {

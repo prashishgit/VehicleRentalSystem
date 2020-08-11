@@ -216,6 +216,7 @@ namespace Project.Controllers
             {
                 if (booking.TotalAmount != booking.AmountPaid && booking.AmountPaid != 0)
                 {
+                    ViewBag.BookingConfirm = "Booking Confirmed";
                     booking.BookingStatus = "Confirm";
                 }
                 else if (bvmm.AmountPaid == 0)
@@ -224,6 +225,7 @@ namespace Project.Controllers
                 }
                 else
                 {
+                   
                     booking.BookingStatus = "Checked Out";
                     vehicle.VehicleStatus = "Available";
 
@@ -233,12 +235,13 @@ namespace Project.Controllers
             }
             else
             {
-                return RedirectToAction("Edit", "Booking");
+                ViewBag.FailedBooking = "Booking Confirmed Failed";
+                return View();
             }
 
 
-
-            return RedirectToAction("Edit", "Booking");
+          
+            return View();
         }
         [HttpGet]
         public ActionResult Details(int id)
@@ -298,7 +301,7 @@ namespace Project.Controllers
                 }
                 else
                 {
-                    lstCart[check].Quantity++;
+                    lstCart[check].Quantity = 1;
                 }
 
                 Session[strCart] = lstCart;
@@ -327,6 +330,18 @@ namespace Project.Controllers
                 if (lstCart[i].Vehicle.VehicleId == id) return i;
             }
             return -1;
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            int check = IsExistingCheck(id);
+            List<Cart> lstCart = (List<Cart>)Session[strCart];
+            lstCart.RemoveAt(check);
+            ViewBag.CartValue = lstCart.Count;
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult PaymentWithPaypal(string Cancel = null)

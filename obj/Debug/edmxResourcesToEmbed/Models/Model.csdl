@@ -28,8 +28,8 @@
     <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="VehicleId" Type="Int32" />
     <Property Name="UserId" Type="Int32" />
-    <Property Name="PickUpDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="DropOffDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PickUpDate" Type="DateTime" Precision="0" />
+    <Property Name="DropOffDate" Type="DateTime" Precision="0" />
     <Property Name="TotalAmount" Type="Int32" />
     <Property Name="AmountPaid" Type="Int32" />
     <Property Name="BookingStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />

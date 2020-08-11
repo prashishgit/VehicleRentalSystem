@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Project.Models.ViewModel
 {
@@ -19,6 +20,7 @@ namespace Project.Models.ViewModel
     }
     public class RetriveViewModel
     {
+        [Remote("EmailExists", "User", ErrorMessage = "Email does not exists")]
         [Required]
         public string Email { get; set; }
     }

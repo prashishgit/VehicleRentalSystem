@@ -87,10 +87,10 @@
                         <img src="~/images/CitizenshipPhoto/@item.CitizenshipPhoto" height="50" width="50" />
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PickUpDate)
+                        @Html.FormatValue("dddd, dd MMMM yyyy", item.PickUpDate.Value.ToString("dddd, dd MMMM yyyy"))
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DropOffDate)
+                        @Html.FormatValue("dddd, dd MMMM yyyy", item.DropOffDate.Value.ToString("dddd, dd MMMM yyyy"))
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TotalAmount)
@@ -141,3 +141,6 @@
 
     </div>
 }
+<script>
+
+</script>

@@ -12,11 +12,27 @@
     <div class="container">
         <div class="card" style="width: 100%;">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
+                <h5 class="card-title">Booking Payment</h5>
                 <div class="form-horizontal">
                     <form id="myform">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
+                            @if (ViewBag.FailedBooking != null)
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewBag.FailedBooking
+                                </div>
+                            }
+                            else if(ViewBag.BookingConfirm != null)
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    @ViewBag.BookingConfirm
+                                </div>
+                            }
+                            else
+                            {
+
+                            }
                             @Html.HiddenFor(model => model.BookingId, htmlAttributes: new { @class = "control-label col-md-2" })
                             @Html.HiddenFor(model => model.VehicleId, htmlAttributes: new { @class = "control-label col-md-2" })
                             @Html.HiddenFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -54,7 +70,7 @@
                             <div class="col-sm" ">
                                 @Html.LabelFor(model => model.AmountLeft, htmlAttributes: new { @class = "col-sm" })
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.AmountLeft, new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(model => model.AmountLeft, new { @class = "form-control", id = "amountleft", @readonly = "readonly" })
                                     @Html.ValidationMessageFor(model => model.AmountLeft, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -63,10 +79,10 @@
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Save" class="btn btn-primary pull-left" id="SubmitProject" onclick="validate()" />
-                                <a href="@Url.Action("IndexBooking", "Booking", new {@class="btn btn-secondary pull-right"})">Back</a>
+                                <a href="@Url.Action("IndexBooking", "Booking",new {@class="btn btn-secondary pull-right"})">Back</a>
                             </div>
                         </div>
-                      
+
 
 
                     </form>
@@ -76,14 +92,18 @@
     </div>
 }
 
-<script src="~/Scripts/jquery.validate.js"></script>
+
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+
     var validate = function () {
+
         var amountpaid = $("#amountpaid").val();
         var totalamount = $("#totalamount").val();
-        if (amountpaid > totalamount || amountpaid == "") {
+        if (amountpaid > totalamount) {
             $("#amountpaid").focus();
             alert("Please Enter a valid input");
             $("#SubmitProject").attr("disabled", true);

@@ -112,10 +112,11 @@ namespace Project.Controllers
             else
             {
 
-                return RedirectToAction("Index", "Home");
+                return View();
             }
 
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
+            return View();
         }
     }
 }

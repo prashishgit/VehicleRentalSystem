@@ -1,9 +1,9 @@
-﻿@model Project.Models.ViewModel.CategoryViewModel
+﻿@model Project.Models.tblCategory
 @{
     Layout = null;
 }
 
-@using (Html.BeginForm("AddOrEdit", "Home", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+@using (Html.BeginForm("Add", "Category", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
 {
     @Html.HiddenFor(model => model.VehicleCategoryId)
     <div class="form-group">

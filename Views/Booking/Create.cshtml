@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @using (Html.BeginForm("OrderNow", "Booking", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                            @using (Html.BeginForm("OrderNow", "Booking", FormMethod.Post, new { @enctype = "multipart/form-data", autocomplete = "off" }))
                             {
 
                                 @Html.AntiForgeryToken()
@@ -64,7 +64,7 @@
                                         </h3>
                                         <p class="price">
                                             <label>Vehicle Price:</label>
-                                            <span> Rs @Html.DisplayFor(model => model.VehiclePrice) / Day</span>
+                                            <span> $ @Html.DisplayFor(model => model.VehiclePrice) / Day</span>
 
                                         </p>
                                         <p class="price">
@@ -75,20 +75,20 @@
                                         </p>
                                         <p class="price">
                                             <label>Total Price:</label>
-                                            <span> Rs @Html.DisplayFor(model => model.TotalAmount)</span>
+                                            <span> $ @Html.DisplayFor(model => model.TotalAmount, new { @id = "totalAmount" })</span>
 
                                         </p>
                                         <p class="price">
                                             <label>PickUp Date:</label>
                                             <span>
-                                                @Html.DisplayFor(model => model.PickUpDate)
+                                                @Html.FormatValue("dddd, dd MMMM yyyy", Model.PickUpDate.Value.ToString("dddd, dd MMMM yyyy"))
                                             </span>
 
                                         </p>
                                         <p class="price">
                                             <label>DropOff Date: </label>
                                             <span>
-                                                @Html.DisplayFor(model => model.DropOffDate)
+                                                @Html.FormatValue("dddd, dd MMMM yyyy", Model.DropOffDate.Value.ToString("dddd, dd MMMM yyyy"))
                                             </span>
 
                                         </p>
@@ -114,12 +114,12 @@
                                         <p class="price">
                                             <label class="col-md-3">Amount Pay:</label>
 
-                                            @Html.EditorFor(model => model.AmountPaid)
+                                            @Html.EditorFor(model => model.AmountPaid, new { id = "amountPaid" })
                                         </p>
                                         @*<p><input type="submit" value="BOOK With Paypal" class="btn btn-primary btn-addtocart" id="SubmitBooking"> </p>*@
                                         <p>
                                             @*<a data-toggle="modal" class="btn btn-primary btn-addtocart" data-target="#myModal"><i class="icon-calendar"></i> Book With Paypal</a>*@
-                                            <input type="submit" value="Book" class="btn btn-primary btn-block glyphicon glyphicon-ok" />
+                                            <input type="submit" value="Book" class="btn btn-primary btn-block glyphicon glyphicon-ok" id="book" />
                                         </p>
 
                                     </div>
@@ -136,20 +136,20 @@
     </div>
 
 </div>
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-    var validate = function () {
-        var citizenship = $("#citizenship").val();
+    $(document).ready(function () {
+        $('#book').click(function () {
+            debugger
+            var amountPaid = $('#amountPaid').val();
+            var totalAmount = $('#totalAmount').val();
+            Console.log(totalAmount);
+            if (amountPaid < totalAmount) {
+                $('#amountPaid').val('');
+                return false;
+            }
 
-        if (citizenship == "") {
-            $("#citizenship").focus();
-            alert("Please upload your citizenship photo");
-            $("#SubmitBooking").attr("disabled", true);
-            return false;
-        }
-        else {
-            $('#SubmitBooking').removeAttr("disabled");
-        }
-    };
+        });
 </script>
 
