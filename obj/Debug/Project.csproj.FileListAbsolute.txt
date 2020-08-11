@@ -82,7 +82,6 @@ E:\Broadway\Project\Project\bin\PagedList.dll
 E:\Broadway\Project\Project\bin\PagedList.Mvc.dll
 E:\Broadway\Project\Project\bin\PagedList.xml
 E:\Broadway\Project\Project\bin\PagedList.Mvc.xml
-G:\Project\Project\obj\Debug\Project.csproj.CoreCompileInputs.cache
 G:\Project\Project\bin\Project.dll.config
 G:\Project\Project\bin\Project.dll
 G:\Project\Project\bin\Project.pdb
