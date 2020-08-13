@@ -37,8 +37,8 @@ namespace Project.Controllers
                     VehicleTitle = vehicle.VehicleTitle,
                     VehiclePhoto = vehicle.VehiclePhoto,
                     CitizenshipPhoto = users.CitizenshipPhoto,
-                    PickUpDate = item.PickUpDate,
-                    DropOffDate = item.DropOffDate,
+                    PickUpDate = Convert.ToDateTime(item.PickUpDate),
+                    DropOffDate = Convert.ToDateTime(item.DropOffDate),
                     TotalAmount = item.TotalAmount,
                     AmountPaid = item.AmountPaid,
                     BookingStatus = item.BookingStatus
@@ -113,8 +113,8 @@ namespace Project.Controllers
                 tb.VehicleId = vehicle.VehicleId;
                 tb.UserId = Convert.ToInt32(@Session["UserId"]);
 
-                tb.PickUpDate = item.Vehicle.PickUpDate;
-                tb.DropOffDate = item.Vehicle.DropOffDate;
+                tb.PickUpDate = Convert.ToString(item.Vehicle.PickUpDate);
+                tb.DropOffDate = Convert.ToString(item.Vehicle.DropOffDate);
                 tb.TotalAmount = item.Vehicle.TotalAmount;
                 tb.AmountPaid = item.Vehicle.AmountPaid;
                 vehicle.VehicleStatus = "Booked";
@@ -254,9 +254,9 @@ namespace Project.Controllers
             bvm.TotalAmount = booking.TotalAmount;
             bvm.UserName = users.UserName;
             bvm.VehicleTitle = vehicle.VehicleTitle;
-            bvm.PickUpDate = booking.PickUpDate;
+            bvm.PickUpDate = Convert.ToDateTime(booking.PickUpDate);
 
-            bvm.DropOffDate = booking.DropOffDate;
+            bvm.DropOffDate = Convert.ToDateTime(booking.DropOffDate);
             DateTime pickupday = Convert.ToDateTime(bvm.PickUpDate);
             DateTime dropofday = Convert.ToDateTime(bvm.DropOffDate);
             var days = (dropofday - pickupday).Days;

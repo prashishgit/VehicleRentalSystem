@@ -133,8 +133,8 @@ namespace Project.Controllers
                     SN = i + 1,
                     BookingId = item.BookingId,
                     BookingStatus = item.BookingStatus,
-                    PickUpDate = item.PickUpDate,
-                    DropOffDate = item.DropOffDate,
+                    PickUpDate = Convert.ToDateTime(item.PickUpDate),
+                    DropOffDate = Convert.ToDateTime(item.DropOffDate),
                     VehiclePhoto = item.tblItem.VehiclePhoto,
                     TotalAmount = item.TotalAmount,
                     AmountPaid = item.AmountPaid,
@@ -278,7 +278,7 @@ namespace Project.Controllers
                 var bookedItem = _db.tblItems.Where(m => m.tblBookings.All(r => r.BookingStatus != "Confirm" && r.BookingStatus != "Pending")).ToList().ToPagedList(page ?? 1, 9);
                 //IEnumerable<tblItem> bookedItem1 = bookedItem.Where(x => x.tblBookings.All(r => (r.PickUpDate >= start && r.DropOffDate < end) && r.PickUpDate >= DateTime.Now)).ToList().ToPagedList(page ?? 1, 9);
                 //var bookedItem = _db.tblItems.Where(m => m.VehicleStatus == "Available").ToList().ToPagedList(page ?? 1, 9);
-                var bookedItem1 = bookedItem.Where(x => x.tblBookings.All(r => r.PickUpDate >= start && r.DropOffDate <= end)).ToList().ToPagedList(page ?? 1, 9);
+                var bookedItem1 = bookedItem.Where(x => x.tblBookings.All(r => Convert.ToDateTime(r.PickUpDate) >= start && Convert.ToDateTime(r.DropOffDate) <= end)).ToList().ToPagedList(page ?? 1, 9);
 
                 return View(bookedItem1);
 
