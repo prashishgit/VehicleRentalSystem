@@ -6,7 +6,7 @@
 
 
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<button class="btn btn-success" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("AddOrEdit", "Category")')"><i class="fa fa-plus"></i> Add New</button>
+<button class="btn btn-success" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("Add", "Category")')"><i class="fa fa-plus"></i> Add New</button>
 <table id="categoryTable" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
@@ -38,7 +38,7 @@
                     { "data": "CategoryName" },
 
                     {"data":"VehicleCategoryId" , "render" : function (data) {
-                        return "<button class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("AddOrEdit","Category")/" + data + "')><i class='fa fa-pencil'></i> Edit</button><button class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete("+data+")><i class='fa fa-trash'></i> Delete</button>";
+                        return "<button class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("Add","Category")/" + data + "')><i class='fa fa-pencil'></i> Edit</button><button class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete("+data+")><i class='fa fa-trash'></i> Delete</button>";
                     },
                         "orderable": false,
                         "searchable":false,

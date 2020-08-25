@@ -256,3 +256,4 @@ G:\Project\Project\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 G:\Project\Project\obj\Debug\Project.csproj.CopyComplete
 G:\Project\Project\obj\Debug\Project.dll
 G:\Project\Project\obj\Debug\Project.pdb
+G:\Project\Project\obj\Debug\Project.csprojAssemblyReference.cache
