@@ -1,120 +1,165 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="VehicleRentalDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="VehicleRentalDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="VehicleRentalDBModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="VehicleRentalDBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblBanners" EntityType="VehicleRentalDBModel.Store.tblBanners" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblBookings" EntityType="VehicleRentalDBModel.Store.tblBookings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblCategories" EntityType="VehicleRentalDBModel.Store.tblCategories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblComments" EntityType="VehicleRentalDBModel.Store.tblComments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblContacts" EntityType="VehicleRentalDBModel.Store.tblContacts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblItems" EntityType="VehicleRentalDBModel.Store.tblItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblRoles" EntityType="VehicleRentalDBModel.Store.tblRoles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblTestimonies" EntityType="VehicleRentalDBModel.Store.tblTestimonies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblUsers" EntityType="VehicleRentalDBModel.Store.tblUsers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblUserRoles" EntityType="VehicleRentalDBModel.Store.tblUserRoles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_tblBooking_tblItem" Association="VehicleRentalDBModel.Store.FK_tblBooking_tblItem">
+      <End Role="tblItem" EntitySet="tblItems" />
+      <End Role="tblBooking" EntitySet="tblBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblBooking_tblUser" Association="VehicleRentalDBModel.Store.FK_tblBooking_tblUser">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblBooking" EntitySet="tblBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblItem_tblCategory" Association="VehicleRentalDBModel.Store.FK_tblItem_tblCategory">
+      <End Role="tblCategory" EntitySet="tblCategories" />
+      <End Role="tblItem" EntitySet="tblItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblComments_tblItem" Association="VehicleRentalDBModel.Store.FK_tblComments_tblItem">
+      <End Role="tblItem" EntitySet="tblItems" />
+      <End Role="tblComments" EntitySet="tblComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblUser_tblRole" Association="VehicleRentalDBModel.Store.FK_tblUser_tblRole">
+      <End Role="tblRole" EntitySet="tblRoles" />
+      <End Role="tblUser" EntitySet="tblUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblUserRole_tblRole" Association="VehicleRentalDBModel.Store.FK_tblUserRole_tblRole">
+      <End Role="tblRole" EntitySet="tblRoles" />
+      <End Role="tblUserRole" EntitySet="tblUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTestimony_tblUser" Association="VehicleRentalDBModel.Store.FK_tblTestimony_tblUser">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblTestimony" EntitySet="tblTestimonies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblUserRole_tblUser" Association="VehicleRentalDBModel.Store.FK_tblUserRole_tblUser">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblUserRole" EntitySet="tblUserRoles" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="sysdiagrams">
     <Key>
       <PropertyRef Name="diagram_id" />
     </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
     <Property Name="principal_id" Type="int" Nullable="false" />
     <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
+    <Property Name="version" Type="int" Nullable="true" />
+    <Property Name="definition" Type="varbinary(max)" Nullable="true" />
   </EntityType>
-  <EntityType Name="tblBanner">
+  <EntityType Name="tblBanners">
     <Key>
       <PropertyRef Name="BannerId" />
     </Key>
     <Property Name="BannerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Photo" Type="nvarchar" MaxLength="50" />
-    <Property Name="Title" Type="nvarchar" MaxLength="50" />
-    <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="HeadingOne" Type="nvarchar" MaxLength="50" />
-    <Property Name="HeadingTwo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Photo" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Title" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="HeadingOne" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="HeadingTwo" Type="nvarchar" Nullable="true" MaxLength="50" />
   </EntityType>
-  <EntityType Name="tblBooking">
+  <EntityType Name="tblBookings">
     <Key>
       <PropertyRef Name="BookingId" />
     </Key>
     <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="VehicleId" Type="int" />
-    <Property Name="UserId" Type="int" />
-    <Property Name="PickUpDate" Type="nvarchar" />
-    <Property Name="DropOffDate" Type="nvarchar" />
-    <Property Name="TotalAmount" Type="int" />
-    <Property Name="AmountPaid" Type="int" />
-    <Property Name="BookingStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="VehicleId" Type="int" Nullable="true" />
+    <Property Name="UserId" Type="int" Nullable="true" />
+    <Property Name="PickUpDate" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="DropOffDate" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="TotalAmount" Type="int" Nullable="true" />
+    <Property Name="AmountPaid" Type="int" Nullable="true" />
+    <Property Name="BookingStatus" Type="nvarchar" Nullable="true" MaxLength="50" />
   </EntityType>
-  <EntityType Name="tblCategory">
+  <EntityType Name="tblCategories">
     <Key>
       <PropertyRef Name="VehicleCategoryId" />
     </Key>
     <Property Name="VehicleCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+    <Property Name="CategoryName" Type="nvarchar" Nullable="true" MaxLength="50" />
   </EntityType>
   <EntityType Name="tblComments">
     <Key>
       <PropertyRef Name="CommentId" />
     </Key>
     <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Comments" Type="varchar" MaxLength="7999" />
-    <Property Name="ThisDateTime" Type="datetime" />
-    <Property Name="VehicleId" Type="int" />
-    <Property Name="Rating" Type="int" />
-    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="varchar" Nullable="true" MaxLength="7999" />
+    <Property Name="ThisDateTime" Type="datetime" Nullable="true" />
+    <Property Name="VehicleId" Type="int" Nullable="true" />
+    <Property Name="Rating" Type="int" Nullable="true" />
+    <Property Name="UserName" Type="nvarchar" Nullable="true" MaxLength="50" />
   </EntityType>
-  <EntityType Name="tblContact">
+  <EntityType Name="tblContacts">
     <Key>
       <PropertyRef Name="ContactId" />
     </Key>
     <Property Name="ContactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
-    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
-    <Property Name="Email" Type="nvarchar" MaxLength="50" />
-    <Property Name="Subject" Type="nvarchar" MaxLength="50" />
-    <Property Name="Message" Type="nvarchar(max)" />
+    <Property Name="FirstName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Subject" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
-  <EntityType Name="tblItem">
+  <EntityType Name="tblItems">
     <Key>
       <PropertyRef Name="VehicleId" />
     </Key>
     <Property Name="VehicleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="VehicleCategoryId" Type="int" />
-    <Property Name="VehiclePrice" Type="nvarchar" MaxLength="50" />
-    <Property Name="VehicleTitle" Type="nvarchar" MaxLength="500" />
-    <Property Name="VehiclePhoto" Type="nvarchar" MaxLength="50" />
-    <Property Name="Description" Type="nvarchar(max)" />
-    <Property Name="VehicleStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="VehicleCategoryId" Type="int" Nullable="true" />
+    <Property Name="VehiclePrice" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="VehicleTitle" Type="nvarchar" Nullable="true" MaxLength="500" />
+    <Property Name="VehiclePhoto" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="VehicleStatus" Type="nvarchar" Nullable="true" MaxLength="50" />
   </EntityType>
-  <EntityType Name="tblRole">
+  <EntityType Name="tblRoles">
     <Key>
       <PropertyRef Name="RoleId" />
     </Key>
     <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="RoleName" Type="nvarchar" Nullable="true" MaxLength="50" />
   </EntityType>
-  <EntityType Name="tblTestimony">
+  <EntityType Name="tblTestimonies">
     <Key>
       <PropertyRef Name="TestimonyId" />
     </Key>
     <Property Name="TestimonyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserId" Type="int" />
-    <Property Name="Location" Type="nvarchar" MaxLength="50" />
-    <Property Name="TestimonyDescription" Type="nvarchar(max)" />
+    <Property Name="UserId" Type="int" Nullable="true" />
+    <Property Name="Location" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="TestimonyDescription" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
-  <EntityType Name="tblUser">
+  <EntityType Name="tblUsers">
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
     <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="RoleId" Type="int" />
-    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
-    <Property Name="Password" Type="nvarchar" MaxLength="50" />
-    <Property Name="FullName" Type="nvarchar" MaxLength="50" />
-    <Property Name="Email" Type="nvarchar" MaxLength="50" />
-    <Property Name="Photo" Type="nvarchar" MaxLength="50" />
-    <Property Name="CitizenshipPhoto" Type="nvarchar" MaxLength="50" />
+    <Property Name="RoleId" Type="int" Nullable="true" />
+    <Property Name="UserName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="FullName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Photo" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="CitizenshipPhoto" Type="nvarchar" Nullable="true" MaxLength="50" />
   </EntityType>
-  <EntityType Name="tblUserRole">
+  <EntityType Name="tblUserRoles">
     <Key>
       <PropertyRef Name="UserRoleId" />
     </Key>
     <Property Name="UserRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="RoleId" Type="int" />
-    <Property Name="UserId" Type="int" />
+    <Property Name="RoleId" Type="int" Nullable="true" />
+    <Property Name="UserId" Type="int" Nullable="true" />
   </EntityType>
   <Association Name="FK_tblBooking_tblItem">
-    <End Role="tblItem" Type="Self.tblItem" Multiplicity="0..1" />
-    <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="*" />
+    <End Role="tblItem" Type="VehicleRentalDBModel.Store.tblItems" Multiplicity="0..1" />
+    <End Role="tblBooking" Type="VehicleRentalDBModel.Store.tblBookings" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblItem">
         <PropertyRef Name="VehicleId" />
@@ -125,8 +170,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tblBooking_tblUser">
-    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
-    <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="*" />
+    <End Role="tblUser" Type="VehicleRentalDBModel.Store.tblUsers" Multiplicity="0..1" />
+    <End Role="tblBooking" Type="VehicleRentalDBModel.Store.tblBookings" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblUser">
         <PropertyRef Name="UserId" />
@@ -136,25 +181,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tblComments_tblItem">
-    <End Role="tblItem" Type="Self.tblItem" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="tblComments" Type="Self.tblComments" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tblItem">
-        <PropertyRef Name="VehicleId" />
-      </Principal>
-      <Dependent Role="tblComments">
-        <PropertyRef Name="VehicleId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_tblItem_tblCategory">
-    <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1">
+    <End Role="tblCategory" Type="VehicleRentalDBModel.Store.tblCategories" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="tblItem" Type="Self.tblItem" Multiplicity="*" />
+    <End Role="tblItem" Type="VehicleRentalDBModel.Store.tblItems" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblCategory">
         <PropertyRef Name="VehicleCategoryId" />
@@ -164,21 +195,23 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tblTestimony_tblUser">
-    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
-    <End Role="tblTestimony" Type="Self.tblTestimony" Multiplicity="*" />
+  <Association Name="FK_tblComments_tblItem">
+    <End Role="tblItem" Type="VehicleRentalDBModel.Store.tblItems" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tblComments" Type="VehicleRentalDBModel.Store.tblComments" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tblUser">
-        <PropertyRef Name="UserId" />
+      <Principal Role="tblItem">
+        <PropertyRef Name="VehicleId" />
       </Principal>
-      <Dependent Role="tblTestimony">
-        <PropertyRef Name="UserId" />
+      <Dependent Role="tblComments">
+        <PropertyRef Name="VehicleId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tblUser_tblRole">
-    <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
-    <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
+    <End Role="tblRole" Type="VehicleRentalDBModel.Store.tblRoles" Multiplicity="0..1" />
+    <End Role="tblUser" Type="VehicleRentalDBModel.Store.tblUsers" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblRole">
         <PropertyRef Name="RoleId" />
@@ -189,10 +222,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tblUserRole_tblRole">
-    <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1">
+    <End Role="tblRole" Type="VehicleRentalDBModel.Store.tblRoles" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="tblUserRole" Type="Self.tblUserRole" Multiplicity="*" />
+    <End Role="tblUserRole" Type="VehicleRentalDBModel.Store.tblUserRoles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblRole">
         <PropertyRef Name="RoleId" />
@@ -202,11 +235,23 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tblTestimony_tblUser">
+    <End Role="tblUser" Type="VehicleRentalDBModel.Store.tblUsers" Multiplicity="0..1" />
+    <End Role="tblTestimony" Type="VehicleRentalDBModel.Store.tblTestimonies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tblTestimony">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tblUserRole_tblUser">
-    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1">
+    <End Role="tblUser" Type="VehicleRentalDBModel.Store.tblUsers" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="tblUserRole" Type="Self.tblUserRole" Multiplicity="*" />
+    <End Role="tblUserRole" Type="VehicleRentalDBModel.Store.tblUserRoles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblUser">
         <PropertyRef Name="UserId" />
@@ -216,49 +261,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="VehicleRentalDBModelStoreContainer">
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblBanner" EntityType="Self.tblBanner" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblBooking" EntityType="Self.tblBooking" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblComments" EntityType="Self.tblComments" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblContact" EntityType="Self.tblContact" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblItem" EntityType="Self.tblItem" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblRole" EntityType="Self.tblRole" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblTestimony" EntityType="Self.tblTestimony" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblUserRole" EntityType="Self.tblUserRole" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_tblBooking_tblItem" Association="Self.FK_tblBooking_tblItem">
-      <End Role="tblItem" EntitySet="tblItem" />
-      <End Role="tblBooking" EntitySet="tblBooking" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tblBooking_tblUser" Association="Self.FK_tblBooking_tblUser">
-      <End Role="tblUser" EntitySet="tblUser" />
-      <End Role="tblBooking" EntitySet="tblBooking" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tblComments_tblItem" Association="Self.FK_tblComments_tblItem">
-      <End Role="tblItem" EntitySet="tblItem" />
-      <End Role="tblComments" EntitySet="tblComments" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tblItem_tblCategory" Association="Self.FK_tblItem_tblCategory">
-      <End Role="tblCategory" EntitySet="tblCategory" />
-      <End Role="tblItem" EntitySet="tblItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tblTestimony_tblUser" Association="Self.FK_tblTestimony_tblUser">
-      <End Role="tblUser" EntitySet="tblUser" />
-      <End Role="tblTestimony" EntitySet="tblTestimony" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tblUser_tblRole" Association="Self.FK_tblUser_tblRole">
-      <End Role="tblRole" EntitySet="tblRole" />
-      <End Role="tblUser" EntitySet="tblUser" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tblUserRole_tblRole" Association="Self.FK_tblUserRole_tblRole">
-      <End Role="tblRole" EntitySet="tblRole" />
-      <End Role="tblUserRole" EntitySet="tblUserRole" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tblUserRole_tblUser" Association="Self.FK_tblUserRole_tblUser">
-      <End Role="tblUser" EntitySet="tblUser" />
-      <End Role="tblUserRole" EntitySet="tblUserRole" />
-    </AssociationSet>
-  </EntityContainer>
 </Schema>
